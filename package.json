@@ -1,0 +1,49 @@
+{
+    "devDependencies": {
+        "@babel/preset-react": "^7.12.10",
+        "@hotwired/turbo": "^7.0.0-beta.5",
+        "@symfony/stimulus-bridge": "^1.1.0",
+        "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
+        "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
+        "@symfony/ux-swup": "file:vendor/symfony/ux-swup/Resources/assets",
+        "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/Resources/assets",
+        "@symfony/webpack-encore": "^0.32.0",
+        "core-js": "^3.0.0",
+        "node-sass": "^4.0.0",
+        "regenerator-runtime": "^0.13.2",
+        "sass-loader": "^9.0.1",
+        "stimulus": "^2.0.0",
+        "vue-loader": "^15.9.6",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "dependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.12.1",
+        "@fortawesome/fontawesome-free": "^5.15.2",
+        "@stripe/stripe-js": "^1.15.0",
+        "axios": "^0.21.1",
+        "bootstrap": "^4.6.0",
+        "codemirror": "^5.61.0",
+        "flatpickr": "^4.6.9",
+        "flexslider": "^2.7.2",
+        "glightbox": "^3.0.8",
+        "htmx": "^0.0.2",
+        "htmx.org": "^1.4.0",
+        "jquery": "^3.5.1",
+        "pace": "^0.0.4",
+        "popper.js": "^1.16.1",
+        "select2": "^4.1.0-rc.0",
+        "semantic-ui-vue": "^0.11.0",
+        "simplemde": "^1.11.2",
+        "sweetalert2": "^10.13.3",
+        "vue": "^2.6.12",
+        "vue-template-compiler": "^2.6.12"
+    }
+}

@@ -1,0 +1,7 @@
+{% extends "email/layout.html.twig" %}
+
+{% block content %}
+    <h1>Alert!</h1>
+    <p>The product {{ product.name }} quantity becoming too little with that quantity {{ product.quantity }}</p>
+    <a href="{{ url('product_show', {slug: product.slug}) }}">View product details</a>
+{% endblock %}

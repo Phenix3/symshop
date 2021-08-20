@@ -1,0 +1,253 @@
+pending: En attente
+accepted: Accepte
+rejected: Rejeter
+
+buttons:
+  save: Sauvegarder
+  update: Mettre a jour
+  continue_shopping: __buttons.continue_shopping
+  order: Commander
+  order_with_required_payment: Commande avec obligation de paiement
+  cart_clear: Vider le panier
+  submit: Envoyer
+  already_registered: Deja inscrit ? Cree un compte.
+  filter: Filtrer
+  next: Suivant
+  process_checkout: Proceder au paiement
+  checkout_empty_cart: Desole, mais votre panier est vie.
+  logout: Déconnexion
+  create_account: Creer un compte
+  forgot_password: Mot de passe oublie ?
+  login: Connexion
+  my_account: Mon compte
+  add_review: Ajouter un avis
+  add: Ajouter
+  accept: Accepter
+  reject: Rejeter
+  show: Afficher
+  new_address: Ajouter une adresse
+
+menus:
+  admin: Administration
+  settings: Parametres
+  shop: Boutique
+  countries: Pays
+  ranges: Plages de valeurs
+
+  personal_infos: Informations personnelles
+  dashboard: Tableau de bord
+  addresses: Mes adresses
+  change_password: Changez votre mot de passe
+  addresses_book: Carnet d'adresses
+  orders: Commandes
+  excerpt: Resume de informations
+  edit: Modifier
+  products: Produits
+  pages: Pages
+  states: Etats des commandes
+  categories: Categories de produit
+  reviews: Avis de produit
+
+titles:
+  shop_edit: Editer le infors de la boutique
+  dashboard: Tableau de bord de l'administration
+  countries: Liste des pays
+  country_new: Cree un nouveau pays
+  ranges: Liste des plages de valeurs
+  range_new: Cree un nouveau plage de valeur
+  states: Liste des etats.
+  add_your_review: Ajouter votre avis
+  products: Nos produits
+  contact: Nous contacter
+
+forms:
+  name: Nom
+  first_name: Prenom
+  username: Nom d'utilisateur
+  repeat_password: Retapez votre mot de passe
+  password: Mot de passe
+  email: Adresse E-mail
+  content: Contenu
+  newsletter: Je désire recevoir votre lettre d'information
+  message: Le message
+  search: Rechercher
+  agree: J'accepte les termes et conditions de la politique de confidentialité
+  min_price: Prix minimum
+  max_price: Prix maximum
+  is_professionnal: Professionelle
+  different_shipping_address: Utiliser une adresse differente pour la facturation
+  different_billing_address: Utiliser une adresse differente pour la facturation
+  female: Feminin
+  male: Masculin
+  civility: Civilite
+  company: Entreprise
+  address: Adresse
+  addressbis: Adresse 2
+  bp: Boite postale
+  city: Ville
+  country: Pays
+  postal: Code postal
+  phone: Numero de telephone
+  colissimo: Livraison en colissimo
+  withdrawal: Retrait sur place
+  checkout_notes: Notes supplémentaires
+  remember_me: Se souvernir de moi
+  select_civility: Selectionner votre civilite
+  quantity: Quantite
+  select_country: Selectionner votre pays
+  civility_m: Masculin
+  civility_mme: Feminin
+
+
+  checkout:
+    cart: Carte bancaire
+    check: Paiement par cheque
+    mandat: Paiement par mandat administratif
+    cash_on_delivery: Cache a la livraison
+
+  stripe:
+    publishable_key: Cle publique de Stripe
+    secret_key: Cle secrete de Stripe
+
+labels:
+  add_to_wish_list: Ajouter a la list de souhaits
+  add_to_cart: Ajouter au panier
+  payment_means: Moyens de paiement
+  actions: Actions authorise
+  reviews: Avis
+
+  account:
+    edit_profile: Modifier mes informations
+    my_addresses: Mes adresses
+    my_account: Mon compte
+    dashboard: Tableau de bord
+    informations_excerpt: Resume de mes informations personnelles.
+    addresses: 'messages'
+    orders: Mes commandes
+    new_address: Nouvelle adresse
+
+  checkout:
+    call_for_help: Besoin d'aide? Appelez-nous !
+    select_address_from_book: Selectionner une adresse dans mon carnet d'adresse
+    shipping_address: Adresse de livraison
+    billing_address: Adresse de facturation
+
+  orders:
+    item: Élément
+    unit_price: Prix unitaire
+    qty: Qté
+    subtotal: Sous-total
+  
+  login:
+    please_login: Connectez vous s'il vous plait.
+
+  country:
+    name: Nom dy pays
+    tax: Le tax du pays
+
+  payment_method:
+    name: Methode de paiement
+    gateway: Passerelle
+    enabled: Actif ?
+    factory_name: Nom du factory
+
+  product_name: Nom du produit'
+  product_price: Prix du produit
+  product_image: Image du produit
+  product_quantity: Quantite du produit
+  details: Details du produit
+  add_your_review_description: Vous êtes en train d’évaluer
+  add_your_review: Ecrire votre propre avis
+  customer: Client
+  product: Produit
+  comment: Commentaire
+  status: Status
+  categories: Categories
+  order_details: Détails de la commande
+  order: Commande
+  created_at: Date de creation
+  reference: Réference
+  order_state: Etat de la commande
+  order_total: Total de la commande
+  
+
+modals:
+  cart_excerpt: __modals.cart_excerpt
+  cart_instruction: __modals.cart_instruction
+
+alerts:
+  unauthorized_to_order: Vous devez etre connecte pour passer une commande, si vous n'avez pas encore de compte vous pouvez en creer un en utilisant le lien sous ce formulaire.
+  access_denied: Acces non authorise
+  empty_addresses: Adresse vide
+  product_out_of_stock: Nous sommes désolés mais le produit "{{name}}" ne dispose pas d'un stock suffisant pour satisfaire votre demande. Il ne nous reste plus que {{quantity}} exemplaires disponibles.
+  product_added_to_cart: L'article a bien ete ajoute au panier
+  empty_filtered_products: Aucun produit ne correspond a vos criteres de recherche.
+  profile_updated: Vos informations ont bien été mises à jour.
+  address_updated: Votre adresse a bien ete mis a jour.
+  no_reviews: Il n'y a pas d'avis pour le moment.
+
+
+single_price: Prix unitaire
+
+products: Produits
+settings: Parametres
+key: Cle
+value: Valeur
+setting: Parametres
+my_order: Ma commande
+shipping_and_facturation_address: Adresse de facturation et de livraison
+
+shipping_mode: Mode de livraison
+manage_addresses: Gerer mes adresse
+orders_details: Detail de la commande
+product_added_to_cart: Produit ajouter au panier avec success
+product: Produit
+sub_total: Sous total
+sub_total_with_tax: Sous total avec taxes
+
+bank_card: Carte bancaire
+mandat: Mandat administratif
+bank_transfer: Virement bancaire
+bank_check: Chèque
+
+withdrawal_in_place: Retait sur place
+check_order_before_payment: Verifier la commande avant le paiement
+cash_on_delivery: Cache a la livraison
+
+our_cart: Votre panier
+our_cart_description: Modifier vos objets, ajouter un code de promotionnel ou proceder au paiement
+
+contact_us: Nous contacter
+contact_us_description: Utilisez le formulaire de contact ci-dessous pour nous envoyer un message
+
+register: Inscription
+register_description: Cree un compte pour plus de foctionnalites.
+
+summary_of_your_order: Récapitulatif de votre commande
+
+email:
+  contact_request:
+    content: "Contenu"
+    message_from: "Message de"
+    subject: "Demande de contact"
+  order_confirmation:
+    has_been_successfully_placed: "a été passée avec succès."
+    subject: "Confirmation de commande"
+    view_order_or_change_payment_method: "Afficher une commande ou changer le mode de paiement"
+    thank_you: "Merci d'avoir acheté dans notre boutique !"
+    your_order_number: "Votre commande n°"
+  password_reset:
+    hello: "Bonjour"
+    reset_your_password: "Réinitialiser votre mot de passe"
+    subject: "Réinitialisation du mot de passe"
+    to_reset_your_password: "Pour réinitialiser votre mot de passe, cliquez sur le lien ci-dessous"
+  user_registration:
+    start_shopping: "Commencer le shopping"
+    subject: "Enregistrement de l'utilisateur"
+    welcome_to_our_store: "Bienvenue dans notre boutique !"
+    you_have_just_been_registered: "Vous venez d'être enregistré. Merci"
+  verification_token:
+    hello: "Bonjour"
+    subject: "Vérification de l'adresse e-mail"
+    to_verify_your_email_address: "Pour confirmer votre adresse e-mail, cliquez sur le lien ci-dessous"
+    verify_your_email_address: "Vérifiez votre adresse email"

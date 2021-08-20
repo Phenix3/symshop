@@ -1,0 +1,14 @@
+<div class="ui small icon message">
+	<i class="payment icon"></i>
+	<div class="content">
+		<div class="header" id="shop-payment-method" {{ shop_test_html_attribute('payment-method') }}>
+			{{ payment|trans }}
+		</div>
+		<p {{ shop_test_html_attribute('payment-price') }}>{{ total|localizedcurrency('XAF') }}</p>
+		{% if state != 'cart' %}
+			<p id="payment-status" {{ shop_test_html_attribute('payment-state') }}>
+				{# {% include "@SyliusShop/Common/Order/Label/PaymentState/singlePaymentState.html.twig" with { 'state': state } %} #}
+			</p>
+		{% endif %}
+	</div>
+</div>

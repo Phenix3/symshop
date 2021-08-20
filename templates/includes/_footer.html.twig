@@ -1,0 +1,47 @@
+<div class="ui hidden divider"></div>
+<footer class="ui inverted vertical footer segment">
+	<div class="ui container">
+		<div class="ui inverted divided four column stackable grid">
+			<div class="column">
+				<h4 class="ui inverted header"><i class="marked icon"></i> {{ shop.name }}</h4>
+				<div class="ui inverted link list">
+					<a href="#" class="item"><i class="phone icon"></i> {{ shop.phone }}</a>
+					<a href="#" class="item"><i class="map marker icon"></i> {{ shop.address }}</a>
+					<a href="#" class="item">L3</a>
+				</div>
+			</div>
+			<div class="{# three wide #}column">
+				<h4 class="ui inverted header">Boutique</h4>
+				<div class="ui inverted link list">
+					<a href="#" class="item">L1</a>
+					<a href="#" class="item">L2</a>
+					<a href="#" class="item">L3</a>
+				</div>
+			</div>
+			<div class="column">
+				<h4 class="ui inverted header">Boutique</h4>
+				<p>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta, neque sint, omnis voluptate impedit officiis accusamus recusandae aliquid accusantium ea eum doloremque ullam ab iste veniam expedita, possimus nihil rerum.
+				</p>
+			</div>
+			<div class="column">
+				<h4 class="ui inverted header">{{ 'labels.payment_means'|trans }}</h4>
+				<div class="ui center aligned">
+					<i class="huge cc mastercard icon"></i>
+					<i class="huge cc visa icon"></i>
+					<i class="huge cc paypal card icon"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui hidden divider"></div>
+	<div class="ui center aligned inverted basic segment">
+		<h4 class="ui inverted header"> &copy; Ma boutique a la con.</h4>
+		<a href="#"><i class="big grey facebook icon"></i></a>
+		<a href="#"><i class="big grey instagram icon"></i></a>
+		<a href="#"><i class="big grey twitter icon"></i></a>
+	</div>
+</footer>
+<script>
+	window._shop = {{ shopJson|raw }}
+</script>

@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ product.name }} {% endblock %}
+
+{% block meta %}
+  <meta name="keywords" content="{{ product.metaKeywords }}">
+  <meta name="description" content="{{ product.metaDescription }}">
+{% endblock %}
+
+{% block body %}
+
+<div class="ui container two column stackable segment grid">
+      <div class="column">
+          <div class="ui ">
+              {% if not product.image %}
+                  <a href="{{ asset('images/empty-product.jpg') }}" class="glightbox" data-type="image" data-glightbox>
+                      <img class="ui image" src="{{ asset('images/empty-product.jpg')|imagine_filter('medium') }}" alt="{{ product.name }}">
+                  </a>
+              {% else %}
+                  <a href="{{ vich_uploader_asset(product.image, 'file') }}" data-type="image" class="glightbox" {% if product.images is defined and product.images|length > 0 %} data-gallery="gallery" {% endif %}>
+                      <img class="ui image" src="{{ vich_uploader_asset(product.image, 'file')|imagine_filter('medium') }}" alt="{{ product.name }}">
+                  </a>
+              {% endif %}
+              {% include 'product/_images.html.twig' with {images: product.images} only %}
+          </div>
+      </div>
+      <div class="column">
+        {# <div class="ui hidden divider"></div> #}
+          <h1 class="ui monster dividing header primary text">{{ product.name }}</h1>
+          <div class="">
+              {% for category in product.categories %}
+                <a class="ui small tag label" href="{{ path('product_index', {slug: category.slug}) }}">
+                    {{ category.name }}
+                </a>
+              {% endfor %}
+          </div>
+          <h3 class="ui huge header red text">{{ product.price|localizedcurrency('XAF') }}</h3>
+          <div class="ui text menu">
+              <div class="item">
+                  <div class="ui yellow huge star rating average-review" data-rating="{{ averageRating }}" data-max-rating="5"></div>
+              </div>
+              <div class="item">({{ product.reviewsCount }}) {{ 'labels.reviews'|trans }}</div>
+          </div>
+          <div class="ui segment">
+              <!-- <form class="ui form">
+                  <div class="field">
+                      <label for="quantity">Quantity</label>
+                      <input type="number" name="quantity" id="quantity" value="1">
+                  </div>
+                  <button type="submit" class="ui labeled icon primary button"><i class="cart icon"></i> Add to cart</button>
+              </form> -->
+              {{ render(controller('App\\Controller\\CartController::renderForm', {id: product.id})) }}
+          </div>
+      </div>
+</div>
+<div class="ui container grid">
+  <div class="row">
+      <div class="column">
+          <div class="ui top attached tabular menu tabular-menu">
+            <a class="item active" data-tab="details">{{ 'labels.details'|trans }}</a>
+            <a class="item" data-tab="reviews">({{ product.reviewsCount }}) {{ 'labels.reviews'|trans }}</a>
+          </div>
+          <div class="ui botton attached tab segment active" data-tab="details">
+            <p>
+                {{ htmlDescription|raw }}
+            </p>
+          </div>
+          <div class="ui botton attached tab segment" data-tab="reviews">
+            {% if product.reviews|length > 0 %}
+              {% include "product/_product_reviews.html.twig" with {reviews: product.reviews} only %}
+            {% else %}
+              <div class="ui icon info message">
+                <i class="info icon"></i>
+                <div class="content">
+                  <div class="header">Alert!</div>
+                  <p>{{ 'alerts.no_reviews'|trans }}</p>
+                </div>
+              </div>  
+            {% endif %}
+            <a href="{{ path('product_review_new', {slug: product.slug}) }}">
+              <div class="ui blue labeled icon button">
+                <i class="plus icon"></i>
+                {{ 'buttons.add_review'|trans }}
+              </div>
+            </a>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="ui container">
+  <div class="ui six column grid">
+    
+  </div>
+</div>
+
+<div class="ui modal alert-modal">
+  <div class="header">
+    {{ 'product_added_to_cart'|trans }}
+  </div>
+  <div class="content">
+    <p>
+      {{ 'modals.cart_excerpt'|trans }}
+    </p>
+    <p>
+      {{ 'modals.cart_instruction'|trans }}
+    </p>
+  </div>
+  <div class="actions">
+    <div class="ui approve button">{{ 'buttons.continue_shopping'|trans }}</div>
+    <a href="{{ path('cart_index') }}" class="ui cancel button">{{ 'buttons.order'|trans }}</a>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('app-product-show') }}
+  <script>
+    $('.tabular-menu .item').tab();
+
+
+    $('.ui.rating.average-review').rating('disable')
+;
+  </script>
+{% endblock %}
+
+{% block css %}
+{{ encore_entry_link_tags('app-product-show') }}
+{% endblock %}

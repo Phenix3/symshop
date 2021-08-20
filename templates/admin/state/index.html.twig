@@ -1,0 +1,48 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="tile">
+            <div class="tile-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Couleur</th>
+                            <th>Indice</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                        {% set editLink = path(prefix ~ '_edit', {id: row.id}) %}
+                        {% set deleteLink = path(prefix ~ '_delete', {id: row.id}) %}
+                            <tr>
+                                <td>{{ row.name }}</td>
+                                <td style="background: {{ row.color }}">{{ row.color }}</td>
+                                <td>{{ row.indice }}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ editLink }}" class="btn btn-warning btn-sm"><i class="fa fa-pen"></i></a>
+                                        <a href="{{ deleteLink }}" class="btn btn-danger btn-sm" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {{ paginate(rows) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block css %}
+{{ encore_entry_link_tags('admin-list') }}
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('admin-list') }}
+{% endblock %}

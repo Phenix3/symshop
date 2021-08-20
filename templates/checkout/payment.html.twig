@@ -1,0 +1,30 @@
+{% extends "checkout/layout.html.twig" %}
+
+{% form_theme checkoutPaymentForm with["form/theme.html.twig"] only %}
+
+{% block steps %}
+    {% include "checkout/_steps.html.twig" with {
+        activeStep : 'select_payment'
+    } %}
+{% endblock %}
+
+{% block content %}
+    <div class="ui unmargined segments">
+        <div class="ui segment">
+            <div class="ui dividing header">Envoi #1</div>
+            {{ form_start(checkoutPaymentForm, {attr: {class: 'ui loadable large form', novalidate: 'novalidate'}}) }}
+            {{ form_errors(checkoutPaymentForm) }}
+            <input type="hidden" name="_method" value="PUT">
+            {% include "checkout/_payment_form.html.twig" with {
+                form : checkoutPaymentForm
+            }
+                only %}
+            <div class="field"></div>
+            <button type="submit" class="ui fluid icon primary button">
+                <i class="airplane icon"></i>
+                {{ 'buttons.next'|trans }}
+            </button>
+            {{ form_end(checkoutPaymentForm) }}
+        </div>
+    </div>
+{% endblock %}

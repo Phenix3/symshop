@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme registrationForm with ['form/theme.html.twig'] only %}
+
+{% block title %}Register
+{% endblock %}
+
+{% block body %}
+	<div class="ui container">
+		<div class="ui two column stackable grid">
+			<div class="column">
+				<h1 class="ui aligned teal header">
+					<i class="circular lock icon"></i>
+					<div class="content">
+						{{ 'register'|trans }}
+						<div class="sub header">
+							{{ 'register_description'|trans }}
+						</div>
+					</div>
+				</h1>
+			</div>
+			<div class="ui middle aligned column">
+				<a href="#" class="ui right floated basic button">{{ 'buttons.already_registered'|trans }}</a>
+			</div>
+		</div>
+		<div class="ui middle aligned centered grid">
+			<div class="ui wide column">
+				{% for flashError in app.flashes('verify_email_error') %}
+					<div class="ui error message" role="alert">{{ flashError }}</div>
+				{% endfor %}
+
+				{{ form_start(registrationForm, {attr: {class: 'ui large form'}}) }}
+				<div class="ui fluid attached segment">
+
+					<div class="two fields">
+						{{ form_row(registrationForm.email) }}
+						{{ form_row(registrationForm.username) }}
+					</div>
+					<div class="two fields">
+						{{ form_row(registrationForm.password) }}
+					</div>
+					<div class="two fields">
+						{{ form_row(registrationForm.agreeTerms) }}
+						{{ form_row(registrationForm.newsletter) }}
+					</div>
+
+					<button type="submit" class="ui button large green">Register</button>
+				</div>
+				<div class="ui bottom attached message">
+					<i class="icon help"></i>
+					You have an account ?
+					<a href="{{ path('shop_login') }}">Login</a>
+				</div>
+				{{ form_end(registrationForm) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block css %}
+	<style>
+		body > .container > .grid {
+			height: 90vh;
+		}
+	</style>
+{% endblock %}

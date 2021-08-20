@@ -1,0 +1,42 @@
+<div id="details">
+    <h5>{{ 'orders_details'|trans }}</h5>
+    <hr><br>
+    <table class="ui celled striped table">
+        <thead>
+            <tr class="positive">
+                <th>{{ 'product'|trans }}</th>
+                <th>{{ 'sub_total'|trans }}</th>
+                <th>{{ 'sub_total_with_tax'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+            <tr>
+                <td>{{ item.name }} ({{ item.quantity }})</td>
+                <td>{{ item.total }}</td>
+                <td>
+                    {{ tax > 0 ? item.price : ((item.price / 1.2) * item.quantity)|number_format(2, ', ', ' ') }}
+                </td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="2">
+                TVA a {{ (tax * 100) }}% ({{tax}})
+            </td>
+            <td >
+                <strong>{{ (total / (1 + tax) * tax)|localizedcurrency('XAF') }}</strong>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    Total TTC {{total}}  {{shipping}}
+                </td>
+                <td >
+                    <strong>{{ (total + shipping)|localizedcurrency('XAF') }}</strong>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

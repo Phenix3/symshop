@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %} | {{ app_title }} - Admin</title>
+    {{ encore_entry_link_tags('admin') }}
+    {% block css %}{% endblock %}
+</head>
+<body class="app sidebar-mini rtl">
+    {% include "admin/includes/_header.html.twig" %}
+    {% include "admin/includes/_sidebar.html.twig" %}
+    <main class="app-content" id="app">
+      {{ breadcrumbs() }}
+      {% include "admin/includes/_flash.html.twig" %}
+      {% block content %}{% endblock %}
+    </main>
+
+    {{ encore_entry_script_tags('admin') }}
+    {% block js %}{% endblock %}
+</body>
+</html>

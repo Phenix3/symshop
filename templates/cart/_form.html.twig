@@ -1,0 +1,7 @@
+{% form_theme form 'form/theme.html.twig' %}
+
+{{ form_start(form, {attr: {class: 'ui form'}}) }}
+{{ form_widget(form) }}
+<div class="ui hidden divider"></div>
+<button type="submit" class="ui labeled icon primary button"><i class="cart icon"></i> Add to cart</button>
+{{ form_end(form) }}

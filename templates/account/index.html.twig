@@ -1,0 +1,29 @@
+{% extends 'account/layout.html.twig' %}
+
+{% block title %}
+	{{'labels.account.my_account'|trans}}
+{% endblock %}
+
+{% block content %}
+	<h1 class="ui dividing header">{{'labels.account.my_account'|trans}}</h1>
+	<div class="ui large list">
+		<div class="item">{{ app.user.username }}</div>
+		<div class="item"><strong>{{ app.user.email }}</strong></div>
+		<div class="item">
+			<span class="ui {{ app.user.isVerified ? 'green' : 'red' }} icon basic label">
+				{{ app.user.isVerified ? 'verified'|trans : 'No verified'|trans }}
+			</span>
+		</div>
+	</div>
+	<div class="ui hidden divider"></div>
+	<div class="ui text menu">
+		<a href="{{ path('account_profile_edit') }}" class="item">
+			<i class="edit icon"></i>
+			{{ 'menus.edit'|trans }}
+		</a>
+		<a href="{{ '' }}" class="item">
+			<i class="lock icon"></i>
+			{{'menus.change_password'|trans}}
+		</a>
+	</div>
+{% endblock %}

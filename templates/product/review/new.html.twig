@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{'titles.add_your_review'|trans}}
+{% endblock %}
+
+{% block body %}
+
+    <div class="ui container">
+        <div class="ui stackable grid">
+            <div class="four wide column">
+                {% include 'product/_product_card.html.twig' with {product: product} only %}
+            </div>
+            <div class="twelve wide column">
+                <div class="ui segment">
+                    <div class="ui dividing header">
+                        {{ 'labels.add_your_review'|trans }}
+                        <div class="sub header">
+                            {{ 'labels.add_your_review_description'|trans }} <strong>{{ product.name }}</strong>
+                        </div>
+                    </div>
+
+                    {{ form_start(form, {attr: {class: 'ui loadable reply form'}}) }}
+                        <div class="field">
+                            <div class="ui yellow huge star rating" data-rating="0" data-max-rating="5"></div>
+                            <br>
+                            {{ form_errors(form.rating) }}
+                            {{ form_widget(form.rating, {attr: {style: 'display: none'}}) }}
+                        </div>
+                        {{ form_rest(form) }}
+
+                    <button type="submit" class="ui blue labeled large submit icon button">
+                        <i class="check icon"></i>
+                        {{ 'buttons.add'|trans }}
+                    </button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('.star.rating').rating({
+            fireOnInit: true,
+            onRate(value) {
+                $('[name="review[rating]"]:checked').removeAttr('checked');
+                $(`#review_rating_${value - 1}`).attr('checked', 'checked');
+            },
+        });
+    </script>
+{% endblock %}

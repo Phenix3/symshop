@@ -1,0 +1,128 @@
+{% extends 'account/layout.html.twig' %}
+
+{% block title %}
+	{{ 'labels.account.informations_excerpt'|trans }}
+{% endblock %}
+
+{% block content %}
+	<h1 class="ui dividing header">{{ 'labels.account.informations_excerpt'|trans }}</h1>
+	<div class="ui stacked segment">
+		<h2 class="ui header">
+			<div class="content">
+			{{ shop.name }}
+				<div class="sub header">{{ date('now', 'Europe/Paris')|date("m/d/Y") }}</div>
+				{{ user.username }}
+			</div>
+		</h2>
+		<h3 class="ui header">{{ 'labels.account.general_informations'|trans }}</h3>
+		<table class="ui striped table">
+			<thead>
+				<tr>
+					<th>Nom et prenom</th>
+					<th>Email</th>
+					<th>Creation du compte</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ user.username }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.createdAt|date("m/d/Y") }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<h3 class="ui header">{{ 'labels.account.my_addresses'|trans }}</h3>
+        <div class="ui two column divided stackable grid">
+            {% for address in user.addresses %}
+                <a class="column" href="{{ path('address_edit', {id: address.id}) }}">
+                    {% include "account/_address.html.twig" with {address: address} only %}
+                </a>
+            {% endfor %}
+        </div>
+		{# {% for address in user.addresses %}
+			<table class="ui celled striped table">
+				<tbody>
+					{% if address.name is defined %}
+						<tr>
+							<td>Nom</td>
+							<td>{{ address.civility ~ ' ' ~ address.name ~ ' ' ~ address.firstName }}</td>
+						</tr>
+					{% endif %}
+					{% if address.company is defined %}
+						<tr>
+							<td>
+								<strong>{{ 'labels.account.company'|trans }}</strong>
+							</td>
+							<td>{{ address.company }}</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td>
+							<strong>{{ 'labels.account.address'|trans }}</strong>
+						</td>
+						<td>{{ address.address }}</td>
+					</tr>
+					{% if address.addressbis is defined %}
+						<tr>
+							<td>
+								<strong>{{ 'labels.account.addressbis'|trans }}</strong>
+							</td>
+							<td>{{ address.addressbis }}</td>
+						</tr>
+					{% endif %}
+					{% if address.bp %}
+						<tr>
+							<td>
+								<strong>{{ 'labels.account.bp'|trans }}</strong>
+							</td>
+							<td>{{ address.bp }}</td>
+						</tr>
+					{% endif %}
+					<tr>
+						<td>
+							<strong>{{ 'city'|trans }}</strong>
+						</td>
+						<td>{{ address.postal ~ ' ' ~ address.city }}</td>
+					</tr>
+					<tr>
+						<td>
+							<strong>{{ 'pays'|trans }}</strong>
+						</td>
+						<td>{{ address.country.name }}</td>
+					</tr>
+					<tr>
+						<td>
+							<strong>{{ 'phone'|trans }}</strong>
+						</td>
+						<td>{{ address.phone }}</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endfor %} #}
+        <h3 class="ui header">{{ 'labels.account.orders' }}</h3>
+        {% for order in user.orders %}
+            <table class="ui basic celled striped table">
+                <thead>
+                    <tr>
+                        <th>Reference</th>
+                        <th>Date</th>
+                        <th>Prix</th>
+                        <th>Paiement</th>
+                        <th>Etat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ order.reference }}</td>
+                        <td>{{ order.createdAt|date("m/d/Y") }}</td>
+                        <td>{{ (order.total + order.shipping)|localizedcurrency('XAF') }}</td>
+                        <td>{{ order.payment }}</td>
+                        <td>{{ order.state.name }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h5 class="ui header">{{ 'labels.account.order_details'|trans }}</h5>
+            {% include "order/_table.html.twig" with {order: order} only %}
+        {% endfor %}
+	</div>
+{% endblock %}

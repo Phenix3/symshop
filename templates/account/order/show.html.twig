@@ -1,0 +1,11 @@
+{% extends 'account/layout.html.twig' %}
+
+{% block title %}
+	{{'labels.account.my_account'|trans}}
+{% endblock %}
+
+{% block content %}
+    {% include "account/order/Show/_header.html.twig" %}
+    <h3>{{ 'labels.order_details'|trans }}</h3>
+    {% include "order/_table.html.twig" with {order: order} only %}
+{% endblock %}

@@ -1,0 +1,13 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: true
+    form_themes:
+         - 'bootstrap_4_layout.html.twig'
+#        - 'form/layout.html.twig'
+    globals:
+        app_title: '%env(APP_TITLE)%'
+        page: '@App\Service\PageManagerService'
+        app_stripe:
+            - publishable_key: '%env(STRIPE_PUBLISHABLE_KEY)%'
+    paths:
+        '%kernel.project_dir%/src/Maker/templates': maker

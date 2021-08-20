@@ -1,0 +1,17 @@
+<tr>
+	<td>
+		<div class="ui header">
+			{% if not item.product.image %}
+				<img class="ui image" src="{{ asset('images/empty-product.jpg')|imagine_filter('mini') }}" alt="{{ item.name }}">
+			{% else %}
+				<img class="ui image" src="{{ vich_uploader_asset(item.product.image, 'file')|imagine_filter('mini') }}" alt="{{ item.name }}">
+			{% endif %}
+			<div class="content">
+				<a href="{{ path('product_show', {slug: item.product.slug}) }}">{{ item.name }}</a>
+			</div>
+		</div>
+	</td>
+	<td>{{ item.totalPriceGross|localizedcurrency('XAF') }}</td>
+	<td>{{ item.quantity }}</td>
+	<td>{{ (item.quantity * item.totalPriceGross)|localizedcurrency('XAF') }}</td>
+</tr>

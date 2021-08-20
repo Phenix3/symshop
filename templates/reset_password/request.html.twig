@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% form_theme requestForm 'form/theme.html.twig' %}
+
+{% block body %}
+<div class="ui middle aligned centered grid reset-grid">
+    <div class="sixteen wide mobile eight wide tablet six wide computer column">
+        <h2 class="ui teal header center aligned">
+            <div class="content">
+                <p>Reset your password</p>
+            </div>
+        </h2>
+                {{ form_start(requestForm, {attr: {class: 'ui large form js-reset-password-form'}}) }}
+            <div class="ui stacked segment">
+                {{ form_row(requestForm.email, {attr: {name: 'email'}}) }}
+                <div>
+                    <small>
+                        Enter your email address and we we will send you a
+                        link to reset your password.
+                    </small>
+                </div>
+
+                <button class="ui button primary">Send password reset email</button>
+                <div class="ui error message"></div>
+            </div>
+            {{ form_end(requestForm) }}
+
+    </div> 
+</div>
+    {% for flashError in app.flashes('reset_password_error') %}
+        <div class="ui message error" role="alert">{{ flashError }}</div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block js %}
+    <script>
+    $('.js-reset-password-form')
+        .form({
+            fields: {
+                email: ['empty', 'email']
+            },
+            inline: true,
+            on: 'blur'
+        })
+    </script>
+{% endblock %}
+
+{% block css %}
+    <style>
+    body > .container > .reset-grid {
+        height: 90vh;
+    }
+    </style>
+{% endblock %}

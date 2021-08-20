@@ -1,0 +1,33 @@
+
+
+App\Entity\Page:
+  page_1:
+    __construct: false
+    name: Livraisons
+    slug: livraisons
+    content: <text()>
+  page_2:
+    __construct: false
+    name: Mentions légales
+    slug: mentions-legales
+    content: <text()>
+  page_3:
+    __construct: false
+    name: Conditons générales de vente
+    slug: conditions-generales-de-vente
+    content: <text()>
+  page_4:
+    __construct: false
+    name: Politique de confidentialité
+    slug: politique-de-confidentialite
+    content: <text()>
+  page_5:
+    __construct: false
+    name: "Respect de l'environnement"
+    slug: respect-environnement
+    content: <text()>
+  page_6:
+    __construct: false
+    name: Mandat administratif
+    slug: mandat-administratif
+    content: <text()>

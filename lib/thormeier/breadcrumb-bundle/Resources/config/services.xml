@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="thormeier_breadcrumb.breadcrumb_provider.default" class="Thormeier\BreadcrumbBundle\Provider\BreadcrumbProvider" public="true">
+            <argument>%thormeier_breadcrumb.class.model%</argument>
+            <argument>%thormeier_breadcrumb.class.collection%</argument>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+        </service>
+
+        <service id="thormeier.breadcrumb.breadcrumb_extension" class="Thormeier\BreadcrumbBundle\Twig\BreadcrumbExtension">
+            <argument type="service" id="thormeier_breadcrumb.breadcrumb_provider"/>
+            <argument>%thormeier_breadcrumb.template%</argument>
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="thormeier_breadcrumb.routing.attach_breadcrumb_loader" class="Thormeier\BreadcrumbBundle\Routing\BreadcrumbAttachLoader">
+            <argument type="service" id="thormeier_breadcrumb.routing.attach_breadcrumb_loader.inner"/>
+        </service>
+
+    </services>
+</container>

@@ -1,0 +1,40 @@
+{% if activeStep is not defined or activeStep == 'address' %}
+    {% set steps = {'address': 'active', 'select_shipping': 'disabled', 'select_payment': 'disabled', 'complete': 'disabled'} %}
+{% elseif activeStep == 'select_shipping' %}
+    {% set steps = {'address': 'completed', 'select_shipping': 'active', 'select_payment': 'disabled', 'complete': 'disabled'} %}
+{% elseif activeStep == 'select_payment' %}
+    {% set steps = {'address': 'completed', 'select_shipping': 'completed', 'select_payment': 'active', 'complete': 'disabled'} %}
+{% else %}
+    {% set steps = {'address': 'completed', 'select_shipping': 'completed', 'select_payment': 'completed', 'complete': 'active'} %}
+{% endif %}
+
+<div class="ui four steps">
+	<div class="{{ steps['address'] }} step" {{ shop_test_html_attribute('step-address') }}>
+		<i class="truck icon"></i>
+		<div class="content">
+			<div class="title">Shipping</div>
+			<div class="description">Choose your shipping options</div>
+		</div>
+	</div>
+	<div class="{{ steps['select_shipping'] }} step" {{ shop_test_html_attribute('step-shipping') }}>
+		<i class="payment icon"></i>
+		<div class="content">
+			<div class="title">Billing</div>
+			<div class="description">Enter your billing informations</div>
+		</div>
+	</div>
+	<div class="{{ steps['select_payment'] }} step" {{ shop_test_html_attribute('step-payment') }}>
+		<i class="info icon"></i>
+		<div class="content">
+			<div class="title">Confirm Order</div>
+			<div class="description">Choose your shipping options</div>
+		</div>
+	</div>
+	<div class="{{ steps['complete'] }} step">
+		<i class="info icon"></i>
+		<div class="content">
+			<div class="title">Confirm Order</div>
+			<div class="description">Choose your shipping options</div>
+		</div>
+	</div>
+</div>

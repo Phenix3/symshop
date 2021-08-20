@@ -1,0 +1,40 @@
+{% extends "account/layout.html.twig" %}
+
+{% block title %}{{'labels.account.my_addresses'|trans}}
+{% endblock %}
+
+{% block content %}
+  <h1 class="ui dividing header">{{'labels.account.my_addresses'|trans}}</h1>
+  <div class="ui segment">
+    <div class="ui two column divided stackable grid">
+      {% for address in addresses %}
+        <a class="column" href="{{ path('address_edit', {id: address.id}) }}">
+          {% include "account/_address.html.twig" with {
+            address : address
+          }
+          only %}
+        </a>
+      {% else %}
+        <div class="ui info icon message">
+          <i class="circle info icon"></i>
+          <div class="content">
+            <h4 class="header">Alert!</h4>
+            <p>
+              {{ 'alerts.empty_addresses'|trans }}
+            </p>
+          </div>
+        </div>
+
+      {% endfor %}
+    </div>
+  </div>
+  <div class="ui hidden divider"></div>
+  <a href="{{ path('address_new') }}" class="ui primary icon labeled button">
+    <i class="circle plus icon"></i>
+    {{ 'buttons.new_address'|trans }}
+  </a>
+{% endblock %}
+
+{% block js %}
+  {{ encore_entry_script_tags('account-addresses') }}
+{% endblock %}

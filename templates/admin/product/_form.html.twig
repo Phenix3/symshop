@@ -1,0 +1,11 @@
+{{ form_start(form, {attr: {class: 'stacked'}}) }}
+{{ form_row(form.images, {attr: {"data-form-type": "collection"}}) }}
+      {{ form_rest(form) }}
+
+  <div class="form-row">
+    <button class="btn btn-primary" type="submit">
+      {{ button_label|default('buttons.save')|trans }}
+    </button>
+  </div>
+
+{{ form_end(form) }}

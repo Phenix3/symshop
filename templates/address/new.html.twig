@@ -1,0 +1,21 @@
+{% extends 'account/layout.html.twig' %}
+
+{% form_theme addressForm 'form/theme.html.twig' %}
+
+{% block title %}
+	{{'labels.account.new_address'|trans}}
+{% endblock %}
+
+{% block content %}
+	<h1 class="ui dividing header">{{'labels.account.new_address'|trans}}</h1>
+  <div class="ui stacked segment">
+      {{ form_start(addressForm, {attr: {class: 'ui loadable form'}}) }}
+            {% include "checkout/_address_form.html.twig" with {form: addressForm} %}
+        <div class="field"></div>
+        <button class="ui labeled icon primary button">
+            <i class="checkmark icon"></i>
+            {{'buttons.save'|trans}}
+        </button>
+		{{ form_end(addressForm) }}
+  </div>
+{% endblock %}

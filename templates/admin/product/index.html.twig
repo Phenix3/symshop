@@ -1,0 +1,86 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  Gérer les contenus
+{% endblock %}
+
+{% block content %}
+  <div class="tile">
+  <div class="tile-title-w-btn">
+					<h1>Gérer les contenus</h1>
+					<p>
+						<a href="{{ path(prefix ~ '_new') }}" class="btn btn-primary btn-icon-only">
+							<i class="fa fa-plus"></i>
+						</a>
+					</p>
+				</div>
+    <div class="tile-body">
+      {{ knp_pagination_filter(rows,
+        {
+          'row.name': 'labels.product_name'|trans,
+          'row.quantity': 'labels.product_quantity'|trans
+        }
+      ) }}
+        <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>
+        {{ knp_pagination_sortable(rows, 'labels.product_name'|trans , 'row.name', {}, {direction: 'asc'}) }}
+      </th>
+      <th>
+        {{ knp_pagination_sortable(rows, 'labels.product_price'|trans , 'row.price', {}, {direction: 'asc'}) }}
+      </th>
+      <th>
+        {{ knp_pagination_sortable(rows, 'labels.product_quantity'|trans , 'row.quantity', {}, {direction: 'asc'}) }}
+      </th>
+      <th class="">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      {% set link = path(prefix ~ '_edit', {id: row.id}) %}
+      <tr>
+        <td>
+          <div >
+            {% if not row.image %}
+              <img class="img-thumbnail" style="width: 100px" src="{{ asset('images/empty-product.jpg')|imagine_filter('mini') }}" alt="{{ row.name }}">
+            {% else %}
+              <img class="img-thumbnail" style="width: 100px" src="{{ vich_uploader_asset(row.image, 'file')|imagine_filter('mini') }}" alt="{{ row.name }}">
+            {% endif %}
+            <span class="float-right">
+              <a href="{{ path('product_show', {slug: row.slug}) }}"><strong>{{ row.name }}</strong></a>
+            </span>
+          </div>
+        </td>
+        <td>
+          <strong>{{ row.price|localizedcurrency('XAF') }}</strong>
+        </td>
+        <td>
+          <strong>{{ row.quantity }}</strong>
+        </td>
+        <td>
+          <div class="btn-group">
+            <a href="{{ link }}" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i></a>
+            <a href="{{ path(prefix ~ '_delete', {id: row.id}) }}" class="btn btn-sm btn-danger" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}">
+                <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  {{ paginate(rows) }}
+{% endblock %}
+
+{% block css %}
+{{ encore_entry_link_tags('admin-list') }}
+{% endblock %}
+
+{% block js %}
+  {{ encore_entry_script_tags('admin-list') }}
+{% endblock %}
+

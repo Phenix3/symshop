@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!
+{% endblock %}
+
+{% block body %}
+
+	<div class="ui container">
+		<div class="ui two column stackable grid">
+			<div class="column">
+				<h1 class="ui header">
+					<i class="circular cart icon"></i>
+					<div class="content">
+						{{'our_cart'|trans}}
+						<div class="sub header">
+							{{'our_cart_description'|trans}}
+						</div>
+					</div>
+				</h1>
+			</div>
+			<div class="ui middle aligned right floated column">
+
+				<form method="post" class="">
+					<input type="hidden" name="_method" value="DELETE">
+					<input type="hidden" name="_csrf_token" value="{{ csrf_token('cart_clear') }}">
+					<div class="ui two buttons">
+						<a href="{{ path('checkout_address') }}" class="ui icon positive button">
+							<i class="credit card icon"></i>
+							{{ 'buttons.process_checkout'|trans }}</a>
+						<button type="submit" id="cart-clear" class="ui right floated negative button">
+							<i class="remove icon"></i>
+							{{'buttons.cart_clear'|trans}}
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="ui hidden divider"></div>
+		<div class="ui stacked segment table-segment">
+
+{#			<cart-table></cart-table>#}
+			{{ form_start(form, {attr: {class: 'ui loadable form'}}) }}
+
+			<table class="ui celled padded table js-cart-table">
+				<thead>
+					<tr>
+						<th>Produit</th>
+						<th>Prix</th>
+						<th>Quantity</th>
+						<th>Total</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for key, cartItem in cart %}
+						<tr data-controller="cart">
+							<td>
+								<div class="ui header">
+									{% if not cartItem.associatedModel.image %}
+										<img class="ui image" src="{{ asset('images/empty-product.jpg')|imagine_filter('mini') }}" alt="{{ cartItem.name }}">
+									{% else %}
+										<img class="ui image" src="{{ vich_uploader_asset(cartItem.associatedModel.image, 'file')|imagine_filter('mini') }}" alt="{{ cartItem.name }}">
+									{% endif %}
+									<div class="content">
+										<a href="{{ path('product_show', {slug: cartItem.associatedModel.slug}) }}">{{ cartItem.name }}</a>
+									</div>
+								</div>
+							</td>
+							<td class="subPrice" data-cart-target="price">{{ cartItem.price }}</td>
+							<td class="">
+								<div class="ui form">
+									{% include "cart/_item_form.html.twig" with {form: form.items[key], item: cartItem, main_form: form.vars.id} only %}
+								</div>
+							</td>
+							<td class="subTotal" data-cart-target="subTotal">{{ cartItem.price * cartItem.quantity }}</td>
+							<td>
+								<a class="ui red icon button" data-action="click->cart#remove" href="{{ path('cart_remove', {id: cartItem.id}) }}">
+									<i class="trash icon"></i>
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+				<tfoot>
+					<tr data-controller="cart" id="total-row">
+						<td colspan="3">Total:</td>
+						<td colspan="2">
+							<span data-cart-target="total" class="js-cart-total">{{ total }}</span>
+							FCFA</td>
+					</tr>
+				</tfoot>
+			</table>
+			<button class="ui icon labeled large primary button" type="submit">
+				<i class="paper plane icon"></i>
+				{{ 'buttons.update'|trans }}
+			</button>
+			{{ form_end(form) }}
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	<script>// let value = 1;
+// $('input[name="quantity"]').change(function(e) {
+//     e.preventDefault();
+//       let $input = $(this);
+//       const route = $input.attr('data-route');
+//       console.log(route);
+//       if(e.target.value > 1) {
+//         value = e.target.value;
+//       }
+//       $('.table-segment').addClass('loading');
+//       $.post(route)
+//         .done(function(response) {
+//           const $tr = $input.parent('tr');
+//           const subTotal = parseFloat($tr.child('subTotal').text());
+//           const subPrice = parseFloat($tr.child('subPrice').text());
+//           console.log(response);
+//         })
+//         .fail(function(error) {
+//           console.log(error);
+//         }).always(function() {
+//           $('.table-segment').removeClass('loading');
+//         });
+// });
+</script>{% endblock %}

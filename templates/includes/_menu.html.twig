@@ -1,0 +1,38 @@
+{% macro item(category) %}
+    {% import _self as macros %}
+
+    {% if category.enabledChildren|length > 0 %}
+        <div class="ui dropdown item" {{ shop_test_html_attribute('menu-item') }}>
+            <span class="text">{{ category.name }}</span>
+            <i class="dropdown icon"></i>
+            <div class="menu">
+                {% for childCategory in category.enabledChildren %}
+                    {{ macros.item(childCategory) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <a href="{{ path('product_index', {'slug': category.slug}) }}" class="item" {{ shop_test_html_attribute('menu-item') }}>{{ category.name }}</a>
+    {% endif %}
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% if nav_categories|length > 0 %}
+    <div class="ui large stackable menu" {{ shop_test_html_attribute('menu') }}>
+        <div class="item header">SymShop</div>
+        <a href="{{ path('home') }}" class="item {{ active_class('home') }}">
+            <i class="icon home"></i>
+            Home</a>
+        <a href="{{ path('product_index') }}" class="item {{ active_class('product_index') }}">
+            <i class="icon box"></i>
+            {{ 'products'|trans }}</a>
+        <a href="{{ path('contact_new') }}" class="item {{ active_class('contact_new') }}">
+            <i class="icon phone"></i>
+            Contact</a>
+
+        {% for category in nav_categories %}
+            {{ macros.item(category) }}
+        {% endfor %}
+    </div>
+{% endif %}

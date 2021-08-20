@@ -1,0 +1,26 @@
+{% extends "checkout/layout.html.twig" %}
+
+{% form_theme checkoutCompleteForm with ["form/theme.html.twig"] only %}
+
+{% block steps %}
+    {% include "checkout/_steps.html.twig" with {activeStep: 'select_payment'} %}
+{% endblock %}
+
+{% block content %}
+	<div class="">
+		{% include "checkout/complete/_header.html.twig" %}
+
+		{% include "order/_addresses.html.twig" with {order: order} only %}
+
+		{% include "order/_summary.html.twig" with {order: order} only %}
+		<div class="ui hidden divider"></div>
+		{{ form_start(checkoutCompleteForm, {attr: {class: 'ui loadable form', novalidate: 'novalidate'}}) }}
+			{% include "checkout/complete/_form.html.twig" with {form: checkoutCompleteForm} %}
+			<button type="submit" class="ui fluid icon primary button">
+				<i class="checkmark icon"></i>
+				Commander
+			</button>
+			{{ form_row(checkoutCompleteForm._token) }}
+		{{ form_end(checkoutCompleteForm, {render_rest: false}) }}
+	</div>
+{% endblock %}

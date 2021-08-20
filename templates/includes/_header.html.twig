@@ -1,0 +1,50 @@
+<header>
+	<div class="ui large sticky inverted stackable menu" id="topbar">
+		<div class="ui right stackable inverted menu">
+		{% if app.user %}
+				<div class="item">
+					Bonjour
+					{{ app.user.username }}
+				</div>
+                <a href="{{ path('account_index') }}" class="item">{{ 'buttons.my_account'|trans }}</a>
+                <a href="{{ path('shop_logout') }}" class="item">{{ 'buttons.logout'|trans }}</a>
+
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('admin_dashboard_index') }}" class="item">{{ 'menus.admin'|trans }}</a>
+			{% endif %}
+
+		{% else %}
+			<a href="{{ path('shop_login') }}" class="item {{ active_class('shop_login') }}">
+				<i class="icon unlock"></i>
+				Login</a>
+			<a href="{{ path('shop_register') }}" class="item {{ active_class('shop_register') }}">
+				<i class="icon user"></i>
+				Register</a>
+		{% endif %}
+			</div>
+	</div>
+	<div class="ui container">
+		<div class="ui basic segment">
+			<div class="ui three column stackable grid">
+				<div class="column">
+					<a href="">
+						<img src="{{ asset('images/logo.svg') }}" alt="" class="ui small image">
+					</a>
+				</div>
+				<div class="column"></div>
+				<div class="right aligned column">
+					<a href="{{ path('cart_index') }}" class="ui middle aligned button">
+						{{ cartTotal|localizedcurrency('XAF') }}
+						(
+						{{ cartCount }}
+						)
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="ui large menu stackable menu">
+			{% include 'includes/_menu.html.twig' %}
+		</div>
+	</div>
+</header>
+{# <div class="ui hidden divider"></div> #}

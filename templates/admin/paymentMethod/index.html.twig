@@ -1,0 +1,90 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  Gérer les contenus
+{% endblock %}
+
+{% block content %}
+  <div class="tile">
+    <div class="tile-title-w-btn">
+      <h1>Gérer les contenus</h1>
+      <p>
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+          <button class="btn btn-danger" type="button">Danger</button>
+          <div class="btn-group" role="group">
+            <button class="btn btn-danger dropdown-toggle" id="btnGroupDrop4" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu dropdown-menu-right">
+              {{ render(url('admin_payment_method_gateways')) }}
+            </div>
+          </div>
+        </div>
+      </p>
+    </div>
+    
+    <div class="tile-body">
+      <div class="">
+        {{ knp_pagination_filter(rows,
+                {
+                  'row.name': 'labels.payment_method.name'|trans,
+                  'row.gatewayConfig.factoryName': 'labels.payment_method.factory_name'|trans,
+                }
+            ) }}
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              {{ knp_pagination_sortable(rows, 'labels.payment_method.name'|trans , 'row.name', {}, {direction: 'asc'}) }}
+            </th>
+            <th>
+              {{'labels.payment_method.enabled'}}
+            </th>
+            <th>
+              {{'labels.payment_method.gateway'}}
+            </th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            {% set link = path(prefix ~ '_edit', {id: row.id}) %}
+            <tr>
+              <td>
+                {{ row.name }}
+              </td>
+              <td>
+                {{ row.enabled }}
+              </td>
+              <td>
+                {{ row.gatewayConfig.gatewayName }}
+              </td>
+              <td>
+                <div class="btn-group">
+                  <a href="{{ link }}" class="btn btn-sm btn-warning">
+                    <i class="fa fa-pen"></i>
+                  </a>
+                  <a href="{{ path(prefix ~ '_delete', {id: row.id}) }}" class="btn btn-sm btn-danger" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {{ paginate(rows) }}
+{% endblock %}
+
+{% block css %}
+  {{ encore_entry_link_tags('admin-list') }}
+{% endblock %}
+
+{% block js %}
+  {{ encore_entry_script_tags('admin-list') }}
+  <script>
+      $('[data-toggle="tooltip"]').tooltip();
+  </script>
+{% endblock %}

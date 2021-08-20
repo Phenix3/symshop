@@ -1,0 +1,36 @@
+{% extends "account/layout.html.twig" %}
+
+{% block title %}{{ 'labels.account.orders'|trans }}{% endblock %}
+
+{% block content %}
+<h1 class="ui dividing header">{{ 'labels.account.orders'|trans }}</h1>
+<div class="ui segment">
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>{{ 'labels.reference'|trans }}</th>
+                <th>{{ 'labels.created_at'|trans }}</th>
+                <th>{{ 'labels.order_total'|trans }}</th>
+                <th>{{ 'labels.order_state'|trans }}</th>
+                <th>{{ 'labels.actions'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.reference }}</td>
+                    <td>{{ order.createdAt|date("m/d/Y") }}</td>
+                    <td>{{ order.total|localizedcurrency('XAF') }}</td>
+                    <td>{{ order.state }}</td>
+                    <td>
+                        <a href="{{ path('account_orders_show', {reference: order.reference}) }}" class="ui blue icon labeled button">
+                            <i class="eye icon"></i>
+                            {{ 'buttons.show'|trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

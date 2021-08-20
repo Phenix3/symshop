@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+    <div class="ui container">
+    <div class="ui stackable grid">
+        <div class="four wide column">
+            <div class="ui fluid vertical menu">
+                <a href="{{ path('account_index') }}" class="{{ active_class('account_index') }} item">
+                    <i class="home icon"></i> {{'menus.dashboard'|trans}}
+                </a>
+                <a href="{{ path('account_addresses') }}" class="{{ active_class('account_addresses') }} item">
+                    <i class="address book icon"></i>{{'menus.addresses'|trans}}
+                </a>
+                <a href="{{ path('account_profile_edit') }}" class="{{ active_class('account_profile_edit') }} item">
+                    <i class="user icon"></i>{{'menus.personal_infos'|trans}}
+                </a>
+                <a href="{{ path('account_orders') }}" class="{{ active_class('account_orders') }} item">
+                    <i class="cart icon"></i>{{'menus.orders'|trans}}
+                </a>
+                <a href="{{ path('account_excerpt') }}" class="{{ active_class('account_excerpt') }} item">
+                    <i class="list icon"></i>{{'menus.excerpt'|trans}}
+                </a>
+            </div>
+        </div>
+        <div class="twelve wide column">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

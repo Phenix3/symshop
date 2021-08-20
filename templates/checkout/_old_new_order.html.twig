@@ -1,0 +1,143 @@
+<form id="form" method="post">
+        <div class="ui items">
+            <h4 class="header">{{ 'my_order'|trans }}</h4>
+            <div id="wrapper">
+                <div class="item">
+                    <div class="content">
+                        <h5 class="header">{{ 'shipping_and_facturation_address'|trans }} <span id="solo"></span></h5>
+                        {% include "order/_addresses.html.twig" with {addresses: addresses, name: 'facturation'} only %}
+                        <div class="hidden divider"></div>
+                        <a href="#" class="ui fluid green button">{{ 'manage_addresses'|trans }}</a>
+                        <div class="ui hidden divider"></div>
+                        <div class="ui form">
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="different" id="different" {% if addresses|length is same as(1) %} disabled {% endif %}>
+                         
+                                <label>
+                                    {% if addresses|length is same as(1) %}
+                                        Vous n'avez qu'une adresse enregistrée, si vous voulez une
+                                        adresse différente pour la livraison
+                                        <a href="#">vous
+                                            pouvez en créer une autre</a>.
+                                    {% else %}
+                                        Mon adresse de livraison est différente de mon adresse de
+                                        facturation
+                                    {% endif %}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content" id="liShipping">
+                        <h4 class="header">{{ 'shipping_address'|trans }}</h4>
+                        {% include "order/_addresses.html.twig" with {addresses: addresses, name: 'shipping'} only %}
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <h4 class="header">{{ 'shipping_mode'|trans }}</h4>
+                        <div class="ui form">
+                            <div class="field">
+                                <div class="ui checkbox">
+                                    <input type="radio" name="expedition" value="colissimo">
+                                    <label for="colissimo">{{ 'colissimo'|trans }}</label>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui checkbox">
+                                    <input type="radio" name="expedition" value="withdrawal">
+                                    <label>{{ 'withdrawal_in_place'|trans }}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <h4 class="header">{{ 'payment'|trans }}</h4>
+                        <div class="ui form">
+                            {% if shop.hasCard %}
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input class="payment" type="radio" name="payment" value="card">
+                                        <label>{{ 'bank_card'|trans }}</label>
+                                    </div>
+                                    <p style="margin-left: 40px" class="ui hidden">
+                                        Vous devrez renseigner un formulaire de paiement sur la page de confirmation de cette commande.</p>
+                                </div>
+                            {% endif %}
+                            {% if shop.hasMandat %}
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input class="payment" type="radio" name="payment" value="mandat">
+                                        <label>{{ 'mandat'|trans }}</label>
+                                    </div>
+                                    <p style="margin-left: 40px" class="ui hidden">
+                                        Envoyez un bon de commande avec la mention "Bon pour accord". Votre
+                                            commande sera expédiée dès réception de ce bon de commande. N'oubliez pas de
+                                            préciser la référence de la commande dans votre bon.
+                                    </p>
+                                </div>
+                            {% endif %}
+                            {% if shop.hasTransfer %}
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input class="payment" type="radio" name="payment" value="transfer">
+                                        <label>{{ 'bank_transfer'|trans }}</label>
+                                    </div>
+                                    <p style="margin-left: 40px" class="ui hidden">
+                                        Il vous faudra transférer le montant de la commande sur notre compte
+                                            bancaire. Vous recevrez votre confirmation de commande comprenant nos coordonnées
+                                            bancaires et le numéro de commande. Les biens seront mis de côté 30 jours pour
+                                            vous et nous traiterons votre commande dès la réception du paiement.
+                                    </p>
+                                </div>
+                            {% endif %}
+                            {% if shop.hasCheck %}
+                                <div class="field">
+                                    <div class="ui checkbox">
+                                        <input class="payment" type="radio" name="payment" value="check">
+                                        <label>{{ 'bank_check'|trans }}</label>
+                                    </div>
+                                    <p style="margin-left: 40px" class="ui hidden">
+                                        Il vous faudra nous envoyer un chèque du montant de la commande. Vous
+                                            recevrez votre confirmation de commande comprenant nos coordonnées bancaires et le
+                                            numéro de commande. Les biens seront mis de côté 30 jours pour vous et nous
+                                            traiterons votre commande dès la réception du paiement.
+                                    </p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        {% include "order/_details.html.twig" with {cart: cart, shipping: shipping, tax: tax, total: total} only %}
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="content">
+                        <h5 class="header">{{ 'check_order_before_payment'|trans }}</h5>
+                        <div class="ui form">
+                            <div class="field">
+                                <div class="ui toggle checkbox">
+                                    <input type="checkbox" name="ok" id="ok" required>
+                                    <label for="ok">J'ai lu
+                                        <a href="#" target="_blank">les conditions générales
+                                                de vente et les conditions d'annulation</a>
+                                        et j'y adhère sans réserve.</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui segment">
+            <button id="order" class="ui fuid green button">
+                {{ 'buttons.order_with_required_payment'|trans }}
+            </button>
+        </div>
+    </form>

@@ -1,0 +1,10 @@
+{% extends 'account/layout.html.twig' %}
+
+{% block title %}{{'labels.address.edit'|trans}}{% endblock %}
+
+{% block content %}
+<h1 class="ui dividing header">{{'labels.address.edit'|trans}}</h1>
+<div class="ui segment">
+    {% include "address/_form.html.twig" with {form: addressForm} only %}
+</div>
+{% endblock %}

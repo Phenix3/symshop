@@ -1,0 +1,85 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  Gérer les contenus
+{% endblock %}
+
+{% block content %}
+  <div class="tile">
+  <div class="tile-title-w-btn">
+					<h1>Gérer les contenus</h1>
+					<p>
+						<a href="#" class="btn btn-primary btn-icon-only">
+							<i class="fa fa-plus"></i>
+						</a>
+					</p>
+				</div>
+    <div class="tile-body">
+        <div class="">
+            {{ knp_pagination_filter(rows,
+                {
+                  'row.id': 'labels.order_id'|trans,
+                  'row.name': 'labels.order_'|trans,
+                }
+            ) }}
+        </div>
+        <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>
+        {{ knp_pagination_sortable(rows, 'labels.order_reference'|trans , 'row.reference', {}, {direction: 'asc'}) }}
+      </th>
+      <th>
+        {{ 'labels.customer'|trans }}
+      </th>
+      <th>
+        {{ 'labels.state'|trans }}
+      </th>
+      <th>
+        {{ 'labels.total'|trans }}
+      </th>
+      <th class="text-right">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      {% set link = path(prefix ~ '_edit', {id: row.id}) %}
+      <tr>
+        <td class="dashboard-id">
+          {{ row.reference }}
+        </td>
+        <td>
+          {{ row.user.username }}
+        </td>
+        <td>
+          {{ row.state }}
+        </td>
+        <td>
+          {{ row.total|localizedcurrency('XAF') }}
+        </td>
+        <td>
+          <div class="btn-group">
+            <a href="{{ path(prefix ~ '_show', {id: row.id}) }}" class="btn btn-sm btn-secondary"><i class="fa fa-eye"></i></a>
+            <a href="{{ path(prefix ~ '_delete', {id: row.id}) }}" class="btn btn-sm btn-danger" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}">
+                <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  {{ paginate(rows) }}
+{% endblock %}
+
+{% block css %}
+{{ encore_entry_link_tags('admin-form') }}
+{% endblock %}
+
+{% block js %}
+{{ encore_entry_script_tags('admin-form') }}
+{% endblock %}
+

@@ -1,0 +1,11 @@
+{# {% include "order/_addresses.html.twig" with {order: order} only %} #}
+{% include "order/_table.html.twig" with {order: order} only %}
+
+<div class="ui two column stackable grid">
+    <div class="column" id="shop-payments">
+        {% include 'order/_payment.html.twig' with {total: order.total, payment: order.payment, state: order.state.name } %}
+    </div>
+    <div class="column" id="shop-shipments">
+        {# {% include 'order/_shipments.html.twig' %} #}
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<address class="ui small container">
+    {% if address.company is not null %}
+        <strong>{{ address.company }}</strong><br>
+    {% endif %}
+    <strong>{{ address.firstName }} {{ address.name }}</strong><br>
+    {% if address.phone is not null %}
+        {{ address.phone }}<br>
+    {% endif %}
+    {{ address.address }} {% if address.addressbis is not null %} {{ address.addressbis }} {% endif %}<br>
+    {{ address.city }}, {{ address.postal }} <br>
+    {{ address.bp }} <br>
+    <i class="cm flag"></i> {{ address.country.name }} 
+    <div style="display: inline">
+        <a href="{{ path('address_delete', {id: address.id}) }}" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ address.id) }}" class="ui small red icon button">
+            <i class="trash icon"></i>
+        </a>
+    </div>
+</address>

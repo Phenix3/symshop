@@ -1,0 +1,26 @@
+{% extends "account/layout.html.twig" %}
+
+{% form_theme profileForm with ['form/theme.html.twig'] only %}
+
+{% block title %}
+	{{'labels.account.edit_profile'|trans}}
+{% endblock %}
+
+{% block content %}
+	<h1 class="ui dividing header">{{'labels.account.edit_profile'|trans}}</h1>
+	<div class="ui segment">
+		{{ form_start(profileForm, {attr: {class: 'ui loadable form'}}) }}
+		{{ form_widget(profileForm) }}
+        <div class="field"></div>
+        <button class="ui labeled icon primary button">
+            <i class="checkmark icon"></i>
+            {{'buttons.save'|trans}}
+        </button>
+		{{ form_end(profileForm) }}
+	</div>
+	<div class="ui hidden divider"></div>
+	<a class="ui labeled fluid icon primary button" href="{{ path('account_excerpt') }}">
+		<i class="user icon"></i>
+		{{ 'labels.account.informations_excerpt'|trans }}
+	</a>
+{% endblock %}

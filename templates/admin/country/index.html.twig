@@ -1,0 +1,60 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  {{ icon_svg('lines') }}
+  Gérer les contenus
+{% endblock %}
+
+{% block actions %}
+    <a href="{{ path(prefix ~ '_new') }}" class="btn-primary">Ajouter</a>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <div class="tile">
+        <div class="tile-body">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th class="text-right">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in rows %}
+              {% set link = path(prefix ~ '_edit', {id: row.id}) %}
+              <tr>
+                <td class="dashboard-id">
+                  <a href="{{ link }}">{{ row.id }}</a>
+                </td>
+                <td>
+                  {{ row.name }}
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <a href="{{ link }}" class="btn btn-sm btn-warning btn-icon-only"><i class="fa fa-edit"></i></a>
+                    <a href="{{ path(prefix ~ '_delete', {id: row.id}) }}" class="btn btn-sm btn-danger btn-icon-only" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}"><i class="fa fa-trash"></i></a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{ paginate(rows) }}
+{% endblock %}
+
+{% block css %}
+{{ encore_entry_link_tags('admin-list') }}
+{% endblock %}
+
+{% block js %}
+{{ encore_entry_script_tags('admin-list') }}
+{% endblock %}
+

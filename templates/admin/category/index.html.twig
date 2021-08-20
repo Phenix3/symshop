@@ -1,0 +1,53 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  Gérer les contenus
+{% endblock %}
+
+{% block content %}
+  <div class="tile">
+  <div class="tile-title-w-btn">
+					<h1>Gérer les contenus</h1>
+					<p>
+						<a href="{{ path(prefix ~ '_new') }}" class="btn btn-primary btn-icon-only">
+							<i class="fa fa-plus"></i>
+						</a>
+					</p>
+				</div>
+    <div class="tile-body">
+        <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>{{ 'forms.name'|trans }}</th>
+      <th class="text-right">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      {% set link = path(prefix ~ '_edit', {id: row.id}) %}
+      <tr>
+        <td class="dashboard-id">
+          <a href="{{ link }}">{{ row.id }}</a>
+        </td>
+        <td class="dashboard-id">
+          {{ row.name }}
+        </td>
+        <td>
+          <div class="btn-group">
+            <a href="{{ link }}" class="btn btn-sm btn-warning"><i class="fa fa-pen"></i></a>
+            <a href="{{ path(prefix ~ '_delete', {id: row.id}) }}" class="btn btn-sm btn-danger" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}">
+                <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  {{ paginate(rows) }}
+{% endblock %}
+

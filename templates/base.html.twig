@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{% endblock %} | SymShop!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% block meta %}
+        {% endblock %}
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        {{ encore_entry_link_tags('app') }}
+        {% block css %}{% endblock %}
+    </head>
+    <body>
+        
+        {% include "includes/_header.html.twig" %}
+        <div id="app">
+{#            <product-quick-view v-if="$root.quickView"></product-quick-view>#}
+            {% include "includes/_flash.html.twig" %}
+            {% block body %}{% endblock %}
+        </div>
+
+        {% include "includes/_footer.html.twig" %}
+
+        {{ encore_entry_script_tags('app') }}
+        
+        {% block js %}{% endblock %}
+    </body>
+</html>

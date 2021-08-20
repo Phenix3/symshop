@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Hello OrderController!
+{% endblock %}
+
+{% block body %}
+
+	<div class="ui container main-wrapper">
+		{% block steps %}{% endblock %}
+		<div class="ui hidden divider"></div>
+		<div class="ui stackable grid">
+			<div class="eleven wide column">
+
+				<div class="ui fluid segment">
+					{% block content %}{% endblock %}
+				</div>
+			</div>
+			<div class="five wide column">
+				<h2 class="ui center aligned icon header">
+					<i class="circular phone icon"></i>
+					{{ shop.phone }}
+					<span class="sub header">
+						{{ 'labels.checkout.call_for_help'|trans }}
+					</span>
+				</h2>
+				<div class="ui divider"></div>
+				<div class="ui center aligned basic segment">
+					<i class="huge cc mastercard icon"></i>
+					<i class="huge cc visa icon"></i>
+					<i class="huge cc paypal card icon"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	<script>
+
+{# console.log('Applied');
+const changePayment = () => {
+document.querySelectorAll('.payment').forEach(el => {
+const list = el.parentNode.parentNode.querySelector('p').classList;
+console.log(el, list);
+
+if (el.checked) {
+list.remove('hide');
+} else {
+list.add('hide');
+}
+});
+};
+
+const getDetails = async () => {
+document.querySelector('#wrapper').classList.add('hide');
+document.querySelector('.main-wrapper').classList.add('loader');
+
+const response = await fetch('{{ path("order_details") }}', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json',
+'X-Requested-With': 'XMLHttpRequest'
+},
+body: JSON.stringify(
+{
+facturation: document.querySelector('input[type="radio"][name="facturation"]:checked').value,
+shipping: document.querySelector('input[type="radio"][name="shipping"]:checked').value,
+different: document.querySelector('#different').checked,
+pick: document.querySelector('input[type="radio"][name="shipping"]:checked').value === 'withdrawal'
+}
+)
+});
+
+const data = await response.json();
+document.querySelector('#details').innerHTML = data.view;
+document.querySelector('#wrapper').classList.remove('hide');
+document.querySelector('.main-wrapper').classList.remove('loader');
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+document.querySelector('#different').checked = false;
+document.querySelector('#different').addEventListener('change', (e) => {
+document.querySelector('#liShipping').classList.toggle('hide');
+document.querySelector('#solo').classList.toggle('hide');
+getDetails();
+});
+
+document.querySelectorAll('.payment').forEach(payment => {
+payment.addEventListener('change', () => changePayment());
+});
+
+document.querySelector('#ok').addEventListener('change', () => document.querySelector('#commande').classList.toggle('disabled'));
+document.querySelectorAll('input[type=radio][name=facturation]').forEach(input => {
+input.addEventListener('change', () => getDetails());
+});
+
+document.querySelectorAll('input[type=radio][name=livraison]').forEach(input => {
+input.addEventListener('change', () => getDetails());
+});
+
+
+document.querySelectorAll('input[type=radio][name=expedition]').forEach(input => {
+input.addEventListener('change', () => {
+if (document.querySelector('input[type=radio][name=expedition][value=withdrawal]').checked) {
+if (document.querySelector('#different').checked) {
+document.querySelector('#different').checked = false;
+document.querySelector('#liLivraison').classList.toggle('hide');
+}
+
+document.querySelector('#different').disabled = true;
+document.querySelector('#solo').classList.add('hide');
+}
+if (document.querySelector('input[type=radio][name=expedition][value=colissimo]').checked) {
+document.querySelector('#different').disabled = false;
+if (document.querySelector('#different').checked) {
+document.querySelector('#solo').classList.add('hide');
+} else {
+document.querySelector('#solo').classList.remove('hide');
+}
+}
+getDetails()
+});
+});
+
+document.querySelector('#form').addEventListener('submit', () => {
+const button = document.querySelector('#order');
+button.classList.toggle('disabled');
+button.textContent = 'Confirmation de la commande en cours, ne fermez pascette fenêtre...'
+});
+
+changePayment();
+});
+#}
+	</script>
+{% endblock %}

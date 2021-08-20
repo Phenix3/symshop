@@ -1,0 +1,30 @@
+{% form_theme form with ["form/theme.html.twig"] only %}
+
+{{ form_start(form, {attr: {class: 'ui large loadable form', novalidate: 'novalidate'}}) }}
+{{ form_row(form._token) }}
+{# 
+{% if app.user is null %}
+	{% include "security/_login_form.html.twig" with {form: form.user, error: {}} %}
+{% endif %}
+ #}
+<div class="" id="billing-address">
+	{% include "checkout/_address_book_select.html.twig" %}
+	<div class="field"></div>
+	<h3 class="ui dividing header">{{ 'labels.checkout.billing_address'|trans }}</h3>
+	{% include "checkout/_address_form.html.twig" with {form: form.billingAddress} %}
+	{{ form_row(form.differentShippingAddress, {attr: {'data-toggles': 'shipping-address'}}) }}
+	<div class="field"></div>
+</div>
+
+<div id="shipping-address">
+	{% include "checkout/_address_book_select.html.twig" %}
+	<div class="field"></div>
+	<h3 class="ui dividing header">{{ 'labels.checkout.shipping_address'|trans }}</h3>
+	{% include "checkout/_address_form.html.twig" with {form: form.shippingAddress} %}
+	<div class="field"></div>
+	{# {{ dump(form.differentShippingAddress) }} #}
+</div>
+
+
+<button type="submit" class="ui button large green">Register</button>
+{{ form_end(form, {render_rest: false}) }}

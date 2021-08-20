@@ -1,0 +1,7 @@
+<div class="ui unmargined segments">
+    {% for payment_form in form.payments %}
+        {% include 'checkout/_checkout_payment.html.twig' with {'payment_form': payment_form} %}
+    {% else %}
+        {% include 'checkout/SelectPayment/_unavailable.html.twig' %}
+    {% endfor %}
+</div>

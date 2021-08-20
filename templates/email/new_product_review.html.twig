@@ -1,0 +1,15 @@
+{% extends 'email/layout.html.twig' %}
+
+{% block content %}
+    <h1>{{ 'labels.reviews'|trans }}</h1>
+    <p>
+        The customer <b><strong>{{ review.author.username }}</strong></b> has added a new review to product <b><strong>{{ product.name }}</strong></b> with this rating <b><strong>{{ review.rating }}</strong></b> and this comment
+    </p>
+    <blockquote>
+        {{ review.comment }}
+    </blockquote>
+    <br>
+    <p>
+        The review awaiting for validation
+    </p>
+{% endblock %}

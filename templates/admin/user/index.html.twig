@@ -1,0 +1,62 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col">
+        <div class="tile">
+            <div class="tile-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Image de profile</th>
+                            <th>Nom d'utilisateur</th>
+                            <th>Email</th>
+                            <th>Verifie</th>
+                            <th>Derniere connexion</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in rows %}
+                        {% set editLink = path(prefix ~ '_edit', {id: row.id}) %}
+                        {% set deleteLink = path(prefix ~ '_delete', {id: row.id}) %}
+                            <tr>
+                                <td>
+                                    {% if not row.image %}
+                                       <span>Pas d'image</span>
+                                    {% else %}
+                                        <img src="{{ vich_uploader_asset(row.image, 'file')|imagine_filter('mini') }}" class="img-fluid" alt="{{ row.username }}">
+                                    {% endif %}
+                                </td>
+                                <td>{{ row.username }}</td>
+                                <td>{{ row.email }}</td>
+                                <td>{{ row.isVerified }}</td>
+                                <td>
+                                    {% if row.lastSeen is defined %}
+                                        {{ row.lastSeen|date("m/d/Y") }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ editLink }}" class="btn btn-warning btn-sm"><i class="fa fa-pen"></i></a>
+                                        <a href="{{ deleteLink }}" class="btn btn-danger btn-sm" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {{ paginate(rows) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block css %}
+{{ encore_entry_link_tags('admin-list') }}
+{% endblock %}
+
+{% block js %}
+    {{ encore_entry_script_tags('admin-list') }}
+{% endblock %}

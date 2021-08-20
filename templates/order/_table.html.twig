@@ -1,0 +1,11 @@
+<table class="ui celled striped table">
+    <thead>
+        {% include "order/table/_header.html.twig" %}
+    </thead>
+    <tbody>
+        {% include "order/table/_body.html.twig" with {items: order.orderProducts} only %}
+    </tbody>
+    <tfoot class="ui right aligned">
+        {% include "order/table/_foot.html.twig" with {order: order} %}
+    </tfoot>
+</table>

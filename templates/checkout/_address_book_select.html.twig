@@ -1,0 +1,25 @@
+{% if app.user is not empty and app.user.addresses|length > 0 %}
+    <div class="ui fluid floating dropdown labeled search icon button address-book-select" {{ shop_test_html_attribute('address-book') }}>
+        <i class="book icon"></i>
+        <span class="text">{{ 'labels.checkout.select_address_from_book'|trans }}</span>
+        <div class="menu">
+            {% for address in app.user.addresses %}
+                <div class="item" {{ shop_test_html_attribute('address-book-item') }}
+                     data-id="{{ address.id }}"
+                     data-address="{{ address.address }}"
+                     data-addressbis="{{ address.addressbis }}"
+                     data-name="{{ address.name }}"
+                     data-first-name="{{ address.firstName }}"
+                     data-company="{{ address.company }}"
+                     data-bp="{{ address.bp }}"
+                     data-country="{{ address.country.name }}"
+                     data-city="{{ address.city }}"
+                     data-postal="{{ address.postal }}"
+                     data-phone="{{ address.phone }}"
+                >
+                    <strong>{{ address.firstName }} {{ address.name }}</strong>, {{ address.bp }}, {{ address.city }} {{ address.postal }}, {{ address.country.name }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

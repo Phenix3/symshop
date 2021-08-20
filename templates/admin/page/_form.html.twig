@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+
+{{ form_widget(form) }}
+
+<div class="form-row">
+    <button class="btn btn-primary" type="submit">
+        <i class="fa fa-save"></i>
+        {{ button_label|default('buttons.save')|trans }}
+    </button>
+</div>
+
+{{ form_end(form) }}

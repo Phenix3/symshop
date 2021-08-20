@@ -1,0 +1,45 @@
+<div class="ui container">
+	<div class="ui basic segment">
+		{% for message in app.flashes('success') %}
+			<div class="ui green icon message">
+				<i class="icon close"></i>
+				<i class="checkmark icon"></i>
+				<div class="content">
+					<div class="header">Succes</div>
+					<p>{{ message|trans }}</p>
+				</div>
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('danger') %}
+			<div class="ui red icon message">
+				<i class="icon close"></i>
+				<i class="times icon"></i>
+				<div class="content">
+					<div class="header">Danger!</div>
+					<p>{{ message|trans }}</p>
+				</div>
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('warning') %}
+			<div class="ui yellow icon message">
+				<i class="icon close"></i>
+				<i class="exclamation icon"></i>
+				<div class="content">
+					<div class="header">Warning!</div>
+					<p>{{ message|trans }}</p>
+				</div>
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('info') %}
+			<div class="ui blue icon message">
+				<i class="icon close"></i>
+				<i class="info icon"></i>
+				<div class="content">
+					<div class="header">Info!</div>
+					<p>{{ message|trans }}</p>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+<div class="ui hidden divider"></div>

@@ -1,0 +1,3 @@
+App\Entity\RangeValue:
+  range_value_{1..6}:
+    max: <randomFloat(2, 5, 50)>

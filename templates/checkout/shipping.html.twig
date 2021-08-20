@@ -1,0 +1,31 @@
+{% extends "checkout/layout.html.twig" %}
+
+{% form_theme checkoutShippingForm with ["form/theme.html.twig"] only %}
+
+{% block steps %}
+    {% include "checkout/_steps.html.twig" with {activeStep: 'select_shipping'} %}
+{% endblock %}
+
+{% block content %}
+	<div class="ui unmargined segments">
+		<div class="ui segment">
+			<div class="ui dividing header">Envoi #1</div>
+			<div class="ui stackable fluid items">
+				<div class="ui icon message">
+					<i class="warning icon"></i>
+					<div class="content">
+						<div class="header">Alert</div>
+						Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatum aut sint necessitatibus suscipit magni deleniti aperiam voluptates atque error dignissimos hic voluptas explicabo corporis vitae, earum, ducimus vero enim! Expedita?
+					</div>
+				</div>
+			</div>
+			{{ form_start(checkoutShippingForm, {attr: {class: 'ui loadable large form'}}) }}
+				{% include "checkout/_shipping_form.html.twig" with {form: checkoutShippingForm} only %}
+			<div class="field"></div>
+			<button type="submit" class="ui fluid icon primary button">
+				<i class="airplane icon"></i> {{ 'buttons.next'|trans }}
+			</button>
+			{{ form_end(checkoutShippingForm) }}
+		</div>
+	</div>
+{% endblock %}

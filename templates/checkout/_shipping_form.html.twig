@@ -1,0 +1,7 @@
+<div class="ui unmargined segments">
+    {# {% for key, shipment in order.shipments %} #}
+        {% include 'checkout/_shipment.html.twig' with {'form': form} %}
+    {# {% else %} #}
+        {# {% include 'checkout/_unavailable.html.twig' %} #}
+    {# {% endfor %} #}
+</div>

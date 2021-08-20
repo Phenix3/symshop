@@ -1,0 +1,12 @@
+<div class="ui segment">
+    <div class="ui dividing header">{{ 'payment'|trans }} #</div>
+    <div class="ui fluid stackable items">
+        {{ form_errors(payment_form) }}
+
+        {% for key, choice_form in payment_form.method %}
+            {% include 'checkout/_payment_choice.html.twig' with {choice_form: choice_form, 'method': payment_form.method.vars.choices[key].data} %}
+        {% else %}
+            {# {% include '@SyliusShop/Checkout/SelectPayment/_unavailable.html.twig' %} #}
+        {% endfor %}
+    </div>
+</div>

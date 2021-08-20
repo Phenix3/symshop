@@ -1,0 +1,29 @@
+<br>
+<div class="ui segment">
+    <div class="ui header">
+        <i class="card icon"></i>
+        <div class="content">
+            Vous avez choisi de payer par carte bancaire. Veuillez compléter le présent formulaire pour procéder à ce règlement
+            <div class="sub header">
+                <p class="orange">Nous ne conservons aucune de ces informations sur notre site, elles sont directement transmises à notre prestataire de paiement <a href="https://stripe.com/fr">Stripe</a>.</p>    <p class="orange-text">La transmission de ces informations est entièrement sécurisée.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="ui stackable segment grid" id="card-container">
+    <div class="column">
+        <div class="content">
+            <form id="payment-form">
+                <div id="card-element"></div>
+                <div id="card-errors"></div>
+                <div class="ui hidden">
+
+                </div>
+                <div class="ui" id="submit">
+                    <button type="submit" class="ui right floated primary fluid button">Payer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

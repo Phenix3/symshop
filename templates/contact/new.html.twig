@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'titles.contact'|trans %}
+{% form_theme contactForm 'form/theme.html.twig' %}
+
+{% block body %}
+<div class="ui container">
+    <div class="ui two column centered stackable grid">
+        <div class="column">
+            <h1 class="ui header">
+                <i class="circular mail icon"></i>
+                <div class="content">
+                    {{'contact_us'|trans}}
+                    <p class="sub header">
+                        {{'contact_us_description'|trans}}
+                    </p>
+                </div>
+            </h1>
+            <div class="ui stacked segment">
+                {{ form_start(contactForm, {attr: {class: 'ui form loadable'}}) }}
+                {{ form_widget(contactForm) }}
+                <button type="submit" class="ui fluid large primary usbmit button">
+                    {{'buttons.submit'|trans}}
+                </button>
+                {{ form_end(contactForm) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'titles.products'|trans %}
+
+{% block body %}
+	<div class="ui container">
+		<div class="ui stackable grid">
+			<div class="four wide computer five wide tablet sixteen wide mobile column">
+				<div class="ui segment">
+					{% include "product/_filter_form.html.twig" with {form: searchForm} only %}
+				</div>
+			</div>
+			<div class="twelve wide computer eleven wide tablet sixteen wide mobile column">
+				<div class="ui segment">
+					<div class="ui centered grid">
+						{% for product in products %}
+							{% include "product/_product_card.html.twig" with {product: product} only %}
+						{% else %}
+							<div class="ui yellow icon message">
+								<i class="exclamation triangle icon"></i>
+								<div class="content">
+									<div class="header">
+										Oups
+									</div>
+									<p>
+										{{ 'alerts.empty_filtered_products'|trans }}
+									</p>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					<div class="ui hidden divider"></div>
+					<div class="ui center aligned">
+						{{ knp_pagination_render(products, 'includes/_semantic_ui_pagination.html.twig') }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

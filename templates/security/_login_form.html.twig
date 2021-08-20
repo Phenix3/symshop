@@ -1,0 +1,47 @@
+<form method="post" class="ui large form js-login-form">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+            {% if error %}
+                <div class="ui negative message">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Error!
+                    </div>
+                    <p>
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </p>
+                </div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="ui segment">
+                    You are logged in as {{ app.user.username }}, <a href="{{ path('shop_logout') }}">Logout</a>
+                </div>
+                <div class="hidden divider"></div>
+            {% endif %}
+            
+            <div class="ui attached segment">
+                <div class="required field">
+                    <label for="inputEmail">{{'forms.email'|trans}}</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"  autofocus>
+                </div>
+                <div class="required field">
+                    <label for="inputPassword">{{'forms.password'|trans}}</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" >
+                </div>
+                <div class="field">
+                    <div class="ui toggle checkbox">
+                        <input type="checkbox" tabindex="0" name="_remember_me" id="_remember_me">
+                        <label for="_remember_me">{{'forms.remember_me'|trans}}</label>
+                    </div>
+                </div>
+                <button class="ui teal fluid large submit button" type="submit">
+                    {{ 'buttons.login'|trans }}
+                </button>
+                <div class="ui error message"></div>
+            </div>
+            <div class="ui two bottom attached buttons">
+                <a href="{{ path('shop_register') }}" class="ui button primary">{{'buttons.create_account'|trans}}</a>
+                <a href="{{ path('app_forgot_password_request') }}" class="ui orange button">{{ 'buttons.forgot_password'|trans }}</a>
+            </div>
+
+        </form>

@@ -1,0 +1,39 @@
+<div class="five wide computer eight wide tablet sixteen wide mobile column">
+  <div class="ui attached card ">
+    <div class="image">
+      {% if not product.image %}
+          <img src="{{ asset('images/empty-product.jpg')|imagine_filter('thumb') }}" alt="{{ product.name }}">
+      {% else %}
+          <img src="{{ vich_uploader_asset(product.image, 'file')|imagine_filter('thumb') }}" alt="{{ product.name }}">
+      {% endif %}
+    </div>
+    <div class="content">
+      <a href="{{ path('product_show', {slug: product.slug}) }}" class="header">{{ product.name }}</a>
+      <h3 class="meta">
+        <span class="ui primary middle aligned">{{ product.price|localizedcurrency('XAF') }}</span>
+        {% if product.quantity > 0 %}
+          <span class="ui right floated small green tag label">In stock</span>
+        {% else %}
+          <span class="ui right floated small red tag label">Out of stock</span>
+        {% endif %}
+      </h3>
+      <div class="description">
+        {{ product.description|raw|truncate(50) }}
+      </div>
+    </div>
+      <div class="extra">
+          {% for category in product.categories %}
+            <span class="ui small yellow label">{{ category.name }}</span>
+          {% endfor %}
+      </div>
+    
+    <div class="ui three bottom attached small buttons">
+        <a href="{{ path('cart_add', {id: product.id}) }}" class="ui basic green button popup-js" data-tooltip="{{ 'labels.add_to_cart'|trans }}"><i class="icon cart"></i></a>
+        <a href="#" class="ui basic red button"  data-tooltip="{{ 'labels.add_to_wish_list'|trans }}" data-inverted><i class="heart icon"></i></a>
+{#        <product-quick-view-btn quick-view-details="{{ product.serialize }}" />#}
+        <a href="#" class="ui red button">
+            <i class="zoom in icon"></i>
+        </a>
+      </div>
+  </div>
+</div>

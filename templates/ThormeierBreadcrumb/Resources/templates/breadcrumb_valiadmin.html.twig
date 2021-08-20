@@ -1,0 +1,23 @@
+{%- if breadcrumbs|length -%}
+<div class="app-title">
+    <div>
+        <h1><i class="fa fa-{{ page.icon }}"></i> {{ page.title|trans }}</h1>
+        <p>{{ page.description|trans }}</p>
+    </div>
+    <ul class="app-breadcrumb breadcrumb">
+        {%- for crumb in breadcrumbs -%}
+            {%- set crumbText = crumb.label|replace({"%%": "%"})|trans(crumb.labelParameters) -%}
+            {%- if crumb.route == app.request.get('_route') -%}
+                <li class="breadcrumb-item active">
+                    {{- crumbText -}}
+                </li>
+            {%- else -%}
+                {%- set crumbPath = path(crumb.route, crumb.routeParameters) -%}
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="{{ crumbPath }}" title="{{ crumbText }}">{{ crumbText }}</a>
+                </li>
+            {%- endif -%}
+        {%- endfor -%}
+    </ul>
+</div>
+{%- endif -%}

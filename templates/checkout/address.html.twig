@@ -1,0 +1,9 @@
+{% extends "checkout/layout.html.twig" %}
+
+{% block steps %}
+    {% include "checkout/_steps.html.twig" with {activeStep: 'address'} %}
+{% endblock %}
+
+{% block content %}
+    {% include "checkout/_checkout_address.html.twig" with {form: checkoutAddressForm} only %}
+{% endblock %}

@@ -1,0 +1,22 @@
+<div class="ui large comments">
+    {% for review in reviews %}
+        <div class="ui comment review">
+            <div class="content">
+                <span class="author">
+                    {{ review.author.username }}
+                </span>
+                <div class="metadata">
+                    <div class="date">
+                        {{ review.createdAt|localizeddate }}
+                    </div>
+                    <div class="rating">
+                        <div class="ui yellow huge star rating" data-rating="{{ review.rating }}" data-max-rating="5"></div>
+                    </div>
+                </div>
+                <p>
+                    {{ review.comment }}
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>

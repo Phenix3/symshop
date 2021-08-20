@@ -1,0 +1,21 @@
+{{ form_start(form, {attr: {class: 'ui form'}}) }}
+<div class="field">
+	{{ form_row(form.q, {attr: {class: 'ui search'}}) }}
+</div>
+<div class="field">
+	<div class="fields">
+		{{ form_row(form.min) }}
+		{{ form_row(form.max) }}
+	</div>
+</div>
+<h4>{{ 'labels.categories'|trans }}</h4>
+<div class="field">
+	{{ form_row(form.categories) }}
+</div>
+<div class="field">
+	<button class="ui green fluid button">
+		<i class="search icon"></i>
+		{{ 'buttons.filter'|trans }}
+	</button>
+</div>
+{{ form_end(form) }}

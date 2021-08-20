@@ -1,0 +1,3 @@
+{% for name, gateway in gatewayFactories %}
+        <a href="{{ path('admin_payment_method_new', {factory: name}) }}" id="{{ name }}" class="dropdown-item">{{ name|trans }}</a>
+{% endfor %}

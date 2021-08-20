@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!
+{% endblock %}
+
+{% block body %}
+	<div class="ui container">
+		<div class="ui inverted vertical center aligned masthead segment">
+			<div class="ui text container">
+				<h1 class="ui inverted header">
+					Image Company
+				</h1>
+				<h2>Do something</h2>
+				<a href="#" class="ui huge primary button">Get started</a>
+			</div>
+		</div>
+		<h3 class="ui header center aligned">
+			<span class="content">Last products</span>
+		</h3>
+		<div class="ui segment center aligned">
+
+			<div class="ui centered relaxed grid">
+				{% for product in products %}
+					{% include 'product/_product_card.html.twig' with {product: product} only %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block css %}
+	<style>
+		.masthead.segment {
+			min-height: 700px;
+			padding: 1em 0;
+		}
+	</style>
+{% endblock %}

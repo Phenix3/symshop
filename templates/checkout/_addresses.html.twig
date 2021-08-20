@@ -1,0 +1,27 @@
+<div class="ui stackable segment">
+    <div class="ui relaxed four column grid">
+        {% for address in addresses if addresses | length > 0 %}
+            <div class="column">
+                <div class="ui card">
+                    <div class="content address">
+                        <p class="ui form">
+                            <div class="field">
+                                <div class="ui checkbox">
+                                    <input type="radio" name="{{ name }}" id="{{ address.id }}" value="{{ address.id }}" {% if loop.first %} checked {% endif %} >
+                                    <label></label>
+                                </div>
+                            </div>
+                        </p>
+                        {% include "account/_address.html.twig" with {address: address} only %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="ui warning message">
+                <i class="close icon"></i>
+                <h5 class="header">Alert</h5>
+                <p>{{ 'alerts.empty_addresses'|trans }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,9 @@
+{% if images|length > 0  %}
+    <div class="ui tiny images">
+        {% for image in images %}
+            <a href="{{ vich_uploader_asset(image, 'file') }}" data-type="image" class="glightbox" style="display: inline-flex" data-gallery="gallery">
+                <img class="ui bordered image" src="{{ vich_uploader_asset(image, 'file')|imagine_filter('mini') }}" alt="{{ 'product image gallery' }}">
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}

@@ -1,0 +1,23 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %} {{ 'titles.dashboard'|trans }} {% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-6">
+            <div class="tile">
+                <div class="tile-body">
+                    {{ render_chart(chart, {'data-controller': 'chart'}) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+    {{ encore_entry_script_tags('admin-dashboard') }}
+
+{% endblock %}

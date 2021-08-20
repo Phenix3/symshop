@@ -1,0 +1,137 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    app_title: '%env(resolve:APP_TITLE)%'
+    app.locale: 'fr'
+    app.debug: true
+    app.admin.email: '%env(APP_ADMIN_EMAIL)%'
+
+    app.stripe_public: '%env(STRIPE_PUBLISHABLE_KEY)%'
+    app.stripe_secret: '%env(STRIPE_SECRET_KEY)%'
+
+    app_form_address_validation_groups: 
+        - 'app'
+        - 'Default'
+
+    admin_route_prefix: admin
+
+    app.invoice_path: '%kernel.project_dir%/public/download/invoices/'
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $projectDir: '%kernel.project_dir%'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+    
+    App\Admin\Controller\:
+        resource: '../src/Admin/Controller/'
+        tags: ['controller.service_arguments']
+
+#    Gedmo\Tree\Entity\Repository\AbstractTreeRepository:
+#        arguments: ['@doctrine.orm.entity_manager', '']
+
+
+     # Entity subscriber
+#    nelmio_alice.faker.generator:
+#        class: Faker\UniqueGenerator
+
+    App\EventSubscriber\ImageCacheEventSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    App\Command\DbPurgeCommand:
+        arguments:
+            - '@doctrine.fixtures.purger.orm_purger_factory'
+
+    Knp\Bundle\PaginatorBundle\Helper\Processor: ~
+
+    App\Core\Paginator\PaginatorInterface:
+        class: App\Core\Paginator\KnpPaginator
+
+    # Entity listeners
+
+    App\EntityListener\TimestampListener:
+        tags:
+            - {name: 'doctrine.event_listener', event: 'prePersist'}
+            - {name: 'doctrine.event_listener', event: 'preUpdate'}
+
+    App\EntityListener\SluggerListener:
+        tags:
+            - {name: doctrine.event_listener, event: prePersist}
+            - {name: doctrine.event_listener, event: preUpdate}
+
+    App\EntityListener\StateEntityListener:
+        tags:
+            - {name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\State' }
+            - {name: 'doctrine.orm.entity_listener', event: 'preUpdate', entity: 'App\Entity\State', method: 'prePersist' }
+
+    App\EntityListener\ReviewEntityListener:
+        tags:
+            - {name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Review'}
+
+    App\EntityListener\ProductEntityListener:
+        tags:
+            - {name: 'doctrine.orm.entity_listener', event: 'postLoad', entity: 'App\Entity\Product'}
+
+    App\EntityListener\OrderEntityListener:
+        tags:
+            - {name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Order'}
+
+    App\EntityListener\AddressEntityListener:
+        tags:
+            - {name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Address'}
+    
+
+    # Forms
+
+    App\Form\AddressType:
+        arguments:
+            - '%app_form_address_validation_groups%'
+
+
+    App\Twig\TestFormAttributeExtension:
+        arguments:
+            $environment: '%env(resolve:APP_ENV)%'
+    App\Twig\TestHtmlAttributeExtension:
+        arguments:
+            $env: '%env(resolve:APP_ENV)%'
+
+    App\Service\PageManagerService: ~
+
+    App\Controller\BaseController:
+        calls:
+            - method: setPageManager
+              arguments:
+                - '@App\Service\PageManagerService'
+
+    App\DataFixtures\Processor\UserProcessor:
+        arguments:
+            - '@security.user_password_encoder.generic'
+
+    Bezhanov\Faker\Provider\Commerce: ~
+
+    Twig\Extra\Markdown\MarkdownInterface:
+        class: Twig\Extra\Markdown\ErusevMarkdown
+        

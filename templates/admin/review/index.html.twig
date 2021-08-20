@@ -1,0 +1,87 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  Gérer les contenus
+{% endblock %}
+
+{% set statusColors = {pending: 'warning', accepted: 'success', rejected: 'danger'} %}
+
+{% block content %}
+  <div class="tile">
+  <div class="tile-title-w-btn">
+					<h1>Gérer les contenus</h1>
+					<p>
+						<a href="{{ path(prefix ~ '_new') }}" class="btn btn-primary btn-icon-only">
+							<i class="fa fa-plus"></i>
+						</a>
+					</p>
+				</div>
+    <div class="tile-body">
+        <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>{{ 'labels.status'|trans }}</th>
+      <th>{{ 'labels.comment'|trans }}</th>
+      <th>{{ 'labels.product'|trans }}</th>
+      <th>{{ 'labels.customer'|trans }}</th>
+      <th>Rating</th>
+      <th class="text-right">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+        <td class="dashboard-id">
+          {% if row.status is not null %}
+            <button class="btn btn-{{ statusColors[row.status|lower] }}">
+              {{ row.status|lower|trans }}
+            </button>
+          {% endif %}
+        </td>
+        <td>
+          {{ row.comment }}
+        </td>
+        <td>
+          <p>{{ row.product.name }}</p>
+        </td>
+        <td>
+          <p>{{ row.author.username }}</p>
+        </td>
+        <td>
+          {{ row.rating }}
+        </td>
+        <td>
+          <div class="btn-group">
+            <a href="{{ path(prefix ~ '_edit', {id: row.id}) }}" class="btn btn-sm btn-info"><i class="fa fa-pen"></i></a>
+            <a href="{{ path('product_review_status', {id: row.id}) }}" data-field="status"  data-value="ACCEPTED" data-method="PATCH" data-csrf-token="{{ csrf_token('edit' ~ row.id) }}" class="btn btn-sm btn-primary {% if row.status == 'ACCEPTED' %} disabled {% endif %}" >
+              <i class="fa fa-check"></i>
+              {{ 'buttons.accept'|trans }}
+            </a>
+            <a href="{{ path('product_review_status', {id: row.id}) }}" data-field="status" data-value="REJECTED" data-method="PATCH" data-csrf-token="{{ csrf_token('edit' ~ row.id) }}" class="btn btn-sm btn-warning {% if row.status == 'REJECTED' %} disabled {% endif %}" >
+              <i class="fa fa-ban"></i>
+              {{ 'buttons.reject'|trans }}
+            </a>
+            <a href="{{ path(prefix ~ '_delete', {id: row.id}) }}" class="btn btn-sm btn-danger" data-method="DELETE" data-csrf-token="{{ csrf_token('delete' ~ row.id) }}">
+                <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    </div>
+  </div>
+
+  {{ paginate(rows) }}
+{% endblock %}
+
+
+{% block css %}
+  {{ encore_entry_link_tags('admin-list') }}
+{% endblock %}
+
+{% block js %}
+  {{ encore_entry_script_tags('admin-list') }}
+{% endblock %}
+

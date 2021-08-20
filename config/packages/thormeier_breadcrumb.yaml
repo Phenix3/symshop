@@ -1,0 +1,2 @@
+thormeier_breadcrumb:
+    template: "ThormeierBreadcrumb/Resources/templates/breadcrumb_valiadmin.html.twig"

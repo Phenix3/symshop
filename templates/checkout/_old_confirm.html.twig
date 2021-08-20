@@ -1,0 +1,175 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+	<div class="ui container">
+		<h1 class="ui header">
+			<i class="circular checkmark icon"></i>
+			<div class="content">
+				Votre commande est confirmée.
+				<div class="sub header">
+					Un e-mail vous a été envoyé à l'adresse
+					<em>{{ app.user.email }}</em>
+					avec toutes ces informations.
+				</div>
+			</div>
+		</h1>
+		<div class="ui hidden divider"></div>
+		<div class="ui segment">
+			{% include "order/_details.html.twig" with {tax: order.tax, shipping: order.shipping, total: order.total, cart: order.orderProducts} only %}
+			<div class="ui column grid">
+				<table class="ui table celled">
+					<tr>
+						<td>Référence de la commande :</td>
+						<td>{{ order.reference }}</td>
+					</tr>
+					<tr>
+						<td>Moyen de paiement :</td>
+						<td>{{ order.payment }}</td>
+					</tr>
+				</table>
+			</div>
+			<div class="ui two column stackable grid">
+				<div class="column">
+					<h5 class="ui header">
+						Adresse de facturation et de livraison
+					</h5>
+					{% include "account/_address.html.twig" with {address: facturationAddress} %}
+				</div>
+				<div class="column">
+					<h5 class="ui header">
+						Adresse de livraison
+					</h5>
+					{% include "account/_address.html.twig" with {address: shippingAddress} %}
+				</div>
+			</div>
+		</div>
+		<div class="ui hidden divider"></div>
+		<div class="ui segment">
+			<h3 class="ui header">
+				<i class="checkmark icon"></i>
+				<div class="content">
+					Votre commande a bien été enregistrée.
+				</div>
+			</h3>
+			{% if order.state.slug same as 'bank_check' %}
+				<h4 class="ui header">Veuillez nous envoyer un chèque avec :</h4>
+				<ul>
+					<li>Montant du règlement:
+						{{ (order.total * (1 + order.tax) + order.shipping)|localizedcurrency('XAF') }}</li>
+					<li>Payable à l'ordre de:
+						{{ shop.name }}</li>
+					<li>à envoyer à:
+						{{ shop.address }}</li>
+					<li>n'oubliez pas d'indiquer votreréférence de commande:
+						{{ order.reference }}</li>
+				</ul>
+				<p>
+					{% if order.pick %}
+						Vous pourrez venir chercher votre commandedès réception du paiement.
+					{% else %}
+						Votre commande vous sera envoyéedès réception du paiement
+					{% endif %}
+				</p>
+
+			{% elseif order.state.slug same as 'mandat' %}
+				<p>Vous avez choisi de payer par mandatadministratif. Ce type de paiement est réservé auxadministrations.</p>
+				<p>Vous devez envoyer votre mandatadministratif à :</p>
+				<p>
+					<strong>{{ shop.name }}</strong>
+				</p>
+				<p>
+					<strong>{{ shop.address }}</strong>
+				</p>
+				<p>Vous pouvez aussi nous le transmettre par e-mail à cette adresse :
+					<strong>{{ shop.email }}</strong>
+				</p>
+				<p>N'oubliez pas d'indiquer votre référence decommande
+					<strong>{{ order.reference }}</strong>.</p>
+				{% if order.pick %}
+					<p>Vous pourrez venir chercher votre commandedès réception du mandat.</p>
+				{% else %}
+					<p>
+						<strong>Votre commande vous sera envoyéedès réception de ce mandat.</strong>.</p>
+				{% endif %}
+			{% elseif order.state.slug same as 'transfer' %}
+				<p>Veuillez effectuer un virement sur notrecompte :</p>
+				<ul>
+					<li>
+						- montant du virement :
+						<strong>{{ order.total * (1 + order.tax) + order.shipping |localizedcurrency('XAF') }}
+							€</strong>
+					</li>
+					<li>- titulaire :
+						<strong>{{ shop.holder }}</strong>
+					</li>
+					<li>- BIC :
+						<strong>{{ shop.bic }}</strong>
+					</li>
+					<li>- IBAN :
+						<strong>{{ shop.iban }}</strong>
+					</li>
+					<li>- banque :
+						<strong>{{ shop.bank }}</strong>
+					</li>
+					<li>- adresse banque :
+						<strong>{{ shop.bankAddress }}</strong>
+					</li>
+					<li>- n'oubliez pas d'indiquer votreréférence de commande
+						<strong>{{ order.reference }}</strong>
+					</li>
+				</ul>
+				{% if order.pick %}
+					<p>Vous pourrez venir chercher votre commandedès réception du paiement.</p>
+				{% else %}
+					<p>
+						<strong>Votre commande vous sera envoyéedès réception du virement.</strong>.</p>
+				{% endif %}
+			{% elseif order.state.slug same as 'card' or order.state.slug same as 'error' %}
+				{% include "order/_stripe.html.twig" %}
+			{% endif %}
+			<div id="payment-ok" class="ui card center aligned hidden">
+				<div class="card-content">
+					<span class="card-title">Votre paiement a été validé</span>
+					{% if order.pick %}
+					<p>Vous pouvez venir chercher votrecommande</p>
+					{% else %}
+					<p>Votre commande va vous être envoyée</p>
+					{% endif %}
+				</div>
+			</div>
+			<p>Pour toute question ou informationcomplémentaire merci de contacter notre support client.</p>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block css %}
+	<style>
+		.StripeElement {
+			box-sizing: border-box;
+			height: 40px;
+			padding: 10px 12px;
+			border: 1px solid transparent;
+			border-radius: 4px;
+			background-color: white;
+			box-shadow: 0 1px 3px 0 #e6ebf1;
+			-webkit-transition: box-shadow 150ms ease;
+			transition: box-shadow 150ms ease;
+		}
+		.StripeElement--focus {
+			box-shadow: 0 1px 3px 0 #cfd7df;
+		}
+		.StripeElement--invalid {
+			border-color: #fa755a;
+		}
+		.StripeElement--webkit-autofill {
+			background-color: #fefde5 !important;
+		}
+	</style>
+{% endblock %}
+
+{% block js %}
+    {% include "order/_stripe_js.html.twig" %}
+{% endblock %}

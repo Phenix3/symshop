@@ -1,0 +1,24 @@
+{% extends "email/layout.html.twig" %}
+
+
+{% block content %}
+	<div style="text-align: center; margin-bottom: 30px;">
+		{{ 'email.order_confirmation.your_order_number'|trans }}
+		<div style="margin: 10px 0;">
+			<span style="border: 1px solid #eee; padding: 10px; color: #1abb9c; font-size: 28px;">
+				{{ order.reference }}
+			</span>
+		</div>
+		{{ 'email.order_confirmation.has_been_successfully_placed'|trans }}
+	</div>
+
+	<div style="text-align: center; margin-bottom: 30px;">
+		<a href="{{ url('account_orders') }}" style="display: inline-block; text-align: center; background: #1abb9c; padding: 18px 28px; color: #fff; text-decoration: none; border-radius: 3px;">
+			{{ 'email.order_confirmation.view_order_or_change_payment_method'|trans }}
+		</a>
+	</div>
+
+	<div style="text-align: center;">
+		{{ 'email.order_confirmation.thank_you'|trans }}
+	</div>
+{% endblock %}

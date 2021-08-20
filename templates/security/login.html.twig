@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<div class="ui middle aligned centered grid login-grid">
+    <div class="sixteen wide mobile eight wide tablet six wide computer column">
+        <h1 class="ui teal header center aligned">
+            <i class="circular lock icon"></i>
+            <div class="content">
+                <p>{{'buttons.login'|trans}}</p>
+            </div>
+        </h1>
+        {% include "security/_login_form.html.twig" %}
+    </div> 
+</div>
+{% endblock %}
+
+{% block css %}
+    <style>
+    body > .container > .login-grid {
+        height: 90vh;
+    }
+    </style>
+{% endblock %}
+
+{% block js %}
+    <script>
+    $('.js-login-form')
+        .form({
+            fields: {
+                email: ['empty', 'email'],
+                password: ['minLength[6]', 'empty']
+            },
+            inline: true,
+            on: 'blur'
+        })
+    </script>
+{% endblock %}

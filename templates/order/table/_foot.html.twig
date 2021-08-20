@@ -1,0 +1,16 @@
+<tr>
+    <td colspan="3">Tax</td>
+    <td><strong>{{ order.tax|localizedcurrency('XAF') }}</strong></td>
+</tr>
+<tr>
+    <td colspan="3">Prix de livraison</td>
+    <td><strong>{{ order.shipping|localizedcurrency('XAF') }}</strong></td>
+</tr>
+<tr>
+    <td colspan="3">Total TTC</td>
+    <td><strong>{{ (order.total + order.tax)|localizedcurrency('XAF') }}</strong></td>
+</tr>
+<tr>
+    <td colspan="3">Total TTC et livraison</td>
+    <td><strong>{{ (order.total + order.tax + order.shipping)|localizedcurrency('XAF') }}</strong></td>
+</tr>

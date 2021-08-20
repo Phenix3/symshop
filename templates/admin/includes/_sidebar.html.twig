@@ -1,0 +1,25 @@
+<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="https://s3.amazonaws.com/uifaces/faces/twitter/jsa/48.jpg" alt="User Image">
+        <div>
+          <p class="app-sidebar__user-name">John Doe</p>
+          <p class="app-sidebar__user-designation">Frontend Developer</p>
+        </div>
+      </div>
+      <ul class="app-menu">
+        <li><a class="app-menu__item {{ active_class('admin_dashboard_index') }}" href="{{ path('admin_dashboard_index') }}"><i class="app-menu__icon fa fa-meteor"></i><span class="app-menu__label">Dashboard</span></a></li>
+        <li>
+          <a href="{{ path('admin_setting_index') }}" class="app-menu__item {{ active_class('admin_setting_index') }}">
+            <i class="app-menu__icon fa fa-cogs"></i> {{ 'menus.settings'|trans }}
+          </a>
+        </li>
+        <li><a class="app-menu__item {{ active_class('admin_category_index') }}" href="{{ path('admin_category_index') }}"><i class="app-menu__icon fa fa-box icon"></i><span class="app-menu__label">{{ 'menus.categories'|trans }}</span></a></li>
+        <li><a class="app-menu__item {{ active_class('admin_product_index') }}" href="{{ path('admin_product_index') }}"><i class="app-menu__icon fa fa-box icon"></i><span class="app-menu__label">{{ 'menus.products'|trans }}</span></a></li>
+        <li><a class="app-menu__item {{ active_class('admin_order_index') }}" href="{{ path('admin_order_index') }}"><i class="app-menu__icon fa fa-circular-cart icon"></i><span class="app-menu__label">{{ 'menus.orders'|trans }}</span></a></li>
+        <li><a class="app-menu__item {{ active_class('admin_page_index') }}" href="{{ path('admin_page_index') }}"><i class="app-menu__icon fa fa-list-alt icon"></i><span class="app-menu__label">{{ 'menus.pages'|trans }}</span></a></li>
+        <li><a class="app-menu__item {{ active_class('admin_country_index') }}" href="{{ path('admin_country_index') }}"><i class="app-menu__icon fa fa-flag-checkered icon"></i><span class="app-menu__label">{{'menus.countries'|trans}}</span></a></li>
+        <li><a class="app-menu__item {{ active_class('admin_state_index') }}" href="{{ path('admin_state_index') }}"><i class="app-menu__icon fa fa-flag icon"></i><span class="app-menu__label">{{'menus.states'|trans}}</span></a></li>
+        <li><a class="app-menu__item {{ active_class('admin_review_index') }}" href="{{ path('admin_review_index') }}"><i class="app-menu__icon fa fa-flag icon"></i><span class="app-menu__label">{{'menus.reviews'|trans}}</span></a></li>
+        <li><a class="app-menu__item {{ active_class('admin_payment_method_index') }}" href="{{ path('admin_payment_method_index') }}"><i class="app-menu__icon fa fa-money icon"></i><span class="app-menu__label">{{'menus.payment_method'|trans}}</span></a></li>
+      </ul>
+    </aside>
