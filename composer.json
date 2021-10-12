@@ -19,9 +19,9 @@
         "dompdf/dompdf": "^1.0",
         "easycorp/easyadmin-bundle": "^3.1",
         "erusev/parsedown": "^1.7",
-        "friendsofsymfony/ckeditor-bundle": "^2.2",
+        "friendsofsymfony/ckeditor-bundle": "^2.3",
         "friendsofsymfony/jsrouting-bundle": "^2.7",
-        "hautelook/alice-bundle": "^2.8",
+        "hautelook/alice-bundle": "^2.9",
         "knplabs/knp-paginator-bundle": "^5.4",
         "liip/imagine-bundle": "^2.3",
         "mbezhanov/faker-provider-collection": "^2.0",
@@ -118,7 +118,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "ckeditor:install": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
