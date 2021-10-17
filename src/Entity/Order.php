@@ -7,10 +7,14 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=OrderRepository::class)
  * @ORM\Table(name="`order`")
+ *
+ *
+ * @UniqueEntity(fields={"reference"})
  */
 class Order
 {
@@ -21,11 +25,13 @@ class Order
      * @ORM\Column(type="uuid", unique=true)
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
+     *
+     *
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $reference;
 
@@ -73,9 +79,9 @@ class Order
     private $orderProducts;
 
     /**
-     * @ORM\OneToMany(targetEntity=Payment::class, mappedBy="order")
+     * @ORM\OneToOne(targetEntity=Payment::class, mappedBy="order")
      */
-    private $payments;
+    private $payment;
 
     /**
      * @ORM\OneToOne(targetEntity=Address::class, cascade={"persist", "remove"})
@@ -255,33 +261,19 @@ class Order
     }
 
     /**
-     * @return Collection|Payment[]
+     * @return Payment
      */
-    public function getPayments(): Collection
+    public function getPayment(): ?Payment
     {
-        return $this->payments;
+        return $this->payment;
     }
 
-    public function addPayment(Payment $payment): self
-    {
-        if (!$this->payments->contains($payment)) {
-            $this->payments[] = $payment;
-            $payment->setOrder($this);
-        }
-
-        return $this;
-    }
-
-    public function removePayment(Payment $payment): self
-    {
-        if ($this->payments->contains($payment)) {
-            $this->payments->removeElement($payment);
-            // set the owning side to null (unless already changed)
-            if ($payment->getOrder() === $this) {
-                $payment->setOrder(null);
-            }
-        }
-
+    /**
+     * @param Payment|null $payment
+     * @return $this
+     */
+    public function setPayment(?Payment $payment): self {
+        $this->payment = $payment;
         return $this;
     }
 

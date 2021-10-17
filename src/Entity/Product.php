@@ -53,7 +53,7 @@ class Product
     private float $weight = 0.0;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false}, nullable=true)
      */
     private bool $isActive = false;
 

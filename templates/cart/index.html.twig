@@ -24,10 +24,11 @@
 					<input type="hidden" name="_method" value="DELETE">
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token('cart_clear') }}">
 					<div class="ui two buttons">
-						<a href="{{ path('checkout_address') }}" class="ui icon positive button">
+						{% set status = cart|length == 0 ? ' disabled ' : ''  %}
+						<a href="{{ path('checkout_address') }}" class="ui icon positive button {{ status }}" {{ status }}>
 							<i class="credit card icon"></i>
 							{{ 'buttons.process_checkout'|trans }}</a>
-						<button type="submit" id="cart-clear" class="ui right floated negative button">
+						<button type="submit" id="cart-clear" class="ui right floated negative button {{ status }}" {{ status }}>
 							<i class="remove icon"></i>
 							{{'buttons.cart_clear'|trans}}
 						</button>
@@ -78,6 +79,10 @@
 									<i class="trash icon"></i>
 								</a>
 							</td>
+						</tr>
+					{% else %}
+						<tr class="ui infi message">
+
 						</tr>
 					{% endfor %}
 				</tbody>

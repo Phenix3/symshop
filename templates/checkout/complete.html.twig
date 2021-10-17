@@ -3,7 +3,7 @@
 {% form_theme checkoutCompleteForm with ["form/theme.html.twig"] only %}
 
 {% block steps %}
-    {% include "checkout/_steps.html.twig" with {activeStep: 'select_payment'} %}
+    {% include "checkout/_steps.html.twig" with {activeStep: 'complete'} %}
 {% endblock %}
 
 {% block content %}

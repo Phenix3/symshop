@@ -107,7 +107,6 @@
                         <th>Reference</th>
                         <th>Date</th>
                         <th>Prix</th>
-                        <th>Paiement</th>
                         <th>Etat</th>
                     </tr>
                 </thead>
@@ -116,7 +115,6 @@
                         <td>{{ order.reference }}</td>
                         <td>{{ order.createdAt|date("m/d/Y") }}</td>
                         <td>{{ (order.total + order.shipping)|localizedcurrency('XAF') }}</td>
-                        <td>{{ order.payment }}</td>
                         <td>{{ order.state.name }}</td>
                     </tr>
                 </tbody>

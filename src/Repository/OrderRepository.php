@@ -20,23 +20,6 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($registry, Order::class);
     }
 
-    // /**
-    //  * @return o[] Returns an array of o objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-    return $this->createQueryBuilder('o')
-    ->andWhere('o.exampleField = :val')
-    ->setParameter('val', $value)
-    ->orBy('o.id', 'ASC')
-    ->setMaxResults(10)
-    ->getQuery()
-    ->getResult()
-    ;
-    }
-     */
-
     public function findOneByUserForCheckout(UserInterface $user): ?Order
     {
         return $this->createQueryBuilder('o')
@@ -78,6 +61,16 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+     * @return int
+     */
+    final public function countForReference(): int
+    {
+        $query = $this->count([]);
+
+        return $query;
     }
 
 }

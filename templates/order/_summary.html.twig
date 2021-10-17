@@ -3,7 +3,7 @@
 
 <div class="ui two column stackable grid">
     <div class="column" id="shop-payments">
-        {% include 'order/_payment.html.twig' with {total: order.total, payment: order.payment, state: order.state.name } %}
+        {% include 'order/_payment.html.twig' with {ttc: order.tax + order.shipping + order.total, total: order.total, payment: order.payment, state: order.state.name } %}
     </div>
     <div class="column" id="shop-shipments">
         {# {% include 'order/_shipments.html.twig' %} #}

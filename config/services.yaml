@@ -131,6 +131,7 @@ services:
             - '@security.user_password_encoder.generic'
 
     Bezhanov\Faker\Provider\Commerce: ~
+    Bezhanov\Faker\Provider\Placeholder: ~
 
     Twig\Extra\Markdown\MarkdownInterface:
         class: Twig\Extra\Markdown\ErusevMarkdown

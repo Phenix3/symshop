@@ -178,7 +178,7 @@ class Category
     /**
      * @return mixed
      */
-    public function getLeft()
+    public function getLft()
     {
         return $this->lft;
     }
@@ -186,7 +186,7 @@ class Category
     /**
      * @return mixed
      */
-    public function getLevel()
+    public function getLvl()
     {
         return $this->lvl;
     }
@@ -194,7 +194,7 @@ class Category
     /**
      * @return mixed
      */
-    public function getRight()
+    public function getRgt()
     {
         return $this->rgt;
     }

@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Address;
+use App\Entity\GatewayConfig;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Entity\Payment;
+use App\Entity\PaymentMethod;
 use App\Form\CheckoutAddressType;
 use App\Form\CheckoutCompleteType;
 use App\Form\CheckoutPaymentType;
@@ -21,6 +23,7 @@ use App\Service\Address\AddressComparator;
 use App\Service\Cart\CartService;
 use App\Service\Shipping\ShippingService;
 use Payum\Core\Payum;
+use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Security\GenericTokenFactoryInterface;
 use Payum\Core\Security\HttpRequestVerifierInterface;
 use Payum\Core\Security\TokenInterface;
@@ -209,6 +212,7 @@ class CheckoutController extends AbstractController
         $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
 
         $storage = $this->payum->getStorage(Payment::class);
+        $amount = $order->getTax() + $order->getTotal() + $order->getShipping();
 
         /** @var Payment $payment */
         $payment = $storage->create();
@@ -217,13 +221,13 @@ class CheckoutController extends AbstractController
         $payment->setClientEmail($user->getEmail());
         $payment->setClientId($user->getId());
         $payment->setOrder($order);
-        $payment->setTotalAmount($order->getTotal());
+        $payment->setTotalAmount($amount);
 
-        $order->addPayment($payment);
+        $order->setPayment($payment);
 
-        $checkoutPaymentForm = $this->createForm(CheckoutPaymentType::class, $order);
+        $checkoutPaymentForm = $this->createForm(CheckoutPaymentType::class, $payment);
         $checkoutPaymentForm->handleRequest($request);
-
+//        dump($order);
 
         if ($checkoutPaymentForm->isSubmitted() && $checkoutPaymentForm->isValid()) {
             dump($checkoutPaymentForm->isSubmitted());
@@ -231,17 +235,10 @@ class CheckoutController extends AbstractController
             $payment->setState(Payment::STATE_CART);
             $storage->update($payment);
 
-            $captureToken = $this->getTokenFactory()->createCaptureToken(
-                $payment->getMethod()->getGatewayConfig()->getGatewayName(),
-                $payment,
-                'done'
-            );
-
             $order
                 ->setState($state)
                 ->setPaymentState(Payment::STATE_PROCESSING)
                 ->setCheckoutState('payment_selected')
-                ->setTokenValue($captureToken->getHash())
                 ;
             $this->getDoctrine()->getManager()->flush();
 
@@ -276,6 +273,16 @@ class CheckoutController extends AbstractController
                 ->setCheckoutCompletedAt(new \DateTime())
                 ;
 
+            $payment = $order->getPayment();
+
+            $captureToken = $this->getTokenFactory()->createCaptureToken(
+                $payment->getMethod()->getGatewayConfig()->getGatewayName(),
+                $payment,
+                'awaiting_payment'
+            );
+
+            $order->setTokenValue($captureToken->getHash());
+
             $this->getDoctrine()->getManager()->flush();
 
             // TODO: Invoice generation
@@ -287,13 +294,39 @@ class CheckoutController extends AbstractController
 
             $this->addFlash('success', 'alerts.order_completed');
 
-            return $this->redirectToRoute('home');
+            return $this->redirect($captureToken->getTargetUrl());
         }
 
         return $this->render('checkout/complete.html.twig', [
             'order' => $order,
             'checkoutCompleteForm' => $checkoutCompleteForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/done", name="done")
+     */
+    public function done(Request $request)
+    {
+        $token = $this->getHttpRequestVerifier()->verify($request);
+        $gateway = $this->payum->getGateway($token->getGatewayName());
+
+        $this->getHttpRequestVerifier()->invalidate($token);
+
+        $identity = $token->getDetails();
+
+        $gateway->execute($status = new GetHumanStatus($token));
+        $payment = $status->getFirstModel();
+
+        return $this->json([
+            'status' => $status->getValue(),
+            'payment' => [
+                'totalAmount' => $payment->getTotalAmount(),
+                'currency' => $payment->getCurrencyCode(),
+                'details' => $payment->getDetails()
+            ]
+        ]);
+
     }
 
     private function verifyAddress(Address $address)

@@ -25,9 +25,13 @@ class ProductForm extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
-            ->add('price', MoneyType::class)
+            ->add('price', MoneyType::class, [
+                'currency' => 'XAF'
+            ])
             ->add('weight', NumberType::class)
-            ->add('isActive', CheckboxType::class)
+            ->add('isActive', CheckboxType::class, [
+                'required' => false
+            ])
             ->add('quantity', NumberType::class)
             ->add('quantityAlert', NumberType::class)
             ->add('image', AttachmentType::class)

@@ -13,16 +13,11 @@ class PaymentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $formEvent) {
-            $form = $formEvent->getForm();
-            $payment = $formEvent->getData();
-
-            $form->add('method', PaymentMethodChoiceType::class, [
+        $builder
+            ->add('method', PaymentMethodChoiceType::class, [
                 'label' => 'forms.checkout.payment_method',
-                'subject' => $payment,
                 'expanded' => true
             ]);
-        });
     }
 
     public function configureOptions(OptionsResolver $resolver)

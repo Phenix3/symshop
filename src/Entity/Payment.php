@@ -41,7 +41,7 @@ class Payment extends BasePayment
     /**
      * 
      */
-    protected string $state = self::STATE_NEW;
+    protected ?string $state = self::STATE_NEW;
 
     /**
      * @ORM\ManyToOne(targetEntity=PaymentMethod::class)
@@ -49,10 +49,10 @@ class Payment extends BasePayment
     private $method;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Order::class, inversedBy="payments")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity=Order::class, inversedBy="payment")
      */
     private $order;
+
 
     /**
      * @return mixed

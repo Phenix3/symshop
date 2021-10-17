@@ -22,30 +22,16 @@ class PaymentMethodChoiceType extends AbstractType
         $this->paymentMethodRepository = $paymentMethodRepository;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        if ($options['multiple']) {
-            $builder->addModelTransformer(new CollectionToArrayTransformer());
-        }
-    }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'choices' => function(Options $options) {
-                if ($options['subject']) {
-                    return $this->paymentMethodRepository->findBy(['enabled' => true]);
-                }
-
-                return $this->paymentMethodRepository->findAll();
+                return $this->paymentMethodRepository->findBy(['enabled' => true]);
             },
             'choice_value' => 'id',
             'choice_label' => 'name'
         ])
-        ->setDefined([
-            'subject'
-        ])
-        ->setAllowedTypes('subject', Payment::class)
         ;
     }
 

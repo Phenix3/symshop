@@ -22,7 +22,7 @@ class AddressController extends BaseController
     public function edit(Address $address, Request $request): Response
     {
         $addressForm = $this->createForm(AddressType::class, $address, [
-            'expaded_civility' => false
+            'expanded_civility' => false
         ]);
         $addressForm->handleRequest($request);
 
