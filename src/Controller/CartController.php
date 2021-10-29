@@ -42,7 +42,9 @@ class CartController extends AbstractController
         $this->addFlash('success', 'alerts.product_added_to_cart');
 
         if($request->isXmlHttpRequest()) {
-          return $this->json([]);
+          return $this->json([
+            'reload' => true
+          ]);
         }
         return $this->redirectToRoute('cart_index');
     }
@@ -110,7 +112,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart_index');
     }
 
-    public function renderForm($id, Request $request, UrlGeneratorInterface $urlGenerator)
+    public function renderForm($id, UrlGeneratorInterface $urlGenerator, ProductRepository $productRepository)
     {
         $cartItemForm = $this->createForm(CartItemType::class, new CartData(), [
             'action' => $urlGenerator->generate('cart_add', ['id' => $id]),
@@ -118,6 +120,7 @@ class CartController extends AbstractController
 
         return $this->render('cart/_form.html.twig', [
             'form' => $cartItemForm->createView(),
+            'product' => $productRepository->find($id)
         ]);
     }
 

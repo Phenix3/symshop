@@ -65,7 +65,7 @@ Encore
 
     // enables Sass/SCSS support
     .enableSassLoader()
-    .enableVueLoader()
+    // .enableVueLoader()
     .addAliases({
         '@@': path.resolve(__dirname, 'assets')
     })

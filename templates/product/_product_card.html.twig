@@ -28,7 +28,7 @@
       </div>
     
     <div class="ui three bottom attached small buttons">
-        <a href="{{ path('cart_add', {id: product.id}) }}" class="ui basic green button popup-js" data-tooltip="{{ 'labels.add_to_cart'|trans }}"><i class="icon cart"></i></a>
+        <button data-card-button="true" data-reload="true" data-target-path="{{ path('cart_add', {id: product.id}) }}" data-product-quantity="1" data-product-id="{{ product.id }}" class="ui basic green button popup-js" data-tooltip="{{ 'labels.add_to_cart'|trans }}"><i class="icon cart"></i></button>
         <a href="#" class="ui basic red button"  data-tooltip="{{ 'labels.add_to_wish_list'|trans }}" data-inverted><i class="heart icon"></i></a>
 {#        <product-quick-view-btn quick-view-details="{{ product.serialize }}" />#}
         <a href="#" class="ui red button">

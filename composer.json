@@ -19,12 +19,8 @@
         "dompdf/dompdf": "^1.0",
         "easycorp/easyadmin-bundle": "^3.1",
         "erusev/parsedown": "^1.7",
-<<<<<<< HEAD
         "excelwebzone/recaptcha-bundle": "^1.5",
         "friendsofsymfony/ckeditor-bundle": "^2.2",
-=======
-        "friendsofsymfony/ckeditor-bundle": "^2.3",
->>>>>>> aedb927999397c08d035c12ce2d2b56111a0dc48
         "friendsofsymfony/jsrouting-bundle": "^2.7",
         "hautelook/alice-bundle": "^2.9",
         "knplabs/knp-paginator-bundle": "^5.4",

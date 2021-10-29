@@ -14,5 +14,11 @@ window.$ = window.jQuery = jquery;
 window.axios = api;
 window.swal = window.Swal = swal;
 
+window.Toast = Swal.mixin({
+    timerProgressBar: true,
+    timer: 1000,
+    toast: true
+});
+
 import './js/elements/index';
 

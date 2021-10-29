@@ -50,6 +50,7 @@ const vm = new Vue({
 require("./dist/semantic.min");
 require("./js/plugins/toggle");
 require("./js/plugins/address-book");
+require("./js/plugins/cart-button");
 
 
 // App Initialization
