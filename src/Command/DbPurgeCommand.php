@@ -11,8 +11,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DbPurgeCommand extends Command
+class DbPurgeCommand// extends Command
 {
+   /*
     protected static $defaultName = 'app:db-purge';
 
     private $purgerFactory;
@@ -38,9 +39,9 @@ class DbPurgeCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $io->note('Your database will be purged');
-        /* $question = $this->ask('Question');
-        $io->askQuestion(); */
-        $arg1 = $input->getArgument('arg1');
+        $question = $this->ask('Question');
+        $io->askQuestion();
+        // $arg1 = $input->getArgument('arg1');
 
         $purger = $this->purgerFactory->createForEntityManager('default', $this->em);
         $purger->purge();
@@ -48,5 +49,5 @@ class DbPurgeCommand extends Command
         $io->success('The database has been purged!');
 
         return Command::SUCCESS;
-    }
+    } */
 }

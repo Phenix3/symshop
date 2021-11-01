@@ -90,7 +90,6 @@ class AccountController extends BaseController
         $user = $this->getUser();
         $this->denyAccessUnlessGranted('USER_SHOW', $user);
         $user = $userRepository->findForExcerpt($user);
-        dump($user);
         
         return $this->render('account/excerpt.html.twig', [
             'user' => $user

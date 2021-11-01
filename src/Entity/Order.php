@@ -263,7 +263,7 @@ class Order
     /**
      * @return Payment
      */
-    public function getPayment(): ?Payment
+    public function getPayment(): Payment
     {
         return $this->payment;
     }

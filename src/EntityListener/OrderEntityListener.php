@@ -21,11 +21,10 @@ class OrderEntityListener
 
     public function prePersist(Order $order, LifecycleEventArgs $event)
     {
-        $count = $this->orderRepository->countForReference();
         $order
             ->setCreatedAt(new \DateTime())
             ->setReference(
-                $this->orderReferenceGenerator->generateReference($count)
+                $this->orderReferenceGenerator->generateReference($this->orderRepository->count([]))
             );
     }
 }

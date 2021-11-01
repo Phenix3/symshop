@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,6 +42,12 @@ class ContactType extends AbstractType
                     new Length([
                         'min' => 20
                     ])
+                ]
+            ])
+            ->add('recaptcha', EWZRecaptchaV3Type::class, [
+                'action_name' => 'contact',
+                'constraints' => [
+                    new IsTrueV3()
                 ]
             ])
         ;

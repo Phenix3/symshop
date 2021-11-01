@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
 
 class CheckoutCompleteType extends AbstractType
 {
@@ -16,6 +18,12 @@ class CheckoutCompleteType extends AbstractType
             ->add('notes', TextareaType::class, [
                 'label' => 'forms.checkout_notes',
                 'required' => false,
+            ])
+            ->add('recaptcha', EWZRecaptchaV3Type::class, [
+                'action_name' => 'checkout_complete',
+                'constraints' => [
+                    new IsTrueV3()
+                ]
             ])
         ;
     }

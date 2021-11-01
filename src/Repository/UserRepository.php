@@ -52,8 +52,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ;
 
-        dump($query, $user->getId());
-
         return $query->getOneOrNullResult();
     }
 }

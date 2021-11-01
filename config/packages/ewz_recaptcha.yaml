@@ -1,0 +1,7 @@
+ewz_recaptcha:
+  version: 3
+  public_key: '%env(RECAPTCHA_SITE_KEY)%'
+  private_key: '%env(RECAPTCHA_SECRET_KEY)%'
+
+  score_threshold: 0.6
+  hide_badge: true

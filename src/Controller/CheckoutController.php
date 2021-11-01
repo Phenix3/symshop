@@ -147,7 +147,6 @@ class CheckoutController extends AbstractController
             $entityManager->flush();
 
             $cartService->clear();
-            dump('Final call');
             return $this->redirectToRoute('checkout_shipping');
         }
         return $this->render('checkout/address.html.twig', [
@@ -171,7 +170,7 @@ class CheckoutController extends AbstractController
         $checkoutShippingForm->handleRequest($request);
 
         if ($checkoutShippingForm->isSubmitted() && $checkoutShippingForm->isValid()) {
-
+            
             $shippingData = $checkoutShippingForm->get('shipping')->getData();
 
             $country = $this->countryRepository->findOneBy(['name' => 'Cameroun']);
@@ -181,7 +180,7 @@ class CheckoutController extends AbstractController
 
             $shipping = $shippingData === 'colissimo' ? $shippingService->compute($order->getBillingAddress()->getCountry()) : 0;
             $state = $this->stateRepository->findOneBy(['slug' => 'shipping-selected']);
-            dump($state);
+            
             $order
                 ->setShipping($shipping)
                 ->setTax($tax)
@@ -212,7 +211,6 @@ class CheckoutController extends AbstractController
         $this->denyAccessUnlessGranted('ORDER_EDIT', $order);
 
         $storage = $this->payum->getStorage(Payment::class);
-        $amount = $order->getTax() + $order->getTotal() + $order->getShipping();
 
         /** @var Payment $payment */
         $payment = $storage->create();
@@ -221,16 +219,16 @@ class CheckoutController extends AbstractController
         $payment->setClientEmail($user->getEmail());
         $payment->setClientId($user->getId());
         $payment->setOrder($order);
-        $payment->setTotalAmount($amount);
+        $payment->setTotalAmount($order->getTotal());
 
         $order->setPayment($payment);
 
         $checkoutPaymentForm = $this->createForm(CheckoutPaymentType::class, $payment);
         $checkoutPaymentForm->handleRequest($request);
-//        dump($order);
+       
 
         if ($checkoutPaymentForm->isSubmitted() && $checkoutPaymentForm->isValid()) {
-            dump($checkoutPaymentForm->isSubmitted());
+            
             $state = $this->stateRepository->findOneBy(['slug' => 'payment-selected']);
             $payment->setState(Payment::STATE_CART);
             $storage->update($payment);
@@ -266,7 +264,7 @@ class CheckoutController extends AbstractController
 
         if ($checkoutCompleteForm->isSubmitted() && $checkoutCompleteForm->isValid()) {
 
-            $state = $this->stateRepository->findOneBy(['slug' => 'awaiting_payment']);
+            $state = $this->stateRepository->findOneBy(['slug' => 'completed']);
             $order
                 ->setState($state)
                 ->setCheckoutState('completed')
@@ -278,7 +276,7 @@ class CheckoutController extends AbstractController
             $captureToken = $this->getTokenFactory()->createCaptureToken(
                 $payment->getMethod()->getGatewayConfig()->getGatewayName(),
                 $payment,
-                'awaiting_payment'
+                'checkout_complete'
             );
 
             $order->setTokenValue($captureToken->getHash());

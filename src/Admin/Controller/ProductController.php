@@ -65,7 +65,7 @@ class ProductController extends CrudController
     {
         $data = new ProductCrudData($product);
         $old = clone $product;
-        dump($data);
+        // dump($data);
         $originalImages = new ArrayCollection();
 
         foreach ($product->getImages() as $image) {
@@ -85,7 +85,7 @@ class ProductController extends CrudController
                 }
             }
             $categories = $form->get('categories')->getData();
-            dump($originalImages, $categories);
+            // dump($originalImages, $categories);
             foreach ($categories as $category) {
                 /** @var Category $category */
                 $entity->addCategory($category);
@@ -94,7 +94,7 @@ class ProductController extends CrudController
             }
             $this->em->persist($entity);
             $data->hydrate();
-            dump($data, $entity);
+            // dump($data, $entity);
             $this->em->flush();
 
             if ($this->events['update'] ?? null) {

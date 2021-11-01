@@ -50,7 +50,6 @@ class AutomaticCrudData implements CrudDataInterface
         $reflexion = new ReflectionClass($this);
         $properties = $reflexion->getProperties(ReflectionProperty::IS_PUBLIC);
         $accessor = new PropertyAccessor();
-        dump($this->entity);
         foreach ($properties as $property) {
             $name = $property->getName();
             $value = $accessor->getValue($this, $name);

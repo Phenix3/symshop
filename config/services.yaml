@@ -61,10 +61,6 @@ services:
         tags:
             - { name: doctrine.event_subscriber }
 
-    App\Command\DbPurgeCommand:
-        arguments:
-            - '@doctrine.fixtures.purger.orm_purger_factory'
-
     Knp\Bundle\PaginatorBundle\Helper\Processor: ~
 
     App\Core\Paginator\PaginatorInterface:
@@ -131,8 +127,6 @@ services:
             - '@security.user_password_encoder.generic'
 
     Bezhanov\Faker\Provider\Commerce: ~
-    Bezhanov\Faker\Provider\Placeholder: ~
 
     Twig\Extra\Markdown\MarkdownInterface:
         class: Twig\Extra\Markdown\ErusevMarkdown
-        

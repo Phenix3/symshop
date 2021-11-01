@@ -4,9 +4,11 @@ namespace App\Form;
 
 use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
 
 class CheckoutShippingType extends AbstractType
 {
@@ -19,6 +21,12 @@ class CheckoutShippingType extends AbstractType
                     'forms.withdrawal' => 'withdrawal',
                 ],
                 'expanded' => true 
+            ])
+            ->add('recaptcha', EWZRecaptchaV3Type::class, [
+                'action_name' => 'checkout_shipping',
+                'constraints' => [
+                    new IsTrueV3()
+                ]
             ])
         ;
     }

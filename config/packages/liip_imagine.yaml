@@ -3,10 +3,10 @@ liip_imagine:
     # valid drivers options include "gd" or "gmagick" or "imagick"
     driver: "gd"
 
-    controller:
-        filter_action:          liip_imagine.controller:filterAction
-        filter_runtime_action:  liip_imagine.controller:filterRuntimeAction
-        redirect_response_code: 301
+    # controller:
+    #     filter_action:          liip_imagine.controller:filterAction
+    #     filter_runtime_action:  liip_imagine.controller:filterRuntimeAction
+    #     redirect_response_code: 301
 
     filter_sets:
         mini:

@@ -2,18 +2,20 @@
 
 namespace App\Form;
 
-use App\Entity\Address;
 use App\Entity\Order;
-use App\Service\Address\AddressComparator;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\FormBuilderInterface;
+use App\Entity\Address;
+use Webmozart\Assert\Assert;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\AbstractType;
+use App\Service\Address\AddressComparator;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Valid;
-use Webmozart\Assert\Assert;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
 
 class CheckoutAddressType extends AbstractType
 {
@@ -29,6 +31,12 @@ class CheckoutAddressType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $optins)
     {
         $builder
+            ->add('recaptcha', EWZRecaptchaV3Type::class, [
+                'action_name' => 'checkout_address',
+                'constraints' => [
+                    new IsTrueV3()
+                ]
+            ])
             ->add('differentBillingAddress', CheckboxType::class, [
                 'label' => 'forms.different_billing_address',
                 'required' => false,
@@ -41,7 +49,6 @@ class CheckoutAddressType extends AbstractType
             ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $form = $event->getForm();
-                dump($event->getData(), $form);
                 $form
                     ->add('shippingAddress', AddressType::class, [
                         'constraints' => [new Valid()],
