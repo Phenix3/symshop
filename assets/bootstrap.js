@@ -1,8 +1,8 @@
 
-import jquery from "jquery";
+import jquery from "./js/plugins/jquery";
 import {api} from "@@/js/services/api";
 import swal from "sweetalert2";
-// import './stimulus-app';
+ import './stimulus-app';
 
 
 // Registers Stimulus controllers from controllers.json and in the controllers/ directory

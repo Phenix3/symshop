@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import $ from 'jquery';
+import $ from './jquery';
 
 /**
  * Collection Form plugin

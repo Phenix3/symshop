@@ -5,11 +5,11 @@ import 'flatpickr/dist/themes/material_green.css';
 import {French} from 'flatpickr/dist/l10n/fr.js';
 import a2lix_lib from "@@/js/plugins/a2lix_sf_collection";
 // import './../scss/lib/flatpickr.scss'
-require('./../scss/admin-form.scss');
-require('./plugins/select2.min');
+import './../scss/admin-form.scss';
+import './plugins/select2.min';
 // require('./plugins/bootstrap-datepicker.min');
-require("./plugins/form-collection");
-require("./plugins/a2lix_sf_collection");
+import "./plugins/form-collection";
+import "./plugins/a2lix_sf_collection";
 
 
 $('select').select2();

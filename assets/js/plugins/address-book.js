@@ -1,5 +1,5 @@
 
-import $ from 'jquery';
+import $ from './jquery';
 
 const parseKey = function parseKey(key) {
   return key.replace(/(_\w)/g, words => words[1].toUpperCase());

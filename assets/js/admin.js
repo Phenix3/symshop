@@ -5,7 +5,7 @@ import '../bootstrap';
 import $ from 'jquery';
 // import Vue from 'vue';
 window.Popper = require('popper.js').default;
-require('bootstrap');
+import 'bootstrap';
 
 (function () {
 	"use strict";

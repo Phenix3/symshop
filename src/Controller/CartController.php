@@ -109,7 +109,7 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart_index');
     }
 
-    public function renderForm($id, Request $request, UrlGeneratorInterface $urlGenerator)
+    public function renderCartForm($id, Request $request, UrlGeneratorInterface $urlGenerator)
     {
         $cartItemForm = $this->createForm(CartItemType::class, new CartData(), [
             'action' => $urlGenerator->generate('cart_add', ['id' => $id]),

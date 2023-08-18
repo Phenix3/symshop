@@ -47,10 +47,10 @@ const vm = new Vue({
 
 // Import plugins
 
-require("./dist/semantic.min");
-require("./js/plugins/toggle");
-require("./js/plugins/address-book");
-require("./js/plugins/cart-button");
+import "./dist/semantic.min";
+import "./js/plugins/toggle";
+import "./js/plugins/address-book";
+import "./js/plugins/cart-button";
 
 
 // App Initialization

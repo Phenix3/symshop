@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Address
 {
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection|mixed|\App\Entity\Order[]
+     */
+    public $orders;
     use Timestamp;
 
     /**
@@ -285,11 +289,9 @@ class Address
 
     public function removeOrder(Order $order): self
     {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getBillingAddress() === $this) {
-                $order->setBillingAddress(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->orders->removeElement($order) && $order->getBillingAddress() === $this) {
+            $order->setBillingAddress(null);
         }
 
         return $this;

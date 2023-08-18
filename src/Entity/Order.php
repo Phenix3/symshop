@@ -18,6 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Order
 {
+    public \Doctrine\Common\Collections\ArrayCollection $payments;
     use Timestamp;
 
     /**

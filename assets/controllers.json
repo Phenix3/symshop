@@ -11,7 +11,7 @@
                 "enabled": true,
                 "fetch": "eager",
                 "autoimport": {
-                    "@symfony/ux-dropzone/src/style.css": true
+                    "@symfony/ux-dropzone/dist/style.min.css": true
                 }
             }
         },
@@ -24,6 +24,10 @@
         "@symfony/ux-turbo": {
             "turbo-core": {
                 "enabled": true,
+                "fetch": "eager"
+            },
+            "mercure-turbo-stream": {
+                "enabled": false,
                 "fetch": "eager"
             }
         }

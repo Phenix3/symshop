@@ -144,14 +144,24 @@
     "erusev/parsedown": {
         "version": "1.7.4"
     },
+    "excelwebzone/recaptcha-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.5",
+            "ref": "fd4da7bc71749db65bc83abf5d164bfa9c839cf4"
+        },
+        "files": [
+            "config/packages/dev/ewz_recaptcha.yaml",
+            "config/packages/ewz_recaptcha.yaml"
+        ]
+    },
     "fakerphp/faker": {
         "version": "v1.16.0"
     },
     "fig/link-util": {
         "version": "1.1.2"
-    },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.5"
     },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.3",
@@ -180,6 +190,18 @@
     "gedmo/doctrine-extensions": {
         "version": "v3.1.0"
     },
+    "google/recaptcha": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.1",
+            "ref": "e5a4aa21f2e98d7440ae9aab6b56e307f99dd084"
+        },
+        "files": [
+            "config/packages/google_recaptcha.yaml"
+        ]
+    },
     "hautelook/alice-bundle": {
         "version": "2.9",
         "recipe": {
@@ -205,9 +227,6 @@
     },
     "knplabs/knp-paginator-bundle": {
         "version": "v5.7.0"
-    },
-    "laminas/laminas-code": {
-        "version": "4.4.3"
     },
     "league/uri": {
         "version": "6.5.0"
@@ -271,6 +290,18 @@
     "nikic/php-parser": {
         "version": "v4.13.0"
     },
+    "nyholm/psr7": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
+        },
+        "files": [
+            "config/packages/nyholm_psr7.yaml"
+        ]
+    },
     "payum/core": {
         "version": "1.6.2"
     },
@@ -297,6 +328,18 @@
     },
     "phenx/php-svg-lib": {
         "version": "v0.3.3"
+    },
+    "php-http/discovery": {
+        "version": "1.18",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.18",
+            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
+        },
+        "files": [
+            "config/packages/http_discovery.yaml"
+        ]
     },
     "php-http/message": {
         "version": "1.12.0"
@@ -393,6 +436,18 @@
     },
     "symfony/amqp-messenger": {
         "version": "v5.2.12"
+    },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "efb318193e48384eb5c5aadff15396ed698f8ffc"
+        },
+        "files": [
+            "public/.htaccess"
+        ]
     },
     "symfony/asset": {
         "version": "v5.2.12"
@@ -690,6 +745,15 @@
     },
     "symfony/service-contracts": {
         "version": "v2.4.0"
+    },
+    "symfony/stimulus-bundle": {
+        "version": "2.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.8",
+            "ref": "9e33a8a3794b603fb4be6c04ee5ecab901ce549e"
+        }
     },
     "symfony/stopwatch": {
         "version": "v5.3.4"

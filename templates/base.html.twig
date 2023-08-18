@@ -10,6 +10,10 @@
         {{ encore_entry_link_tags('app') }}
         {# <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" /> #}
         {% block css %}{% endblock %}
+
+        {{ encore_entry_script_tags('app') }}
+        {# <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> #}
+        {% block js %}{% endblock %}
     </head>
     <body>
         
@@ -22,8 +26,5 @@
 
         {% include "includes/_footer.html.twig" %}
 
-        {{ encore_entry_script_tags('app') }}
-        {# <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> #}
-        {% block js %}{% endblock %}
     </body>
 </html>

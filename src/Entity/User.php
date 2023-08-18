@@ -43,7 +43,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @var string The hashed password
@@ -54,7 +54,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isVerified = false;
+    private bool $isVerified = false;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -307,11 +307,9 @@ class User implements UserInterface
 
     public function removeReview(Review $review): self
     {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getAuthor() === $this) {
-                $review->setAuthor(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->reviews->removeElement($review) && $review->getAuthor() === $this) {
+            $review->setAuthor(null);
         }
 
         return $this;
