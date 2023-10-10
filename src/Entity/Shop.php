@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Stringable;
 use App\Entity\Traits\Timestamp;
 use App\Repository\ShopRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=ShopRepository::class)
  */
-class Shop
+class Shop implements Stringable
 {
     use Timestamp;
 
@@ -114,9 +115,9 @@ class Shop
      */
     private $hasMandat;
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->name;
+        return (string) $this->name;
     }
 
     public function getId(): ?string

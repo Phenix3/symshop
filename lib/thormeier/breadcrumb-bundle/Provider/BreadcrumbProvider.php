@@ -4,9 +4,6 @@ namespace Thormeier\BreadcrumbBundle\Provider;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\KernelEvent;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Thormeier\BreadcrumbBundle\Model\Breadcrumb;
 use Thormeier\BreadcrumbBundle\Model\BreadcrumbCollectionInterface;
 use Thormeier\BreadcrumbBundle\Model\BreadcrumbInterface;
@@ -53,7 +50,7 @@ class BreadcrumbProvider implements BreadcrumbProviderInterface
      */
     public function onKernelRequest(KernelEvent $event)
     {
-        if ($event->isMasterRequest()) {
+        if ($event->isMainRequest()) {
             $this->requestBreadcrumbConfig = $event->getRequest()->attributes->get('_breadcrumbs', array());
         }
     }

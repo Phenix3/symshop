@@ -7,7 +7,6 @@ use App\Form\Type\CartCollectionType;
 use App\Repository\ProductRepository;
 use App\Service\Cart\CartData;
 use App\Service\Cart\CartService;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -19,11 +18,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class CartController extends AbstractController
 {
-    private $cartService;
-
-    public function __construct(CartService $cartService)
+    public function __construct(private CartService $cartService)
     {
-        $this->cartService = $cartService;
     }
 
     /**
@@ -123,16 +119,13 @@ class CartController extends AbstractController
     /**
      * @Route("/{id}/update", name="update", methods={"PUT", "POST", "PATCH"})
      *
-     * @param string|int $id
-     * @param Request $request
-     * @param ProductRepository $productRepository
      *
      * @return void
      */
-    public function update($id, Request $request, ProductRepository $productRepository)
+    public function update(string|int $id, Request $request, ProductRepository $productRepository)
     {
-        $product = $productRepository->find($id);
-        $requestContent = \json_decode($request->getContent(), true);
+        $productRepository->find($id);
+        $requestContent = \json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $qte = (int) $requestContent['quantity'];
         $this->cartService->update($id, [
           'quantity' => ['relative' => false, 'value' => $qte]

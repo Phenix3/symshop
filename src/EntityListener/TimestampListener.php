@@ -3,6 +3,7 @@
 namespace App\EntityListener;
 
 
+use DateTime;
 use App\Entity\Address;
 use App\Entity\Order;
 use App\Entity\Product;
@@ -23,7 +24,7 @@ class TimestampListener
         ) {
             return;
         }
-        $entity->setCreatedAt(new \DateTime());
+        $entity->setCreatedAt(new DateTime());
     }
 
     public function preUpdate(LifecycleEventArgs $args)
@@ -38,6 +39,6 @@ class TimestampListener
         ) {
             return;
         }
-        $entity->setUpdatedAt(new \DateTime());
+        $entity->setUpdatedAt(new DateTime());
     }
 }

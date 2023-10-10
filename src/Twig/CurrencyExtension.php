@@ -19,12 +19,8 @@ use Twig\TwigFilter;
 
 final class CurrencyExtension // extends AbstractExtension
 {
-    /** @var CurrencyHelperInterface */
-    private $helper;
-
-    public function __construct(CurrencyHelperInterface $helper)
+    public function __construct(private CurrencyHelperInterface $helper)
     {
-        $this->helper = $helper;
     }
 
     /**
@@ -33,7 +29,7 @@ final class CurrencyExtension // extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('shop_currency_symbol', [$this->helper, 'convertCurrencyCodeToSymbol']),
+            new TwigFilter('shop_currency_symbol', fn(string $code): string => $this->helper->convertCurrencyCodeToSymbol($code)),
         ];
     }
 }

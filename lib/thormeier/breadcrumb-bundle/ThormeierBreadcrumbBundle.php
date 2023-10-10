@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Thormeier\BreadcrumbBundle\DependencyInjection\RoutingLoaderCompilerPass;
 use Thormeier\BreadcrumbBundle\DependencyInjection\ThormeierBreadcrumbExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 /**
  * Breadcrumb bundle class
@@ -17,7 +18,7 @@ class ThormeierBreadcrumbBundle extends Bundle
     /**
      * @return ThormeierBreadcrumbExtension
      */
-    public function getContainerExtension()
+    public function getContainerExtension(): ?ExtensionInterface
     {
         return new ThormeierBreadcrumbExtension();
     }

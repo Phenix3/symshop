@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Stringable;
 use App\Repository\RangeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=RangeRepository::class)
  */
-class RangeValue
+class RangeValue implements Stringable
 {
     /**
      * @ORM\Id()
@@ -120,8 +121,8 @@ class RangeValue
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return "< {$this->max}";
+        return (string) "< {$this->max}";
     }
 }

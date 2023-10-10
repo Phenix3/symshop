@@ -10,11 +10,8 @@ use Symfony\Component\Mime\Address;
 
 final class OrderConfirmationEmailHandler implements MessageHandlerInterface
 {
-    private $mailer;
-
-    public function __construct(MailerInterface $mailer)
+    public function __construct(private MailerInterface $mailer)
     {
-        $this->mailer = $mailer;
     }
 
     public function __invoke(OrderConfirmationEmail $message)

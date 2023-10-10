@@ -4,6 +4,8 @@
 namespace App\Core\Validator;
 
 
+use RuntimeException;
+use stdClass;
 use App\Admin\DataClass\CrudDataInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
@@ -13,15 +15,8 @@ use Symfony\Component\Validator\ConstraintValidator;
 class UniqueValidator extends ConstraintValidator
 {
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
-
-        $this->entityManager = $entityManager;
     }
 
     /**
@@ -34,20 +29,20 @@ class UniqueValidator extends ConstraintValidator
         }
 
         if (!$constraint instanceof Unique) {
-            throw new \RuntimeException(sprintf("%s can't validate constraints %s", self::class, get_class($constraint)));
+            throw new RuntimeException(sprintf("%s can't validate constraints %s", self::class, $constraint::class));
         }
 
         if (!method_exists($obj, 'getId')) {
-            throw new \RuntimeException(sprintf("%s can't be used to object %s, he dont has the \"getId\"", self::class,get_class($obj)));
+            throw new RuntimeException(sprintf("%s can't be used to object %s, he dont has the \"getId\"", self::class,$obj::class));
         }
 
         $accessor = new PropertyAccessor();
 
-        /** @var class-string<\stdClass> $entityClass */
+        /** @var class-string<stdClass> $entityClass */
         $entityClass = $constraint->entityClass;
 
         if ($obj instanceof CrudDataInterface) {
-            $entityClass = get_class($obj->getEntity());
+            $entityClass = $obj->getEntity()::class;
         }
         $value = $accessor->getValue($obj, $constraint->field);
         $repository = $this->entityManager->getRepository($entityClass);

@@ -2,12 +2,11 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Address;
-use App\Entity\GatewayConfig;
 use App\Entity\Order;
 use App\Entity\OrderProduct;
 use App\Entity\Payment;
-use App\Entity\PaymentMethod;
 use App\Form\CheckoutAddressType;
 use App\Form\CheckoutCompleteType;
 use App\Form\CheckoutPaymentType;
@@ -26,7 +25,6 @@ use Payum\Core\Payum;
 use Payum\Core\Request\GetHumanStatus;
 use Payum\Core\Security\GenericTokenFactoryInterface;
 use Payum\Core\Security\HttpRequestVerifierInterface;
-use Payum\Core\Security\TokenInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,43 +39,14 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CheckoutController extends AbstractController
 {
 
-    private OrderRepository $orderRepository;
-    private StateRepository $stateRepository;
-    private ProductRepository $productRepository;
-    private TranslatorInterface $translator;
-    private CountryRepository $countryRepository;
-    private Payum $payum;
-    /**
-     * @var AddressRepository
-     */
-    private AddressRepository $addressRepository;
-
-    public function __construct(
-        OrderRepository $orderRepository,
-        StateRepository $stateRepository,
-        ProductRepository $productRepository,
-        TranslatorInterface $translator,
-        CountryRepository $countryRepository,
-    AddressRepository $addressRepository,
-    Payum $payum
-    ) {
-        $this->orderRepository = $orderRepository;
-        $this->stateRepository = $stateRepository;
-        $this->productRepository = $productRepository;
-        $this->translator = $translator;
-        $this->countryRepository = $countryRepository;
-        $this->addressRepository = $addressRepository;
-        $this->payum = $payum;
+    public function __construct(private OrderRepository $orderRepository, private StateRepository $stateRepository, private ProductRepository $productRepository, private TranslatorInterface $translator, private CountryRepository $countryRepository, private AddressRepository $addressRepository, private Payum $payum)
+    {
     }
 
     /**
      * @Route("/")
      * @Route("/address", name="address")
      * @IsGranted("ROLE_USER")
-     * @param Request $request
-     * @param CartService $cartService
-     * @param AddressComparator $addressComparator
-     * @return Response
      */
     public function address(
         Request $request,
@@ -156,10 +125,6 @@ class CheckoutController extends AbstractController
 
     /**
      * @Route("/shipping", name="shipping")
-     *
-     * @param Request $request
-     * @param ShippingService $shippingService
-     * @return RedirectResponse|Response
      */
     public function shipping(Request $request, ShippingService $shippingService): Response
     {
@@ -201,7 +166,6 @@ class CheckoutController extends AbstractController
     /**
      * @Route("/payment", name="payment")
      *
-     * @param Request $request
      * @return Response
      */
     public function payment(Request $request)
@@ -251,10 +215,9 @@ class CheckoutController extends AbstractController
     /**
      * @Route("/complete", name="complete")
      *
-     * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function complete(Request $request)
+    public function complete(Request $request): RedirectResponse|Response
     {
         $order = $this->orderRepository->findOneByUserForCheckout($this->getUser());
         $this->denyAccessUnlessGranted('ORDER_CONFIRM', $order);
@@ -268,7 +231,7 @@ class CheckoutController extends AbstractController
             $order
                 ->setState($state)
                 ->setCheckoutState('completed')
-                ->setCheckoutCompletedAt(new \DateTime())
+                ->setCheckoutCompletedAt(new DateTime())
                 ;
 
             $payment = $order->getPayment();
@@ -311,7 +274,7 @@ class CheckoutController extends AbstractController
 
         $this->getHttpRequestVerifier()->invalidate($token);
 
-        $identity = $token->getDetails();
+        $token->getDetails();
 
         $gateway->execute($status = new GetHumanStatus($token));
         $payment = $status->getFirstModel();
@@ -346,36 +309,5 @@ class CheckoutController extends AbstractController
     private function getHttpRequestVerifier(): HttpRequestVerifierInterface
     {
         return $this->payum->getHttpRequestVerifier();
-    }
-
-    private function provideTokenBasedOnPayment(Payment $payment, array $redirectOptions): TokenInterface
-    {
-        /** @var PaymentMethod $paymentMethod */
-        $paymentMethod = $payment->getMethod();
-
-        /** @var GatewayConfig $gatewayConfig */
-        $gatewayConfig = $paymentMethod->getGatewayConfig();
-
-        if (isset($gatewayConfig->getConfig()['use_authorize']) && true === (bool) $gatewayConfig->getConfig()['use_authorize']) {
-            $token = $this->getTokenFactory()->createAuthorizeToken(
-                $gatewayConfig->getGatewayName(),
-                $payment,
-                $redirectOptions['route']
-                    ?? null,
-                $redirectOptions['parameters']
-                    ?? []
-            );
-        } else {
-            $token = $this->getTokenFactory()->createCaptureToken(
-                $gatewayConfig->getGatewayName(),
-                $payment,
-                $redirectOptions['route']
-                    ?? null,
-                $redirectOptions['parameters']
-                    ?? []
-            );
-        }
-
-        return $token;
     }
 }

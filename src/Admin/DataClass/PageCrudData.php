@@ -19,7 +19,6 @@ class PageCrudData extends AutomaticCrudData
 
     /**
      * @Assert\NotBlank()
-     * @var string
      */
     public string $content = '';
 }

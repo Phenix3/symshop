@@ -6,16 +6,8 @@ use App\Entity\Product;
 
 final class ProductQuantityAlertEmail
 {
-    /*
-     * Add whatever properties & methods you need to hold the
-     * data for this message class.
-     */
-
-    private $product;
-
-    public function __construct(Product $product)
+    public function __construct(private Product $product)
     {
-        $this->product = $product;
     }
 
 

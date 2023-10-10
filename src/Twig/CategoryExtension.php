@@ -10,31 +10,20 @@ use Twig\Extension\GlobalsInterface;
 
 class CategoryExtension extends AbstractExtension implements GlobalsInterface
 {
-    private CategoryRepository $categoryRepository;
-    /**
-     * @var TagAwareCacheInterface
-     */
-    private TagAwareCacheInterface $cache;
-
-    public function __construct(
-        CategoryRepository $categoryRepository,
-        TagAwareCacheInterface $cache
-    ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->cache = $cache;
+    public function __construct(private CategoryRepository $categoryRepository, private TagAwareCacheInterface $cache)
+    {
     }
 
 
     /**
      * @return array
      */
-    public function getGlobals()
+    public function getGlobals(): array
     {
 
         $categories = $this->cache->get('nav_categories', function (ItemInterface $item) {
             $item->tag('nav_categories_tag');
-            $categories = $this->categoryRepository->findRootNodes();
-            return $categories;
+            return $this->categoryRepository->findRootNodes();
         });
 
         return [

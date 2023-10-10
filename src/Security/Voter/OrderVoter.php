@@ -10,20 +10,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class OrderVoter extends Voter
 {
-    const CONFIRM = 'ORDER_CONFIRM';
-    const CREATE = 'ORDER_CREATE';
-    const EDIT = 'ORDER_EDIT';
-    const SHOW = 'ORDER_SHOW';
-    const DELETE = 'ORDER_DELETE';
+    public const CONFIRM = 'ORDER_CONFIRM';
+    public const CREATE = 'ORDER_CREATE';
+    public const EDIT = 'ORDER_EDIT';
+    public const SHOW = 'ORDER_SHOW';
+    public const DELETE = 'ORDER_DELETE';
 
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
@@ -31,10 +28,8 @@ class OrderVoter extends Voter
             && $subject instanceof Order;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
-        /** @var Order $subject */
-
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
         if (!$user instanceof UserInterface) {
@@ -44,23 +39,13 @@ class OrderVoter extends Voter
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
-
-        switch ($attribute) {
-            case self::CONFIRM:
-                return $this->canEdit($subject, $user);
-                break;
-            case self::EDIT:
-                return $this->canEdit($subject, $user);;
-                break;
-            case self::SHOW:
-                return $this->canShow($subject, $user);
-                break;
-            case self::DELETE:
-                return $this->canEdit($subject, $user);
-                break;
-        }
-
-        return false;
+        return match ($attribute) {
+            self::CONFIRM => $this->canEdit($subject, $user),
+            self::EDIT => $this->canEdit($subject, $user),
+            self::SHOW => $this->canShow($subject, $user),
+            self::DELETE => $this->canEdit($subject, $user),
+            default => false,
+        };
     }
 
     private function canShow(Order $order, UserInterface $user)

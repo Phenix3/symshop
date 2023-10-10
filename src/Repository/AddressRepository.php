@@ -55,7 +55,6 @@ class AddressRepository extends ServiceEntityRepository
     /**
      * Undocumented function
      *
-     * @param UserInterface $user
      * @return Address[]|null
      */
     public function findAllForUser(UserInterface $user): array

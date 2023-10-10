@@ -8,32 +8,15 @@ use App\Entity\Category;
 
 class CategoryUpdated
 {
-    /**
-     * @var Category
-     */
-    private Category $category;
-    /**
-     * @var Category
-     */
-    private Category $oldCategory;
-
-    public function __construct(Category $category, Category $oldCategory)
+    public function __construct(private Category $category, private Category $oldCategory)
     {
-        $this->category = $category;
-        $this->oldCategory = $oldCategory;
     }
 
-    /**
-     * @return Category
-     */
     public function getCategory(): Category
     {
         return $this->category;
     }
 
-    /**
-     * @return Category
-     */
     public function getOldCategory(): Category
     {
         return $this->oldCategory;

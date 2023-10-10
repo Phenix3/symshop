@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +26,6 @@ class ContactController extends BaseController
             return $this->redirectToRoute('home');        
         }
 
-        return $this->renderForm('contact/new.html.twig', compact('contactForm'));
+        return $this->renderForm('contact/new.html.twig', ['contactForm' => $contactForm]);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Service\Shipping;
 
-use App\Entity\Colissimo;
 use App\Repository\ColissimoRepository;
 use App\Repository\CountryRepository;
 use App\Repository\RangeRepository;
@@ -10,30 +9,15 @@ use App\Service\Cart\CartService;
 
 class ShippingService
 {
-    protected $cartService;
-    protected $rangeRepository;
-    protected $countryRepository;
-    protected $colissimoRepository;
-
-    public function __construct(
-        CartService $cartService,
-        RangeRepository $rangeRepository,
-        CountryRepository $countryRepository,
-        ColissimoRepository $colissimoRepository
-    ) {
-        $this->cartService     = $cartService;
-        $this->rangeRepository = $rangeRepository;
-        $this->countryRepository = $countryRepository;
-        $this->colissimoRepository = $colissimoRepository;
+    public function __construct(protected CartService $cartService, protected RangeRepository $rangeRepository, protected CountryRepository $countryRepository, protected ColissimoRepository $colissimoRepository)
+    {
     }
 
     public function compute($country_id)
     {
         $cartItems = $this->cartService->getContent();
 
-        $weight = $cartItems->sum(function ($item) {
-            return $item->quantity * $item->model->getWeight();
-        });
+        $cartItems->sum(fn($item) => $item->quantity * $item->model->getWeight());
 
         
         // $range = $this->rangeRepository->findAndOrderByMax($weight, [$country_id]);
@@ -45,7 +29,7 @@ class ShippingService
             return $col->getCountry() === $country;
         });
         */
-        $col = collect($colissimos)->first();
+        collect($colissimos)->first();
 
         // dd($col->getPrice());
 

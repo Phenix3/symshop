@@ -3,6 +3,7 @@
 
 namespace App\Core\Paginator;
 
+use Exception;
 use Doctrine\ORM\Query;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -10,26 +11,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class KnpPaginator implements PaginatorInterface
 {
-    private $paginator;
-    private $requestStack;
+    private array $sortableFields = [];
 
-    private $sortableFields = [];
-
-    public function __construct(
-        \Knp\Component\Pager\PaginatorInterface $paginator,
-        RequestStack $requestStack
-    ) {
-        $this->paginator = $paginator;
-        $this->requestStack = $requestStack;
+    public function __construct(private \Knp\Component\Pager\PaginatorInterface $paginator, private RequestStack $requestStack)
+    {
     }
 
     public function paginate(Query $query): PaginationInterface
     {
         $request = $this->requestStack->getCurrentRequest();
-        $page = $request ? $request->query->getInt('page', 1) : 1;
+        $page = $request !== null ? $request->query->getInt('page', 1) : 1;
 
         if ($page <= 0) {
-            throw new \Exception();
+            throw new Exception();
         }
 
         return $this->paginator->paginate($query, $page, $query->getMaxResults() ?: 15, [

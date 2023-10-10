@@ -6,16 +6,12 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-
-    private $encoder;
-
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(private UserPasswordHasherInterface $encoder)
     {
-        $this->encoder = $encoder;
     }
 
     public function load(ObjectManager $manager)
@@ -28,7 +24,7 @@ class UserFixtures extends Fixture
                 ->setEmail($faker->safeEmail)
                 ->setPassword($this->encoder->encodePassword($user, '123456'))
                 ->setIsVerified(true)
-                ->setNewsletter(mt_rand(0, 1))
+                ->setNewsletter(random_int(0, 1))
                 ->setLastSeen($faker->dateTimeThisYear())
             ;
             $manager->persist($user);

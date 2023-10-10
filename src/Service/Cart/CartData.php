@@ -4,7 +4,7 @@ namespace App\Service\Cart;
 
 class CartData
 {
-  public $id = null;
+  public $id;
 
   public $quantity = 1;
 }

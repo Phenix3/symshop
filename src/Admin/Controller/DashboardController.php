@@ -3,6 +3,7 @@
 
 namespace App\Admin\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
@@ -15,7 +16,7 @@ class DashboardController extends BaseController
 {
     /**
      * @Route("", name="dashboard_index")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function index(ChartBuilderInterface $chartBuilder)
     {
@@ -40,6 +41,6 @@ class DashboardController extends BaseController
             ],
         ]);
 
-        return $this->render('admin/dashboard/index.html.twig', compact('chart'));
+        return $this->render('admin/dashboard/index.html.twig', ['chart' => $chart]);
     }
 }

@@ -21,8 +21,6 @@ class PageCrudController extends CrudController
 
     /**
      * @Route("/", name="index")
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -31,9 +29,6 @@ class PageCrudController extends CrudController
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
-     *
-     * @param Page $page
-     * @return Response
      */
     public function edit(Page $page): Response
     {
@@ -44,8 +39,6 @@ class PageCrudController extends CrudController
 
     /**
      * @Route("/new", name="new", methods={"GET", "POST"})
-     *
-     * @return Response
      */
     public function new(): Response
     {
@@ -56,9 +49,6 @@ class PageCrudController extends CrudController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
-     *
-     * @param Page $page
-     * @return RedirectResponse
      */
     public function delete(Page $page): RedirectResponse
     {

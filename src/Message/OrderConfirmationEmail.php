@@ -6,17 +6,8 @@ use App\Entity\Order;
 
 final class OrderConfirmationEmail
 {
-    /*
-     * Add whatever properties & methods you need to hold the
-     * data for this message class.
-     */
-
-     private $order;
-
-
-     public function __construct(Order $order)
+    public function __construct(private Order $order)
      {
-         $this->order = $order;
      }
 
      /**

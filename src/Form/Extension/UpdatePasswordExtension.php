@@ -5,7 +5,6 @@ namespace App\Form\Extension;
 
 
 use App\Form\ChangePasswordFormType;
-use App\Form\Type\UpdatePasswordType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;

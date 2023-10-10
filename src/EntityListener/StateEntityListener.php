@@ -8,11 +8,8 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class StateEntityListener
 {
-    private $slugger;
-
-    public function __construct(SluggerInterface $slugger)
+    public function __construct(private SluggerInterface $slugger)
     {
-        $this->slugger = $slugger;
     }
 
     public function prePersist(State $state, LifecycleEventArgs $args): void

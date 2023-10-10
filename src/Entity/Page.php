@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Stringable;
 use App\Entity\Traits\Timestamp;
 use App\Repository\PageRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,7 +12,7 @@ use Symfony\Component\String\Slugger\SluggerInterface;
  * @ORM\Entity(repositoryClass=PageRepository::class)
  * @ORM\HasLifecycleCallbacks
  */
-class Page
+class Page implements Stringable
 {
     use Timestamp;
 
@@ -45,7 +46,7 @@ class Page
         }
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }

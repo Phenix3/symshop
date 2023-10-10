@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Stringable;
 use App\Entity\Traits\ToggleableTrait;
 use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,7 +15,7 @@ use Ramsey\Uuid\Doctrine\UuidGenerator;
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @Gedmo\Tree(type="nested")
  */
-class Category
+class Category implements Stringable
 {
     use ToggleableTrait;
 
@@ -89,7 +90,7 @@ class Category
         $this->children = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }
@@ -199,9 +200,6 @@ class Category
         return $this->rgt;
     }
 
-    /**
-     * @return ArrayCollection
-     */
     public function getChildren(): ArrayCollection
     {
         return $this->children;
@@ -241,9 +239,7 @@ class Category
     public function getEnabledChildren(): Collection
     {
         return $this->children->filter(
-            function (Category $childCategory) {
-                return $childCategory->isEnabled();
-            }
+            fn(Category $childCategory) => $childCategory->isEnabled()
         );
     }
 

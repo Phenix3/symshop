@@ -14,9 +14,7 @@ final class AddressComparator
 
     private function normalizeAddress(Address $address): array
     {
-        return array_map(function ($value) {
-            return strtolower(!is_object($value) ? trim((string) $value) : $value);
-        }, [
+        return array_map(fn($value) => strtolower(is_object($value) ? $value : trim((string) $value)), [
             $address->getIsProfessionnal(),
             $address->getCivility(),
             $address->getName(),

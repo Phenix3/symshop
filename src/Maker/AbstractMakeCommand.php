@@ -13,17 +13,9 @@ use Twig\Environment;
 
 abstract class AbstractMakeCommand extends Command
 {
-    /**
-     * @var Environment
-     */
-    private Environment $twig;
-    private string $projectDir;
-
-    public function __construct(Environment $twig, string $projectDir)
+    public function __construct(private Environment $twig, private string $projectDir)
     {
         parent::__construct();
-        $this->twig = $twig;
-        $this->projectDir = $projectDir;
     }
 
     protected function createFile(string $template, array $params, string $output): void
@@ -45,8 +37,8 @@ abstract class AbstractMakeCommand extends Command
         if (1 === count($paths)) {
             $directory = "{$this->projectDir}/src";
         } else {
-            $directory = "{$this->projectDir}/src/".join('/', array_slice($paths, 0, -1));
-            $pattern = join('/', array_slice($paths, -1));
+            $directory = "{$this->projectDir}/src/".implode('/', array_slice($paths, 0, -1));
+            $pattern = implode('/', array_slice($paths, -1));
         }
         $files = (new Finder())->in($directory)->name($pattern . '.php')->files();
         /** @var SplFileInfo $file */

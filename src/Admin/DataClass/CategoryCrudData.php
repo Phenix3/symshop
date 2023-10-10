@@ -7,7 +7,6 @@ namespace App\Admin\DataClass;
 // use App\Core\Validator\Slug;
 use App\Admin\Form\CategoryForm;
 use App\Entity\Category;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Core\Validator\Unique;
 
@@ -20,7 +19,6 @@ class CategoryCrudData extends AutomaticCrudData
 {
     /**
      * @Assert\NotBlank()
-     * @var string
      */
     public string $name = '';
 

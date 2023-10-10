@@ -37,7 +37,7 @@ class OrderController extends CrudController
     public function show(Order $order): Response
     {
 
-        return $this->render('admin/order/show.html.twig', compact('order'));
+        return $this->render('admin/order/show.html.twig', ['order' => $order]);
     }
 
     /**

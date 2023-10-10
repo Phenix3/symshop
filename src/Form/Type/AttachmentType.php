@@ -4,6 +4,7 @@
 namespace App\Form\Type;
 
 
+use Exception;
 use App\Entity\Attachment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
@@ -17,20 +18,8 @@ use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 class AttachmentType extends TextType implements DataTransformerInterface
 {
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $entityManager;
-    /**
-     * @var UploaderHelper
-     */
-    private UploaderHelper $uploaderHelper;
-
-    public function __construct(EntityManagerInterface $entityManager, UploaderHelper $uploaderHelper)
+    public function __construct(private EntityManagerInterface $entityManager, private UploaderHelper $uploaderHelper)
     {
-
-        $this->entityManager = $entityManager;
-        $this->uploaderHelper = $uploaderHelper;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -87,6 +76,6 @@ class AttachmentType extends TextType implements DataTransformerInterface
             return null;
         }
 
-        return $this->entityManager->getRepository(Attachment::class)->find($value) ?: new \Exception('Not found Attachment ');
+        return $this->entityManager->getRepository(Attachment::class)->find($value) ?: new Exception('Not found Attachment ');
     }
 }

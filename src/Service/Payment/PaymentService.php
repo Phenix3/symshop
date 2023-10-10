@@ -53,7 +53,7 @@ class PaymentService
     public function getData($request, $order, $shopRepository)
     {
         $shop = $shopRepository->findFirst();
-        $data = compact('shop', 'order');
+        $data = ['shop' => $shop, 'order' => $order];
         $slug = $order->getState()->getSlug();
 
         if ($slug === 'card' || $slug === 'error') {

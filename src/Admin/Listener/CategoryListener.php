@@ -4,6 +4,7 @@
 namespace App\Admin\Listener;
 
 
+use Psr\Cache\InvalidArgumentException;
 use App\Admin\Event\Category\CategoryCreated;
 use App\Admin\Event\Category\CategoryUpdated;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -11,14 +12,8 @@ use Symfony\Contracts\Cache\TagAwareCacheInterface;
 
 class CategoryListener implements EventSubscriberInterface
 {
-    /**
-     * @var TagAwareCacheInterface
-     */
-    private TagAwareCacheInterface $cache;
-
-    public function __construct(TagAwareCacheInterface $cache)
+    public function __construct(private TagAwareCacheInterface $cache)
     {
-        $this->cache = $cache;
     }
 
     /**
@@ -33,7 +28,7 @@ class CategoryListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function onCategoryCreated(CategoryCreated $event): void
     {
@@ -42,7 +37,7 @@ class CategoryListener implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function onCategoryUpdated(CategoryUpdated $event): void
     {
@@ -51,8 +46,7 @@ class CategoryListener implements EventSubscriberInterface
     }
 
     /**
-     * @param array $tags
-     * @throws \Psr\Cache\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function invalidateTags(array $tags): void
     {

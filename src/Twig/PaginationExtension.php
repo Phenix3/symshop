@@ -10,11 +10,8 @@ use Twig\TwigFunction;
 
 class PaginationExtension extends AbstractExtension
 {
-    public $processor;
-
-    public function __construct(Processor $processor)
+    public function __construct(public Processor $processor)
     {
-        $this->processor = $processor;
     }
 
     public function getFunctions(): array
@@ -22,7 +19,7 @@ class PaginationExtension extends AbstractExtension
         return [
             new TwigFunction(
                 'paginate',
-                [$this, 'render'],
+                fn(Environment $twig, SlidingPagination $sliding, array $queryParams = [], array $viewParams = []) => $this->render($twig, $sliding, $queryParams, $viewParams),
                 ['is_safe' => ['html'], 'needs_environment' => true]
             ),
         ];

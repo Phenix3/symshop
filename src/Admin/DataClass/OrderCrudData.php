@@ -6,7 +6,6 @@ namespace App\Admin\DataClass;
 
 // use App\Core\Validator\Slug;
 use App\Entity\Order;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @property Order $entity

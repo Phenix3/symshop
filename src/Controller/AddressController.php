@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Address;
 use App\Form\AddressType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,10 +57,9 @@ class AddressController extends BaseController
      * @Route("/new", name="new", methods={"GET", "POST"})
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      *
-     * @param Request $request
      * @return RedirectResponse|Response
      */
-    public function new(Request $request)
+    public function new(Request $request): RedirectResponse|Response
     {
         $address = new Address();
         $addressForm = $this->createForm(AddressType::class, $address);
@@ -77,6 +75,6 @@ class AddressController extends BaseController
             return $this->redirectToRoute('account_addresses');
         }
 
-        return $this->renderForm('address/new.html.twig', compact('addressForm'));
+        return $this->renderForm('address/new.html.twig', ['addressForm' => $addressForm]);
     }
 }

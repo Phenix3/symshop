@@ -10,14 +10,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends BaseController
 {
 
-    /**
-     * @var ProductRepository
-     */
-    private ProductRepository $productRepository;
-
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(private ProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
     }
 
     /**
@@ -36,6 +30,6 @@ class HomeController extends BaseController
      */
     public function page(Page $page): Response
     {
-        return $this->render('home/page.html.twig', compact('page'));
+        return $this->render('home/page.html.twig', ['page' => $page]);
     }
 }

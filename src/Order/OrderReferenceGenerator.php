@@ -5,13 +5,8 @@ namespace App\Order;
 
 class OrderReferenceGenerator
 {
-    private $startNumber;
-    private $numberLength;
-
-    public function __construct($startNumber = 1, $numberLength = 9)
+    public function __construct(private $startNumber = 1, private $numberLength = 9)
     {
-        $this->startNumber = $startNumber;
-        $this->numberLength = $numberLength;
     }
 
     public function generateReference($index = 1): string

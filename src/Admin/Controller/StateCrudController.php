@@ -23,8 +23,6 @@ class StateCrudController extends CrudController
 
     /**
      * @Route("/", name="index", methods={"GET"})
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -35,8 +33,6 @@ class StateCrudController extends CrudController
 
     /**
      * @Route("/new", name="new")
-     *
-     * @return Response
      */
     public function new(): Response
     {
@@ -58,9 +54,6 @@ class StateCrudController extends CrudController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
-     *
-     * @param State $state
-     * @return RedirectResponse
      */
     public function delete(State $state): RedirectResponse
     {

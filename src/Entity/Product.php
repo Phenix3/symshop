@@ -2,21 +2,20 @@
 
 namespace App\Entity;
 
+use Stringable;
 use App\Entity\Traits\Timestamp;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
  * @UniqueEntity(fields = {"name"})
  */
-class Product
+class Product implements Stringable
 {
     use Timestamp;
 
@@ -148,7 +147,7 @@ class Product
         [$this->name, $this->slug, $this->price, $this->description] = \unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }
@@ -186,9 +185,7 @@ class Product
 
     /**
      * Set the value of slug
-     *
-     * @return  self
-     */ 
+     */
     public function setSlug($slug): self
     {
         $this->slug = $slug;

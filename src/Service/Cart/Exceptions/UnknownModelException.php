@@ -2,5 +2,6 @@
 
 namespace App\Service\Cart\Exceptions;
 
-class UnknownModelException extends \Exception
+use Exception;
+class UnknownModelException extends Exception
 { }

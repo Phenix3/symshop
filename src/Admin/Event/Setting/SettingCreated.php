@@ -8,14 +8,8 @@ use App\Entity\Setting;
 
 class SettingCreated
 {
-    /**
-     * @var Setting
-     */
-    private Setting $setting;
-
-    public function __construct(Setting $setting)
+    public function __construct(private Setting $setting)
     {
-        $this->setting = $setting;
     }
 
     public function getSetting()

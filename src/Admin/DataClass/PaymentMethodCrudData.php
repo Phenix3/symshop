@@ -8,7 +8,6 @@ namespace App\Admin\DataClass;
 
 use App\Entity\GatewayConfig;
 use App\Entity\PaymentMethod;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @property PaymentMethod $entity

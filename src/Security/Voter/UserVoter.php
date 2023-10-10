@@ -11,18 +11,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserVoter extends Voter
 {
 
-    const USER_EDIT = 'USER_EDIT';
-    const USER_SHOW = 'USER_SHOW';
-    const USER_DELETE = 'USER_DELETE';
+    public const USER_EDIT = 'USER_EDIT';
+    public const USER_SHOW = 'USER_SHOW';
+    public const USER_DELETE = 'USER_DELETE';
 
-    private $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
@@ -30,7 +27,7 @@ class UserVoter extends Voter
             && $subject instanceof User;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
@@ -41,18 +38,11 @@ class UserVoter extends Voter
         if ($this->security->isGranted('ROLE_ADMIN')) {
             return true;
         }
-
-        // ... (check conditions and return true to grant permission) ...
-        switch ($attribute) {
-            case self::USER_EDIT:
-                return $this->canEdit($user, $subject);
-                break;
-            case self::USER_SHOW:
-                return $this->canEdit($user, $subject);
-                break;
-        }
-
-        return false;
+        return match ($attribute) {
+            self::USER_EDIT => $this->canEdit($user, $subject),
+            self::USER_SHOW => $this->canEdit($user, $subject),
+            default => false,
+        };
     }
 
     public function canEdit(UserInterface $user, User $subject): bool

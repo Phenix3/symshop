@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use DateTimeImmutable;
 use App\Entity\Attachment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -42,7 +43,7 @@ class AttachmentRepository extends ServiceEntityRepository
     public function findForPath(string $path): array
     {
         $parts = explode('/', $path);
-        $start = new \DateTimeImmutable("{$parts[0]}-{$parts[1]}-01");
+        $start = new DateTimeImmutable("{$parts[0]}-{$parts[1]}-01");
         $end = $start->modify('+1 month -1 second');
 
         return $this->createQueryBuilder('a')

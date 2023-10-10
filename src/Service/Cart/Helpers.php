@@ -17,7 +17,7 @@ class Helpers {
      */
     public static function normalizePrice($price)
     {
-        return (is_string($price)) ? floatval($price) : $price;
+        return (is_string($price)) ? (float) $price : $price;
     }
 
     /**
@@ -34,11 +34,11 @@ class Helpers {
     {
         if( $recursive )
         {
-            return (count($array) == count($array, COUNT_RECURSIVE)) ? false : true;
+            return (is_countable($array) ? count($array) : 0) !== (is_countable($array) ? count($array, COUNT_RECURSIVE) : 0);
         }
         else
         {
-            foreach ($array as $k => $v)
+            foreach ($array as $v)
             {
                 if (is_array($v))
                 {
@@ -62,7 +62,7 @@ class Helpers {
      */
     public static function issetAndHasValueOrAssignDefault(&$var, $default = false)
     {
-        if( (isset($var)) && ($var!='') ) return $var;
+        if( (isset($var)) && ($var != '') ) return $var;
 
         return $default;
     }

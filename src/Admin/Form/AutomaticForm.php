@@ -2,6 +2,7 @@
 
 namespace App\Admin\Form;
 
+use RuntimeException;
 use App\Entity\Attachment;
 use App\Entity\GatewayConfig;
 use App\Entity\Product;
@@ -11,7 +12,6 @@ use App\Form\Type\AttachmentCollectionType;
 use App\Form\Type\AttachmentType;
 use App\Form\Type\CategoryChoiceType;
 use App\Form\Type\DateTimeType;
-use App\Form\Type\EditorType;
 use App\Form\Type\GatewayConfigType;
 use App\Form\Type\MarkdownEditorType;
 use App\Form\Type\ProductChoiceType;
@@ -27,13 +27,12 @@ use ReflectionProperty;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class AutomaticForm extends AbstractType
 {
-    const TYPES = [
+    public const TYPES = [
         'string' => TextType::class,
         'bool' => SwitchType::class,
         'int' => NumberType::class,
@@ -46,7 +45,7 @@ class AutomaticForm extends AbstractType
         GatewayConfig::class => GatewayConfigType::class,
     ];
 
-    const NAMED_TYPES = [
+    public const NAMED_TYPES = [
         'content' => MarkdownEditorType::class,
         'description' => MarkdownEditorType::class,
         'color' => ColorType::class,
@@ -64,9 +63,8 @@ class AutomaticForm extends AbstractType
         $classProperties = $refClass->getProperties(ReflectionProperty::IS_PUBLIC);
         foreach ($classProperties as $property) {
             $name = $property->getName();
-            /** @var ReflectionNamedType|null $type */
             $type = $property->getType();
-            if (null === $type) {
+            if (!$type instanceof ReflectionNamedType) {
                 return;
             }
 
@@ -79,7 +77,7 @@ class AutomaticForm extends AbstractType
                     'required' => !$type->allowsNull() && 'bool' !== $type->getName(),
                 ]);
             } else {
-                throw new \RuntimeException(\sprintf("Impossible de trouver le champs associe au type %s dans %s::%s", $type->getName(), \get_class($data), $name));
+                throw new RuntimeException(\sprintf("Impossible de trouver le champs associe au type %s dans %s::%s", $type->getName(), $data::class, $name));
             }
         }
     }

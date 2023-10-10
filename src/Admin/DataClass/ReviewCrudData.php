@@ -9,7 +9,6 @@ use App\Entity\Product;
 use App\Entity\Review;
 use App\Entity\User;
 use App\Form\Type\StatusChoiceType;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @property Review $entity

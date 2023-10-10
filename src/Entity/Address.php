@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Address
 {
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection|mixed|\App\Entity\Order[]
+     * @var ArrayCollection|mixed|Order[]
      */
     public $orders;
     use Timestamp;

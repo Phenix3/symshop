@@ -1,5 +1,6 @@
 <?php namespace App\Service\Cart\Exceptions;
 
-class InvalidConditionException extends \Exception {
+use Exception;
+class InvalidConditionException extends Exception {
 
 }

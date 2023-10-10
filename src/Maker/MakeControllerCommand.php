@@ -4,6 +4,7 @@
 namespace App\Maker;
 
 
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -34,7 +35,7 @@ class MakeControllerCommand extends AbstractMakeCommand
             $controllerPath .= 'Controller';
         }
         if (!is_string($controllerPath)) {
-            throw new \RuntimeException('controllerPath doit etre une chaine de caractere');
+            throw new RuntimeException('controllerPath doit etre une chaine de caractere');
         }
         $parts = explode('/', $controllerPath);
         if (1 === count($parts)) {
@@ -47,11 +48,7 @@ class MakeControllerCommand extends AbstractMakeCommand
 
         $api = $input->getOption('api');
 
-        if (false === $api) {
-            $basePath = 'src/Admin/Controller/';
-        } else {
-            $basePath = 'src/Admin/Api/Controller/';
-        }
+        $basePath = false === $api ? 'src/Admin/Controller/' : 'src/Admin/Api/Controller/';
 
         $params = [
             'namespace' => $namespace,

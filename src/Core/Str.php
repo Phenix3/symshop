@@ -9,12 +9,11 @@ class Str
      *
      * @param  string  $haystack
      * @param  string|string[]  $needles
-     * @return bool
      */
-    public static function endsWith($haystack, $needles)
+    public static function endsWith($haystack, string|array $needles): bool
     {
         foreach ((array) $needles as $needle) {
-            if ($needle !== '' && substr($haystack, -strlen($needle)) === (string) $needle) {
+            if ($needle !== '' && str_ends_with($haystack, $needle)) {
                 return true;
             }
         }

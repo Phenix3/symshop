@@ -90,10 +90,11 @@ class PropertyInfo
 
     private function getPropertyTypeByPropertyDocComment(string $docComment)
     {
+        $type = null;
         $matches = [];
 
         if (preg_match("/\@var (\w+) (\[\])*/", $docComment, $matches) === 1) {
-            if (count($matches) > 0) {
+            if ($matches !== []) {
                 $type = $matches[1];
                 $isArray = isset($matches[2]);
 
@@ -152,9 +153,7 @@ class PropertyInfo
             return $aliasedStatement['namespace'];
         }
 
-        $statement = $useStatements->first(function ($statement) use ($className) {
-            return Str::endsWith($statement['namespace'], $className);
-        });
+        $statement = $useStatements->first(fn($statement) => Str::endsWith($statement['namespace'], $className));
 
         if ($statement) {
             return $statement['namespace'];

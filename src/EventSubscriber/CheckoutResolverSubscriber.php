@@ -5,33 +5,17 @@ namespace App\EventSubscriber;
 use App\Service\Cart\CartService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CheckoutResolverSubscriber implements EventSubscriberInterface
 {
-    private $cartService;
-    private $urlGenerator;
-    private $flashBag;
-
-    const ROPUTES = [
+    public const ROPUTES = [
         'cart' => 'checkout_address',
         'addressed' => 'checkout_shipping',
         'shipping_selected' => 'checkout_payment',
         'payment_selected' => 'complete',
         'completed' => 'order_show'
     ];
-
-    public function __construct(
-        CartService $cartService,
-        UrlGeneratorInterface $urlGenerator,
-        FlashBagInterface $flashBag
-    ) {
-        $this->cartService = $cartService;
-        $this->urlGenerator = $urlGenerator;
-        $this->flashBag = $flashBag;
-    }
 
     public function onKernelRequest(RequestEvent $event)
     {
@@ -47,7 +31,7 @@ class CheckoutResolverSubscriber implements EventSubscriberInterface
         } */
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'kernel.request' => 'onKernelRequest',

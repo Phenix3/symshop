@@ -49,7 +49,7 @@
                   </div>
                   <button type="submit" class="ui labeled icon primary button"><i class="cart icon"></i> Add to cart</button>
               </form> -->
-              {{ render(controller('App\\Controller\\CartController::renderForm', {id: product.id})) }}
+              {{ render(controller('App\\Controller\\CartController::renderCartForm', {id: product.id})) }}
           </div>
       </div>
 </div>

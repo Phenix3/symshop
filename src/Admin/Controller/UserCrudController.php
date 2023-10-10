@@ -2,7 +2,6 @@
 
 namespace App\Admin\Controller;
 
-use App\Admin\Controller\CrudController;
 use App\Admin\DataClass\CrudDataInterface;
 use App\Admin\Event\User\UserCreatedEvent;
 use App\Admin\Event\User\UserDeletedEvent;
@@ -44,8 +43,6 @@ class UserCrudController extends CrudController
 
     /**
      * @Route("/new", name="new")
-     *
-     * @return Response
      */
     public function new(): Response
     {
@@ -59,7 +56,6 @@ class UserCrudController extends CrudController
      * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
      *
      * @param CrudDataInterface $data
-     * @return Response
      */
     public function edit(User $user): Response
     {
@@ -97,9 +93,6 @@ class UserCrudController extends CrudController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
-     *
-     * @param User $user
-     * @return RedirectResponse
      */
     public function delete(User $user): RedirectResponse
     {

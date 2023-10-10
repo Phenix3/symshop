@@ -8,19 +8,11 @@ use Dompdf\Dompdf;
 
 class PdfService
 {
-    /**
-     * @var Dompdf
-     */
-    private Dompdf $dompdf;
-
-    public function __construct(Dompdf $dompdf)
+    public function __construct(private Dompdf $dompdf)
     {
-        $this->dompdf = $dompdf;
     }
 
     /**
-     * @param string $html
-     * @param bool $download
      * @return string|null|void
      */
     public function generate(string $html, bool $download = false)
@@ -34,9 +26,6 @@ class PdfService
         $this->dompdf->stream();
     }
 
-    /**
-     * @return Dompdf
-     */
     public function getDompdf(): Dompdf
     {
         return $this->dompdf;

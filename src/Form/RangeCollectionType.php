@@ -3,7 +3,6 @@
 namespace App\Form;
 
 use App\Form\DataTransformer\RangeTransformer;
-use App\Form\RangeFormType;
 use Symfony\Bridge\Doctrine\Form\DataTransformer\CollectionToArrayTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;

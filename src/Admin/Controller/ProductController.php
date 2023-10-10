@@ -7,9 +7,7 @@ use App\Admin\Form\ProductForm;
 use App\Entity\Attachment;
 use App\Entity\Category;
 use App\Entity\Product;
-use App\Form\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +28,6 @@ class ProductController extends CrudController
      */
     public function index(): Response
     {
-        /** @var EntityRepository */
         $repo = $this->getRepository();
         $query = $repo
                 ->createQueryBuilder('row')

@@ -5,7 +5,6 @@ namespace App\Twig;
 use App\Repository\ShopRepository;
 use App\Service\Cart\CartService;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\Cache\TagAwareCacheInterface;
 use Twig\Extension\AbstractExtension;
@@ -14,33 +13,17 @@ use Twig\TwigFunction;
 
 class AppExtension extends AbstractExtension implements GlobalsInterface
 {
-    private $shopRepository;
-    private $cartService;
-    private $serializer;
-    /**
-     * @var CacheInterface
-     */
-    private CacheInterface $cache;
-
-    public function __construct(
-        ShopRepository $shopRepository,
-        CartService $cartService,
-        SerializerInterface $serializer,
-        TagAwareCacheInterface $cache
-        ) {
-        $this->shopRepository = $shopRepository;
-        $this->cartService = $cartService;
-        $this->serializer = $serializer;
-        $this->cache = $cache;
+    public function __construct(private ShopRepository $shopRepository, private CartService $cartService, private SerializerInterface $serializer, private TagAwareCacheInterface $cache)
+    {
     }
 
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('active_class', [$this, 'getActiveClass'], [
+            new TwigFunction('active_class', fn(array $context, string $routeName, string $activeClass = 'active') => $this->getActiveClass($context, $routeName, $activeClass), [
                 'needs_context' => true
             ]),
-            new TwigFunction('icon_svg', [$this, 'svgIcon'], ['is_safe' => ['html']])
+            new TwigFunction('icon_svg', fn(string $name, ?int $size = null): string => $this->svgIcon($name, $size), ['is_safe' => ['html']])
         ];
     }
 
@@ -54,8 +37,7 @@ class AppExtension extends AbstractExtension implements GlobalsInterface
     {
         $shop = $this->cache->get('shop', function (ItemInterface $item) {
             $item->tag('shop_tag');
-            $shop = $this->shopRepository->findFirst();
-            return $shop;
+            return $this->shopRepository->findFirst();
         });
         return [
             'shop' => $shop,

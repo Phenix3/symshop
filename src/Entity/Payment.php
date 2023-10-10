@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\Order;
 use App\Repository\PaymentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Payum\Core\Model\Payment as BasePayment;
@@ -96,9 +95,7 @@ class Payment extends BasePayment
 
     /**
      * Set the value of state
-     *
-     * @return  self
-     */ 
+     */
     public function setState(?string $state): self
     {
         $this->state = $state;

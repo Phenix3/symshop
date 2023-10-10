@@ -8,26 +8,11 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Message;
-use Symfony\Component\Notifier\Notification\Notification;
-use Symfony\Component\Notifier\NotifierInterface;
-use Symfony\Component\Notifier\Recipient\Recipient;
 
 final class NewProductReviewMessageHandler implements MessageHandlerInterface
 {
-    /**
-     * @var ParameterBagInterface
-     */
-    private ParameterBagInterface $parameterBag;
-    /**
-     * @var MailerInterface
-     */
-    private MailerInterface $mailer;
-
-    public function __construct(MailerInterface $mailer, ParameterBagInterface $parameterBag)
+    public function __construct(private MailerInterface $mailer, private ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
-        $this->mailer = $mailer;
     }
 
     public function __invoke(NewProductReviewMessage $message)

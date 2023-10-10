@@ -1,7 +1,4 @@
 {
-    "acseo/typesense-bundle": {
-        "version": "v0.4"
-    },
     "alcohol/iso4217": {
         "version": "4.0.0"
     },
@@ -290,18 +287,6 @@
     "nikic/php-parser": {
         "version": "v4.13.0"
     },
-    "nyholm/psr7": {
-        "version": "1.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "0cd4d2d0e7f646fda75f9944f747a56e6ed13d4c"
-        },
-        "files": [
-            "config/packages/nyholm_psr7.yaml"
-        ]
-    },
     "payum/core": {
         "version": "1.6.2"
     },
@@ -329,23 +314,8 @@
     "phenx/php-svg-lib": {
         "version": "v0.3.3"
     },
-    "php-http/discovery": {
-        "version": "1.18",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.18",
-            "ref": "f45b5dd173a27873ab19f5e3180b2f661c21de02"
-        },
-        "files": [
-            "config/packages/http_discovery.yaml"
-        ]
-    },
     "php-http/message": {
         "version": "1.12.0"
-    },
-    "php-http/message-factory": {
-        "version": "v1.0.2"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -355,6 +325,18 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.5.1"
+    },
+    "phpstan/phpstan": {
+        "version": "1.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "f10b8054de1a94a3b9e8806a6453fd5c98491c44"
+        },
+        "files": [
+            "phpstan.dist.neon"
+        ]
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -434,9 +416,6 @@
     "stripe/stripe-php": {
         "version": "v4.13.0"
     },
-    "symfony/amqp-messenger": {
-        "version": "v5.2.12"
-    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
@@ -498,9 +477,6 @@
         "version": "v2.4.0"
     },
     "symfony/doctrine-bridge": {
-        "version": "v5.3.8"
-    },
-    "symfony/doctrine-messenger": {
         "version": "v5.3.8"
     },
     "symfony/dom-crawler": {
@@ -679,9 +655,6 @@
     "symfony/polyfill-mbstring": {
         "version": "v1.23.1"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.23.0"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.23.1"
     },
@@ -699,9 +672,6 @@
     },
     "symfony/property-info": {
         "version": "v5.2.12"
-    },
-    "symfony/redis-messenger": {
-        "version": "v5.3.8"
     },
     "symfony/routing": {
         "version": "5.3",
@@ -733,9 +703,6 @@
     },
     "symfony/security-csrf": {
         "version": "v5.3.4"
-    },
-    "symfony/security-guard": {
-        "version": "v5.2.12"
     },
     "symfony/security-http": {
         "version": "v5.2.12"

@@ -18,11 +18,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserCheckoutGuestType extends AbstractType
 {
-    protected $userRepository;
-
-    public function __construct(UserRepository $userRepository)
+    public function __construct(protected UserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -67,7 +64,7 @@ class UserCheckoutGuestType extends AbstractType
 
                 $user = $this->userRepository->findOneBy(['email' => $data['email']]);
 
-                if (null === $user) {
+                if (!$user instanceof User) {
                     $user = new User();
                     $user
                         ->setEmail($data['email'])

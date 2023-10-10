@@ -2,12 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
+use InvalidArgumentException;
 use App\Entity\Traits\Timestamp;
 use App\Repository\ReviewRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ReviewRepository::class)
@@ -117,7 +116,7 @@ class Review
     public function setStatus(?string $status): self
     {
         if (!in_array($status, [self::REVIEW_STATUS_ACCEPTED, self::REVIEW_STATUS_PENDING, self::REVIEW_STATUS_REJECTED])) {
-            throw new \InvalidArgumentException(sprintf("Invalid status value: %s", $status));
+            throw new InvalidArgumentException(sprintf("Invalid status value: %s", $status));
         }
         $this->status = $status;
 

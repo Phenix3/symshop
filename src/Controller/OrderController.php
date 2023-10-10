@@ -19,7 +19,6 @@ use App\Service\Shipping\ShippingService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -29,21 +28,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class OrderController extends AbstractController
 {
-    protected $productRepository;
-    protected $addressRepository;
-    protected $countryRepository;
-    protected $translator;
-
-    public function __construct(
-        ProductRepository $productRepository,
-        AddressRepository $addressRepository,
-        CountryRepository $countryRepository,
-        TranslatorInterface $translator
-    ) {
-        $this->productRepository = $productRepository;
-        $this->addressRepository = $addressRepository;
-        $this->countryRepository = $countryRepository;
-        $this->translator = $translator;
+    public function __construct(protected ProductRepository $productRepository, protected AddressRepository $addressRepository, protected CountryRepository $countryRepository, protected TranslatorInterface $translator)
+    {
     }
 
     /**
@@ -52,15 +38,12 @@ class OrderController extends AbstractController
     public function index()
     {
         $orders = $this->getUser()->getOrders();
-        return $this->render('order/index.html.twig', compact('orders'));
+        return $this->render('order/index.html.twig', ['orders' => $orders]);
     }
 
     /**
      * @Route("/new", name="new")
      *
-     * @param Request $request
-     * @param ShippingService $shippingService
-     * @param CartService $cartService
      *
      * @return void
      */
@@ -220,25 +203,21 @@ class OrderController extends AbstractController
     }
 
     /* protected function getData($request, $order, $shopRepository)
-    {
-        $shop = $shopRepository->findFirst();
-        $data = compact('shop', 'order');
-        $slug = $order->getState()->getSlug();
-
-        if ($slug === 'card' || $slug === 'erreur') {
-            # TODO: Paiement bancaire par carte
-        }
-        
-        return $data;
-    } */
-
+        {
+            $shop = $shopRepository->findFirst();
+            $data = compact('shop', 'order');
+            $slug = $order->getState()->getSlug();
+    
+            if ($slug === 'card' || $slug === 'erreur') {
+                # TODO: Paiement bancaire par carte
+            }
+            
+            return $data;
+        } */
     /**
      * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/details", name="details")
      *
-     * @param Request $request
-     * @param ShippingService $shippingService
-     * @param CartService $cartService
      *
      */
     public function details(
@@ -246,7 +225,7 @@ class OrderController extends AbstractController
         ShippingService $shippingService,
         CartService $cartService
     ) {
-        $requestContent = \json_decode($request->getContent(), true);
+        $requestContent = \json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         dump($requestContent);
         // Facturation
         $facturation_country = $this->addressRepository->find($requestContent['facturation'])->getCountry();
@@ -264,7 +243,7 @@ class OrderController extends AbstractController
         $total = $tax > 0 ? $cartService->getTotal() : $cartService->getTotal() / (1 + $tvaBase);
         dump($shipping, $cart, $total, $tax);
         return $this->json([
-            'view' => $this->renderView('order/_details.html.twig', compact('shipping', 'cart', 'total', 'tax')),
+            'view' => $this->renderView('order/_details.html.twig', ['shipping' => $shipping, 'cart' => $cart, 'total' => $total, 'tax' => $tax]),
         ]);
     }
 

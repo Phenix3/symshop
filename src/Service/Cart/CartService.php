@@ -3,27 +3,25 @@
 namespace App\Service\Cart;
 
 use App\Repository\ProductRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService
 {
+    private SessionInterface $session;
 
     public const CART_SESSION_ID       = '_cart';
     public const CART_ITEMS_SESSION_ID = '_cart_items';
-
-    private $session;
-    private $productRepository;
-    private $config = [
+    private array $config = [
         'decimals'       => 2,
         'dec_point'      => '.',
         'thousands_sep'  => ',',
         'format_numbers' => true,
     ];
 
-    public function __construct(SessionInterface $session, ProductRepository $productRepository)
+    public function __construct(private RequestStack $requestStack, private ProductRepository $productRepository)
     {
-        $this->session           = $session;
-        $this->productRepository = $productRepository;
+        $this->session = $this->requestStack->getSession();
     }
 
     public function add($id, $name = null, $price = null, int $quantity = 1, $associatedModel = null): self
@@ -40,9 +38,7 @@ class CartService
                         $item['name'],
                         $item['price'],
                         $item['quantity'],
-                        Helpers::issetAndHasValueOrAssignDefault($item['attributes'], array()),
-                        Helpers::issetAndHasValueOrAssignDefault($item['conditions'], array()),
-                        Helpers::issetAndHasValueOrAssignDefault($item['associatedModel'], null)
+                        Helpers::issetAndHasValueOrAssignDefault($item['attributes'], [])
                     );
                 }
             } else {
@@ -51,9 +47,7 @@ class CartService
                     $id['name'],
                     $id['price'],
                     $id['quantity'],
-                    Helpers::issetAndHasValueOrAssignDefault($id['attributes'], array()),
-                    Helpers::issetAndHasValueOrAssignDefault($id['conditions'], array()),
-                    Helpers::issetAndHasValueOrAssignDefault($id['associatedModel'], null)
+                    Helpers::issetAndHasValueOrAssignDefault($id['attributes'], [])
                 );
             }
 
@@ -124,11 +118,10 @@ class CartService
      */
     public function getContent()
     {
-        $content = (new CartCollection($this->getCart()))->reject(function ($item) {
+        return (new CartCollection($this->getCart()))->reject(function ($item) {
             $item->put('total', $item->getPriceSum());
             return !($item instanceof ItemCollection);
         });
-        return $content;
     }
 
     public function get($id)
@@ -136,7 +129,7 @@ class CartService
         return $this->getContent()->get($id);
     }
 
-    public function remove($id)
+    public function remove($id): bool
     {
         $cart = $this->getContent();
         $cart->forget($id);
@@ -144,7 +137,7 @@ class CartService
         return true;
     }
 
-    public function clear()
+    public function clear(): bool
     {
         $this->session->set(self::CART_ITEMS_SESSION_ID, []);
         return true;
@@ -168,24 +161,16 @@ class CartService
 
     public function getSubTotal($formatted = true)
     {
-        $sum = $this->getContent()->sum(function (ItemCollection $item) {
-
-            return $item->getPriceSum();
-        });
-
-        return $sum;
+        return $this->getContent()->sum(fn(ItemCollection $item) => $item->getPriceSum());
     }
 
     public function getTotal()
     {
-        $total    = 0;
-        $subTotal = $this->getSubTotal(false);
-
         // foreach ($this->getFullCart() as $item) {
         //     $total += $item['product']->getPrice() * $item['quantity'];
         // }
 
-        return $subTotal;
+        return $this->getSubTotal(false);
     }
 
     public function updateQuantityRelative($item, $key, $value)
@@ -218,7 +203,7 @@ class CartService
         $this->session->set(self::CART_ITEMS_SESSION_ID, $cart);
     }
 
-    public function addRow($id, $item)
+    public function addRow($id, $item): bool
     {
         $cart = $this->getContent();
         $cart = $cart->put($id, new ItemCollection($item, $this->config));

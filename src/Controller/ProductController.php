@@ -14,7 +14,6 @@ use App\Message\NewProductReviewMessage;
 use App\Repository\ProductRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,11 +25,8 @@ use Twig\Extra\Markdown\MarkdownInterface;
 class ProductController extends BaseController
 {
   
-    private $productRepository;
-
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(private ProductRepository $productRepository)
     {
-      $this->productRepository = $productRepository;
     }
 
     /**
@@ -86,14 +82,11 @@ class ProductController extends BaseController
 
       $htmlDescription = $markdown->convert($product->getDescription());
 
-      return $this->render('product/show.html.twig', \compact('product', 'htmlDescription', 'averageRating'));
+      return $this->render('product/show.html.twig', ['product' => $product, 'htmlDescription' => $htmlDescription, 'averageRating' => $averageRating]);
     }
 
     /**
      * @Route("/{slug}/reviews", name="review", methods={"GET"})
-     *
-     * @param \App\Entity\Product $product
-     * @return Response
      */
     public function reviews(Product $product): Response
     {
@@ -138,8 +131,6 @@ class ProductController extends BaseController
 
     /**
      * @Route("/{id}/reviews/change-status", name="review_status")
-     * @param Review $review
-     * @return Response
      */
     public function changeReviewStatus(Review $review, Request $request): Response
     {
@@ -147,7 +138,7 @@ class ProductController extends BaseController
         if ($request->isXmlHttpRequest()) {
             $content = $request->getContent();
 //            dd($content);
-            $status = \json_decode($content, true)['status'];
+            $status = \json_decode($content, true, 512, JSON_THROW_ON_ERROR)['status'];
         } else {
             $status = $request->request->get('status');
         }

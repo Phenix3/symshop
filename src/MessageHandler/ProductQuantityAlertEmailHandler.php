@@ -11,13 +11,8 @@ use Symfony\Component\Mime\Address;
 
 final class ProductQuantityAlertEmailHandler implements MessageHandlerInterface
 {
-    private $mailer;
-    private $parameterBag;
-
-    public function __construct(MailerInterface $mailer, ParameterBagInterface $parameterBag)
+    public function __construct(private MailerInterface $mailer, private ParameterBagInterface $parameterBag)
     {
-        $this->mailer = $mailer;
-        $this->parameterBag = $parameterBag;
     }
 
     public function __invoke(ProductQuantityAlertEmail $message)

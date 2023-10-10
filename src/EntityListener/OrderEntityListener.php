@@ -2,6 +2,7 @@
 
 namespace App\EntityListener;
 
+use DateTime;
 use App\Entity\Order;
 use App\Order\OrderReferenceGenerator;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -9,20 +10,15 @@ use App\Repository\OrderRepository;
 
 class OrderEntityListener
 {
-    private $orderReferenceGenerator;
-    private $orderRepository;
-
-    public function __construct(OrderReferenceGenerator $orderReferenceGenerator, OrderRepository $orderRepository)
+    public function __construct(private OrderReferenceGenerator $orderReferenceGenerator, private OrderRepository $orderRepository)
     {
-        $this->orderReferenceGenerator = $orderReferenceGenerator;
-        $this->orderRepository = $orderRepository;
     }
 
 
     public function prePersist(Order $order, LifecycleEventArgs $event)
     {
         $order
-            ->setCreatedAt(new \DateTime())
+            ->setCreatedAt(new DateTime())
             ->setReference(
                 $this->orderReferenceGenerator->generateReference($this->orderRepository->count([]))
             );

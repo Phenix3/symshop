@@ -10,11 +10,8 @@ use Symfony\Component\Mime\Address;
 
 final class SendVerificationEmailMessageHandler implements MessageHandlerInterface
 {
-    private $emailVerifier;
-
-    public function __construct(EmailVerifier $emailVerifier)
+    public function __construct(private EmailVerifier $emailVerifier)
     {
-        $this->emailVerifier = $emailVerifier;
     }
 
     public function __invoke(SendVerificationEmailMessage $message)

@@ -27,21 +27,8 @@ abstract class CrudController extends BaseController
         'delete' => null,
     ];
 
-    protected EntityManagerInterface $em;
-    protected PaginatorInterface $paginator;
-    protected EventDispatcherInterface $eventDispatcher;
-    private RequestStack $requestStack;
-
-    public function __construct(
-        EntityManagerInterface $em,
-        EventDispatcherInterface $eventDispatcher,
-        RequestStack $requestStack,
-        PaginatorInterface $paginator
-    ) {
-        $this->em = $em;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->requestStack = $requestStack;
-        $this->paginator = $paginator;
+    public function __construct(protected EntityManagerInterface $em, protected EventDispatcherInterface $eventDispatcher, private RequestStack $requestStack, protected PaginatorInterface $paginator)
+    {
     }
 
     public function crudIndex(QueryBuilder $query = null, string $orderBy = 'createdAt'): Response

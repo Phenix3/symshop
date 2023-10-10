@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use App\Entity\Traits\Timestamp;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -9,13 +10,13 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
  */
-class User implements UserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use Timestamp;
 
@@ -29,14 +30,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @var string
      */
     private string $email = '';
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     *
-     * @var string
      */
     private string $username = '';
 
@@ -93,6 +91,11 @@ class User implements UserInterface
         $this->reviews = new ArrayCollection();
     }
 
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
     public function getId(): ?string
     {
         return $this->id;
@@ -117,7 +120,7 @@ class User implements UserInterface
      */
     public function getUsername(): ?string
     {
-        return (string) $this->username;
+        return $this->username;
     }
 
     public function setUsername(string $username): self
@@ -150,7 +153,7 @@ class User implements UserInterface
      */
     public function getPassword(): ?string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -201,12 +204,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getLastSeen(): ?\DateTimeInterface
+    public function getLastSeen(): ?DateTimeInterface
     {
         return $this->lastSeen;
     }
 
-    public function setLastSeen(?\DateTimeInterface $lastSeen): self
+    public function setLastSeen(?DateTimeInterface $lastSeen): self
     {
         $this->lastSeen = $lastSeen;
 

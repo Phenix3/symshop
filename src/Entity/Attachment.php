@@ -22,7 +22,7 @@ class Attachment
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Ramsey\Uuid\Doctrine\UuidGenerator")
      */
-    private ?string $id;
+    private ?string $id = null;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -31,7 +31,6 @@ class Attachment
 
     /**
      * @Vich\UploadableField(mapping="attachments", fileNameProperty="fileName", size="fileSize")
-     * @var File|null
      */
     private ?File $file = null;
 
@@ -69,18 +68,11 @@ class Attachment
         return $this;
     }
 
-    /**
-     * @return File|null
-     */
     public function getFile(): ?File
     {
         return $this->file;
     }
 
-    /**
-     * @param File|null $file
-     * @return self
-     */
     public function setFile(?File $file): self
     {
         $this->file = $file;

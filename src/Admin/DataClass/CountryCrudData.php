@@ -16,19 +16,16 @@ class CountryCrudData extends AutomaticCrudData
 {
     /**
      * @Assert\NotBlank()
-     * @var string
      */
     public string $name = '';
 
     /**
      * @Assert\PositiveOrZero()
-     * @var float
      */
     public float $tax = 0.0;
 
     /**
      * @Assert\Type(type="App\Entity\Range")
-     * @var RangeValue|null
      */
     public ?RangeValue $rangeValue = null;
 

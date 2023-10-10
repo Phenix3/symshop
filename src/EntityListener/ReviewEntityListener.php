@@ -12,14 +12,8 @@ use Symfony\Component\Security\Core\Security;
 class ReviewEntityListener
 {
 
-    /**
-     * @var Security
-     */
-    private Security $security;
-
-    public function __construct(Security $security)
+    public function __construct(private Security $security)
     {
-        $this->security = $security;
     }
 
     public function prePersist(Review $review, LifecycleEventArgs $args): void

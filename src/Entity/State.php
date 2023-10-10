@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Stringable;
 use App\Repository\StateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=StateRepository::class)
  */
-class State
+class State implements Stringable
 {
     /**
      * @ORM\Id()
@@ -21,8 +22,6 @@ class State
     private string $id;
 
     /**
-     * @var string
-     * 
      * @ORM\Column(type="string", length=100)
      */
     private string $name = '';
@@ -52,7 +51,7 @@ class State
         $this->orders = new ArrayCollection();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }

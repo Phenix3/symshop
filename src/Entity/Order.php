@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use App\Entity\Traits\Timestamp;
 use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Order
 {
-    public \Doctrine\Common\Collections\ArrayCollection $payments;
+    public ArrayCollection $payments;
     use Timestamp;
 
     /**
@@ -261,16 +262,12 @@ class Order
         return $this;
     }
 
-    /**
-     * @return Payment
-     */
     public function getPayment(): Payment
     {
         return $this->payment;
     }
 
     /**
-     * @param Payment|null $payment
      * @return $this
      */
     public function setPayment(?Payment $payment): self {
@@ -314,12 +311,12 @@ class Order
         return $this;
     }
 
-    public function getCheckoutCompletedAt(): ?\DateTimeInterface
+    public function getCheckoutCompletedAt(): ?DateTimeInterface
     {
         return $this->checkoutCompletedAt;
     }
 
-    public function setCheckoutCompletedAt(?\DateTimeInterface $checkoutCompletedAt): self
+    public function setCheckoutCompletedAt(?DateTimeInterface $checkoutCompletedAt): self
     {
         $this->checkoutCompletedAt = $checkoutCompletedAt;
 

@@ -1,28 +1,23 @@
 <?php namespace App\Service\Cart;
 
-use App\Service\Cart\Helpers;
 use Tightenco\Collect\Support\Collection;
 
 class ItemCollection extends Collection
 {
 
     /**
-     * Sets the config parameters.
-     *
-     * @var
-     */
-    protected $config;
-
-    /**
      * ItemCollection constructor.
      * @param array|mixed $items
      * @param $config
      */
-    public function __construct($items, $config = [])
+    public function __construct($items, /**
+     * Sets the config parameters.
+     *
+     * @var
+     */
+    protected $config = [])
     {
         parent::__construct($items);
-
-        $this->config = $config;
     }
 
     /**
@@ -38,7 +33,7 @@ class ItemCollection extends Collection
     public function __get($name)
     {
         if ($this->has($name) || $name == 'model') {
-            return !is_null($this->get($name)) ? $this->get($name) : $this->getAssociatedModel();
+            return is_null($this->get($name)) ? $this->getAssociatedModel() : $this->get($name);
         }
         return null;
     }
@@ -70,14 +65,10 @@ class ItemCollection extends Collection
             return false;
         }
         if (is_array($this['conditions'])) {
-            return count($this['conditions']) > 0;
+            return $this['conditions'] !== [];
         }
-        $conditionInstance = "App\\Service\\Cart\\CartCondition";
-        if ($this['conditions'] instanceof $conditionInstance) {
-            return true;
-        }
-
-        return false;
+        $conditionInstance = CartCondition::class;
+        return $this['conditions'] instanceof $conditionInstance;
     }
 
     /**

@@ -2,8 +2,6 @@
 
 namespace App\Admin\DataClass;
 
-use App\Admin\DataClass\AutomaticCrudData;
-use App\Admin\Form\StateForm;
 use App\Entity\State;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,8 +13,7 @@ class StateCrudData extends AutomaticCrudData
     /**
      * Undocumented variable
      *
-     * @var string
-     * 
+     *
      * @Assert\NotBlank
      */
     public string $name = '';
@@ -29,8 +26,7 @@ class StateCrudData extends AutomaticCrudData
     /**
      * Undocumented variable
      *
-     * @var string
-     * 
+     *
      * @Assert\NotBlank
      */
     public string $color = '';

@@ -20,11 +20,8 @@ use Symfony\Component\PropertyAccess\PropertyAccessor;
  */
 class AutomaticCrudData implements CrudDataInterface
 {
-    protected $entity;
-
-    public function __construct(object $entity)
+    public function __construct(protected object $entity)
     {
-        $this->entity = $entity;
         $reflexion = new ReflectionClass($this);
         $properties = $reflexion->getProperties(ReflectionProperty::IS_PUBLIC);
         $accessor = new PropertyAccessor();

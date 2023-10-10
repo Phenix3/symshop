@@ -17,14 +17,14 @@ class SearchData
      *
      * @var int|null
      */
-    public $min = null;
+    public $min;
 
     /**
      * Undocumented variable
      *
      * @var int|null
      */
-    public $max = null;
+    public $max;
 
     /**
      * Undocumented variable

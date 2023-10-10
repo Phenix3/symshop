@@ -18,13 +18,9 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
 
 class CheckoutAddressType extends AbstractType
-{
-    public $addressComaprator;
-    
-    public function __construct(Security $security, ?AddressComparator $addressComaprator)
+{   
+    public function __construct(public Security $security, public ?AddressComparator $addressComaprator)
     {
-        $this->security = $security;
-        $this->addressComaprator = $addressComaprator;
     }
 
 

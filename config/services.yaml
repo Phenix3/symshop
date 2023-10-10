@@ -123,9 +123,7 @@ services:
               arguments:
                 - '@App\Service\PageManagerService'
 
-    App\DataFixtures\Processor\UserProcessor:
-        arguments:
-            - '@security.user_password_encoder.generic'
+    App\DataFixtures\Processor\UserProcessor: ~
 
     Bezhanov\Faker\Provider\Commerce: ~
 

@@ -30,21 +30,17 @@ class AccountController extends BaseController
 
     /**
      * @Route("/addresses", name="addresses")
-     *
-     * @return Response
      */
     public function addresses(AddressRepository $addressRepository): Response
     {
         $addresses = $addressRepository->findAllForUser($this->getUser());
 
-        return $this->render('account/addresses.html.twig', \compact('addresses'));
+        return $this->render('account/addresses.html.twig', ['addresses' => $addresses]);
     }
 
 
     /**
      * @Route("/profile/edit", name="profile_edit")
-     *
-     * @return Response
      */
     public function profileEdit(Request $request): Response
     {
@@ -70,20 +66,16 @@ class AccountController extends BaseController
 
     /**
      * @Route("/orders", name="orders", methods={"GET"})
-     *
-     * @return Response
      */
     public function orders(OrderRepository $orderRepository): Response
     {
         $orders = $orderRepository->findAllForUser($this->getUser());
 
-        return $this->render('account/orders.html.twig', compact('orders'));
+        return $this->render('account/orders.html.twig', ['orders' => $orders]);
     }
 
     /**
      * @Route("/excerpt", name="excerpt", methods={"GET"})
-     *
-     * @return Response
      */
     public function excerpt(UserRepository $userRepository): Response
     {
@@ -98,14 +90,11 @@ class AccountController extends BaseController
 
     /**
      * @Route("/orders/{reference}", name="orders_show", methods={"GET"})
-     *
-     * @param Order $order
-     * @return Response
      */
     public function show(Order $order): Response
     {
         $this->denyAccessUnlessGranted('ORDER_SHOW', $order);
 
-        return $this->render('account/order/show.html.twig', compact('order'));
+        return $this->render('account/order/show.html.twig', ['order' => $order]);
     }
 }

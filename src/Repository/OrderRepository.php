@@ -62,7 +62,6 @@ class OrderRepository extends ServiceEntityRepository
     /**
      * Undocumented function
      *
-     * @param UserInterface $user
      * @return Order[]|null
      */
     public function findAllForUser(UserInterface $user)

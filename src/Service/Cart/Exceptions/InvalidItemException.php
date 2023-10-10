@@ -1,6 +1,6 @@
 <?php namespace App\Service\Cart\Exceptions;
 
-
-class InvalidItemException extends \Exception {
+use Exception;
+class InvalidItemException extends Exception {
 
 }

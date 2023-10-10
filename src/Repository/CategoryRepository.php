@@ -2,11 +2,11 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 /**
  * @method Category|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,9 +21,6 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
     public function findForSearchBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('c')
@@ -35,7 +32,6 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $parentSlug
      * @return Category[]
      */
     public function findChildren(string $parentSlug): array
@@ -52,9 +48,7 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $slug
-     * @return Category
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findOneBySlug(string $slug): Category
     {
@@ -85,8 +79,6 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $phrase
-     * @param int|null $limit
      * @return Category[]
      */
     public function findByNamePart(string $phrase, ?int $limit = null): array

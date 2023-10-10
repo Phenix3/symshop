@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 trait ToggleableTrait
 {
     /**
-     * @var bool
      * @ORM\Column(type="boolean", options={"default": true})
      */
     protected bool $enabled = true;

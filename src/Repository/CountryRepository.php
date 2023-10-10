@@ -22,8 +22,6 @@ class CountryRepository extends ServiceEntityRepository
 
     /**
      * Return a Query object for pagination
-     *
-     * @return Query
      */
     public function findAllQuery(): Query
     {

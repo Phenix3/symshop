@@ -2,7 +2,6 @@
 
 namespace App\Admin\DataClass;
 
-use App\Admin\DataClass\AutomaticCrudData;
 use App\Admin\Form\UserForm;
 use App\Entity\Attachment;
 use App\Entity\User;
@@ -13,16 +12,12 @@ class UserCrudData extends AutomaticCrudData
 {
     /**
      * @Assert\NotBlank()
-     * 
-     * @var string
      */
     public string $username = '';
 
     /**
      * @Assert\NotBlank()
      * @Assert\Email()
-     * 
-     * @var string
      */
     public string $email = '';
     

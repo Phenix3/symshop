@@ -4,8 +4,6 @@ namespace App\Form\Type;
 
 use App\Entity\GatewayConfig;
 use Payum\Core\Model\GatewayConfigInterface;
-use Payum\Core\Payum;
-use Payum\Core\Registry\GatewayFactoryRegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,13 +17,6 @@ class GatewayConfigType extends AbstractType
         'stripe_checkout' => StripeGatewayConfigType::class,
         'stripe_js' => StripeGatewayConfigType::class,
     ];
-
-    private Payum $payum;
-
-    public function __construct(Payum $payum)
-    {
-        $this->payum = $payum;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

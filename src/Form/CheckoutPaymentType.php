@@ -2,11 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\Order;
 use App\Entity\Payment;
 use App\Form\Type\PaymentType;
 use Symfony\Component\Form\AbstractType;
-use App\Form\Type\ChangePaymentMethodType;
 use App\Form\Type\PaymentMethodChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

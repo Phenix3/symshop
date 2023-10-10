@@ -2,13 +2,14 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\NonUniqueResultException;
 use App\DataClass\SearchData;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Review;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
-use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,7 +37,7 @@ class ProductRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->setMaxResults($limit)
             ->leftJoin('p.image', 'image')
-            ->leftJoin('p.categories', 'c', Expr\Join::WITH, 'c.enabled = :status')
+            ->leftJoin('p.categories', 'c', Join::WITH, 'c.enabled = :status')
             ->select('p', 'image', 'c')
             ->where('p.isActive = :active')
             ->setParameter('active', true)
@@ -53,7 +54,7 @@ class ProductRepository extends ServiceEntityRepository
         $query = $this
             ->createQueryBuilder('p')
             ->leftJoin('p.image', 'image')
-                ->leftJoin('p.categories', 'c', Expr\Join::WITH, 'c.enabled = :status')
+                ->leftJoin('p.categories', 'c', Join::WITH, 'c.enabled = :status')
             ->select('p', 'c', 'image')
             ->where('p.isActive = :active')
             ->setParameter('active', true)
@@ -83,15 +84,11 @@ class ProductRepository extends ServiceEntityRepository
 
         }
 
-        $query = $query->getQuery();
-
-        return $query;
+        return $query->getQuery();
     }
 
     /**
-     * @param string $slug
-     * @return Product|null
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findWithImages(string $slug): ?Product
     {
@@ -99,7 +96,7 @@ class ProductRepository extends ServiceEntityRepository
             ->createQueryBuilder('p')
             ->leftJoin('p.image', 'image')
             ->leftJoin('p.images', 'images')
-            ->leftJoin('p.reviews', 'r', Expr\Join::WITH, 'r.status = :status')
+            ->leftJoin('p.reviews', 'r', Join::WITH, 'r.status = :status')
             ->addSelect('image', 'images', 'r')
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)
